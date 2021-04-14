@@ -1,0 +1,16 @@
+.cssGrid{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 50px 150px 200px; 
+    gap:3px;
+
+
+    .boxItem{
+        background: red;
+        color: white;
+        border: 1px solid black;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}

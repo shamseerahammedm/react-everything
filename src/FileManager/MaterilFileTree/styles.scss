@@ -1,0 +1,35 @@
+
+
+
+
+.MuiTreeView-root{
+    overflow: hidden;
+    .MuiTreeItem-root{
+        // border-top: 1px solid rgb(219, 219, 219);
+        // border-bottom: 1px solid rgb(219, 219, 219);
+        padding: 4px 0!important;
+    }
+    
+    .MuiTreeItem-label{
+        position: relative;
+        &:after{
+            content : "";
+            top: 0;
+            bottom: 0;
+            // left: ;
+            right: 0;
+            position: absolute;
+            width: 200%;
+            height: 100%;
+           
+        }
+        &:hover{
+           
+            // &:after{
+            //     background: rgba(0, 0, 0, 0.04);
+               
+            // }
+        }
+    }
+    
+}

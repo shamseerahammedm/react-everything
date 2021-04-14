@@ -1,0 +1,21 @@
+.breadCrumb{
+    li{
+        display: inline-block;
+        margin-right: 10px;
+        &:first-child{
+            &:before{
+                content:"";
+                display: none;
+            }
+        }
+        &:before{
+            content:"/";
+            display: inline-block;
+            margin-right: 10px;
+        }
+    }
+}
+
+.hightLight{
+    background: rgb(236, 236, 236);
+}

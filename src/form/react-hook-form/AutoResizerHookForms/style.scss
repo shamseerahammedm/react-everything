@@ -1,0 +1,41 @@
+
+
+
+
+
+.form {
+  // background: #0e101c;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.container {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.form,
+.wrapper {
+  display: flex;
+  flex: 1 1 auto;
+}
+
+.form {
+  flex-direction: column;
+  width: 100%;
+}

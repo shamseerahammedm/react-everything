@@ -1,0 +1,17 @@
+
+// animate in
+.form-wrapper-enter {
+    opacity: 0;
+  }
+  .form-wrapper-enter-active {
+    opacity: 1;
+    transition: opacity 700ms ease-in;
+  }
+  // animate out
+  .form-wrapper-exit {
+    opacity: 1;
+  }
+  .form-wrapper-exit-active {
+    opacity: 0;
+    transition: opacity 700ms ease-in;
+  }
