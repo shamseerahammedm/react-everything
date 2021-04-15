@@ -7,7 +7,6 @@ import LoadMore from './load-more/load-more';
 import LifeCycleMethods from './lifecycle/lifecycle';
 
 import IntersectionObserverTesting from './intersection-observer/intersection-observer.component';
-import TestComponent from './test/test.jsx';
 import Refs from './refs/refs';
 import RouteComponent from './route/route';
 import TransitionGroup from './animations/transitiongroup';
@@ -51,6 +50,9 @@ import FormArray2 from './form/react-hook-form/FormArray2/FormArray2';
 import Phase1 from './form/react-hook-form/phase1/Phase1';
 import RenderProps from './RenderProps/RenderProps';
 import AutoResizerHookForms from './form/react-hook-form/AutoResizerHookForms/AutoResizerHookForms';
+import Test from './form/react-hook-form/phase1/Phase1';
+import TestComponent from './TestComponent/TestComponent';
+import BindingComponent from './Binding/Binding';
 
 function App() {
 
@@ -67,6 +69,7 @@ function App() {
 
         {/* Form section ends*/}
 
+        <Route exact path="/binding" component={BindingComponent} />
         <Route exact path="/pagination" component={LoadMore} />
         <Route exact path="/refs" component={Refs} />
         <Route exact path="/lifecyclemethods" component={LifeCycleMethods} />
