@@ -13,6 +13,7 @@ import FormComponent from './FormComponent';
 export const AutoResizerHookForms = () => {
 
   // csv related
+  // const formattedDummy = fileHeaderMapper(dummyValues, config);
   const [tableData, setTableData] = useState([]);
   const fileHandler = (e) => {
     const files = e.target.files;
@@ -62,11 +63,11 @@ const schema = Yup.object().shape({
 });
 
 const fileHeaderMapper = (results, config) => {
-  const fromattedData = results.map(item => {
+  const fromattedData = results.map((item, i) => {
     return {
       first_name: item[config.first_name],
       last_name: item[config.last_name],
-      company: item[config.company],
+      company: { value : item[config.company]+i , name  : item[config.company] },
       phone_number: item[config.phone_number],
       email: item[config.email],
       enable_cold_calling:
@@ -74,6 +75,7 @@ const fileHeaderMapper = (results, config) => {
           : (item[config.enableColdCall].toLowerCase() == 'no') ? false
             : true,
       referred_person_email: item[config.referred_person_email],
+      referred_date : new Date(item[config.referred_date]),
     };
   });
   return fromattedData;

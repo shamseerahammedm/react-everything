@@ -1,8 +1,7 @@
-import React, { Fragment } from "react";
+import React, { Fragment } from 'react';
 import { useDispatch } from 'react-redux';
 import './Categories.scss';
 // { type : 'typesomehting', payload : daatToSetInReducer }
-
 
 const categoriesData = [
   { id: 1, categoryName: 'Sales' },
@@ -10,20 +9,17 @@ const categoriesData = [
   { id: 3, categoryName: 'Warranty' },
   { id: 4, categoryName: 'Career' },
   { id: 5, categoryName: 'Something' }
-]
-
+];
 
 const Categories = ({ navigation, setActiveStep }) => {
 
   // const { navigation, setActiveStep } = props;
 
-
-
   const { next } = navigation;
   const dispatch = useDispatch();
 
   return (
-    <div className="form">
+    <div className="form cate">
 
       <div className="container">
         <div className="row">
@@ -33,9 +29,9 @@ const Categories = ({ navigation, setActiveStep }) => {
               return (
                 <Fragment key={catItem.id}>
                   <div key={catItem.id} className="col-sm-3" onClick={() => {
-                    next()
-                    dispatch({ type: 'SET_FORM_CATEGORY', payload: catItem })
-                    setActiveStep(prevState => prevState + 1)
+                    next();
+                    dispatch({ type: 'SET_FORM_CATEGORY', payload: catItem });
+                    setActiveStep(prevState => prevState + 1);
                   }}>
                     <div className="categoryItem">
                       {/* icon */}
@@ -43,12 +39,11 @@ const Categories = ({ navigation, setActiveStep }) => {
                     </div>
                   </div>
                 </Fragment>
-              )
+              );
             })
           }
         </div>
       </div>
-
 
     </div>
   );

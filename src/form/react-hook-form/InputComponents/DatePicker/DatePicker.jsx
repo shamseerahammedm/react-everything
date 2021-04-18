@@ -6,75 +6,93 @@ import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import { ThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import './DatePicker.scss';
-import { theme } from 'utils/constants';
-import { getError } from 'utils/formik';
+import { useController, useFormContext } from 'react-hook-form';
 
-const datePickerTheme = createMuiTheme({
+const secondaryDark = '#179daf!important';
+const themeGrayLight = '#e6e6e6';
+const secondaryColor = '#1ac7de';
+
+const theme = createMuiTheme({
   overrides: {
     MuiPickersClock: {
       clock: {
-        backgroundColor: theme.palette.common.primaryColor
+        backgroundColor: '#EDEDED'
       },
       pin: {
-        backgroundColor: theme.palette.common.primaryColor,
+        backgroundColor: secondaryColor,
       }
     },
     MuiPickersClockPointer: {
       pointer: {
-        backgroundColor: theme.palette.common.primaryColor
+        backgroundColor: secondaryColor
       },
       thumb: {
-        backgroundColor: theme.palette.common.darkLight,
-        borderColor: theme.palette.common.darkLight,
+        backgroundColor: secondaryDark,
+        borderColor: secondaryDark,
       }
     },
     MuiButton: {
       textPrimary: {
-        color: theme.palette.common.primaryColor,
+        color: secondaryColor,
       }
     },
     //header
     MuiPickersToolbar: {
       toolbar: {
-        backgroundColor: theme.palette.common.primaryColor,
+        backgroundColor: secondaryColor,
+      },
+    },
+    MuiPickersCalendarHeader: {
+      switchHeader: {
+        // backgroundColor: lightBlue.A200,
+        // color: "white",
       },
     },
     MuiPickersDay: {
+      // day: {
+      //     color: lightBlue.A700,
+      // },
       daySelected: {
-        backgroundColor: theme.palette.common.primaryColor,
+        backgroundColor: secondaryColor,
         '&:hover': {
-          backgroundColor: theme.palette.common.darkLight,
+          backgroundColor: secondaryDark,
         }
       },
+      // dayDisabled: {
+      //     color: lightBlue["100"],
+      // },
+      // current: {
+      //     color: lightBlue["900"],
+      // },
     },
+    MuiPickersModal: {
+      dialogAction: {
+        color: 'red',
+      },
+    },
+
     MuiOutlinedInput: {
       root: {
-        borderRadius: 8,
         '&.Mui-disabled': {
           '& fieldset': {
-            borderColor: theme.palette.common.borderColor,
+            borderColor: themeGrayLight,
           }
         },
+
         '&.Mui-focused fieldset': {
-          // border color was getting overridden with default primary color
-          borderColor: `${theme.palette.common.primaryColor}!important`,
+          borderColor: `${secondaryColor}!important`,
         },
-      },
-      input: {
-        // input padding was getting overridden by margin dense class
-        paddingTop: '14px!important',
-        paddingBottom: '14px!important',
       }
+    },
+    MuiFormLabel: {
+      '&.Mui-focused legend': {
+        borderColor: `${secondaryColor}!important`,
+      },
     }
   }
 });
 
-// Note : if datepicker needs to be opened conditionally also pass progOpen as true from the component
-
 const DatePicker = ({
-  field: { name, value },
-  form: { setFieldValue, touched, errors, status },
   onChange = () => null,
   label = '',
   variant = 'outlined',
@@ -90,23 +108,38 @@ const DatePicker = ({
   clearable = false,
   autoOk = true,
   placeholder = '',
-  icon = null
+  icon = null,
+  errorMsg,
+  name, control, defaultValue,
+  rules = {}
 }) => {
 
-  const errorText = getError(name, { touched, status, errors });
+  const { setValue } = useFormContext();
+  const {
+    field: { fieldName, value },
+    fieldState: { error },
+  } = useController({
+    name,
+    control,
+    defaultValue: defaultValue,
+    rules: rules
+  });
+
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <ThemeProvider theme={datePickerTheme}>
+      <ThemeProvider theme={theme}>
         <MuiDatePicker
           className={`customDatePicker ${className}`}
           fullWidth={fullWidth}
-          name={name}
+          name={fieldName}
           autoOk={autoOk}
           label={label}
           clearable={clearable}
+          defaultValue={defaultValue}
           value={value}
           onChange={(value) => {
-            setFieldValue(name, value);
+            console.log('setValue',setValue);
+            setValue(name, value);
             // Running the custom on change function if passed
             if (onChange)
             {
@@ -116,8 +149,8 @@ const DatePicker = ({
           inputVariant={variant}
           format={format}
           size={size}
-          error={!!errorText}
-          helperText={errorText}
+          error={error || false}
+          helperText={error && errorMsg}
           InputProps={showIcon ? {
             endAdornment: (
               <InputAdornment position="end">
@@ -154,5 +187,4 @@ DatePicker.propTypes = {
   clearable: PropTypes.bool,
   autoOk: PropTypes.bool,
 };
-
 export default DatePicker;

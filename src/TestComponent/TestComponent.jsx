@@ -1,56 +1,66 @@
-import React, { Component } from 'react';
-import { test } from 'utils/utils';
+import React from 'react';
+import { FormProvider, useForm, useFormContext } from 'react-hook-form';
+import { VariableSizeList as List } from 'react-window';
+import AutoSizer from 'react-virtualized-auto-sizer';
 
-const TestComponent  = () => {
+// import './styles.css';
+
+const items = Array.from(Array(1000).keys()).map((i) => ({
+  title: `List ${i}`,
+  quantity: Math.floor(Math.random() * 10),
+}));
+
+//In a bigger project, this would be a seperate component.
+const WindowedRow = React.memo(({ index, style, data }) => {
+  const { register, formState : { errors } } = useFormContext();
+  const qtyKey = `${index}.quantity`;
+  console.log(errors);
   return (
-    <div>
-      Functional 
-      <TestComponentClass/>
+    <div style={style}>
+      <label>{data[index].title}</label>
+      <input {...register(qtyKey,  {
+        validate : value => false
+      })} />
+      {errors && errors?.[index]?.quantity && <p>Some error </p>}
+    </div>
+  );
+});
+
+const App = () => {
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
+  const formMethods = useForm({
+    defaultValues: items,
+  });
+
+  return (
+    <div className="container">
+      <h1>Using with React-window</h1>
+      <p>Rather than register fields, we use getValues and setValue.</p>
+
+      <form className="form" onSubmit={formMethods.handleSubmit(onSubmit)}>
+        <div className="wrapper">
+          <FormProvider {...formMethods}>
+            <AutoSizer>
+              {({ height, width }) => (
+                <List
+                  height={height}
+                  itemCount={items.length}
+                  itemSize={() => 100}
+                  width={width}
+                  itemData={items}>
+                  {WindowedRow}
+                </List>
+              )}
+            </AutoSizer>
+          </FormProvider>
+        </div>
+        <button type="submit">Submit</button>
+      </form>
     </div>
   );
 };
 
-export default TestComponent;
-
-class TestComponentClass extends Component {
-  constructor(props) {
-    super(props);
-    this.normalFunction = this.normalFunction.bind(this);
-  }
-  state = {
-    test : 123,
-    something : 1
-  }
-  arrowFunction = (arg) => {
-    console.log('arrowFunction');
-    console.log(arg);
-    this.setState({
-      test : 123,
-      something : this.state.something + 1
-    });
-  }
-
-  normalFunction(arg, value){
-    console.log('normalFunction');
-    this.setState({
-      something : this.state.something + 1
-    });
-  }
-
-  render(){
-
-    return (
-      <div>
-        <button onClick={() => this.arrowFunction('Some arrow argument')}>Arrow btn</button>
-        <button onClick={() => this.normalFunction('Some normal argument')}>Normal btn</button>
-        {/* With out biding this button wont work */}
-        <button onClick={this.normalFunction}>Normal binded</button> 
-        {this.state.something}
-        <br/>
-       Test -  {this.state.test}
-      </div>
-    );
-  }
-}
-
-export { TestComponentClass };
+export default App;
