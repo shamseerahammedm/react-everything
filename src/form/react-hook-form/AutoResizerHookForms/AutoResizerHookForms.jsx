@@ -21,6 +21,7 @@ export const AutoResizerHookForms = () => {
       complete: function (parsedData) {
         const results = parsedData.data;
         results.splice(0, 1);
+        
         // also remove last item from parsed result array coz last item comes as undefined by default 
         results.splice(results.length - 1, 1);
         const formattedResults = fileHeaderMapper(results, config);

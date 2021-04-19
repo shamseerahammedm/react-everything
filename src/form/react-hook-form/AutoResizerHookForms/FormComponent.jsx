@@ -119,6 +119,18 @@ const WindowedRowList = React.memo(({ index, style, data }) => {
       <Grid style={style} container>
 
         <Grid item>
+          {/* First name */}
+          <TextField
+            label="Last Name"
+            variant="outlined"
+            error={isFirstNameError}
+            helperText={isFirstNameError && firstNameErrorMsg}
+            size="small"
+            {...otherFirstNameValues}
+            inputRef={firstNameRef}
+          />
+        </Grid>
+        <Grid item>
           {/* Last name */}
           <TextField
             label="Last Name"
@@ -128,6 +140,40 @@ const WindowedRowList = React.memo(({ index, style, data }) => {
             size="small"
             {...otherLastNameValues}
             inputRef={lastNameRef}
+          />
+        </Grid>
+        <Grid item xs={2}>
+          {/* Last name */}
+          <SearchableSelect
+            label="Company"
+            variant="outlined"
+            error={isLastNameError}
+            helperText={isLastNameError && lastNameErrorMsg}
+            size="small"
+            options={options}
+            optionLabel="name"
+            onInputChange={async ()=>{
+              const optionsValues = await fetchResults();
+              setOptions(optionsValues);
+            }}
+            name={companyKey}
+            rules={{
+              validate : value => false
+            }}
+            control={control}
+            defaultValue={defaultCompanyValue}
+          />
+        </Grid>
+        <Grid item>
+          {/* Last name */}
+          <DatePicker
+            label="Date picker"
+            name={dateKey}
+            rules={{
+              validate : value => false
+            }}
+            control={control}
+            defaultValue={defaultDateValue}
           />
         </Grid>
 
