@@ -82,28 +82,28 @@ export default FormComponent;
 const fetchResults = async () => {
   const data = await fetch('https://jsonplaceholder.typicode.com/users');
   const dataInJson = await data.json();
-  console.log('dataInJson',dataInJson);
+  console.log('dataInJson', dataInJson);
   const companyDetails = dataInJson.map(item => {
-    return { value : item.id , name : item.company.name };
+    return { value: item.id, name: item.company.name };
   });
   return companyDetails;
 };
 
 const WindowedRowList = React.memo(({ index, style, data }) => {
-  console.log('data',data);
-  const { register, formState : { errors }, control, getValues } = useFormContext();
-  const [options, setOptions ] = useState([]);
+  console.log('data', data);
+  const { register, formState: { errors }, control, getValues } = useFormContext();
+  const [options, setOptions] = useState([]);
 
   const firstNameKey = `[${index}].first_name`;
-  const { ref : firstNameRef, ...otherFirstNameValues } = register(firstNameKey, {
+  const { ref: firstNameRef, ...otherFirstNameValues } = register(firstNameKey, {
     // validate : value => value === 'shamseer'
   });
   const isFirstNameError = !isEmpty(errors) && errors?.[index]?.first_name ? true : false;
   const firstNameErrorMsg = 'First name is required.';
-  
+
   const lastNameKey = `[${index}].last_name`;
-  const { ref : lastNameRef, ...otherLastNameValues } = register(lastNameKey, {
-    validate : value => value === 'shamseer'
+  const { ref: lastNameRef, ...otherLastNameValues } = register(lastNameKey, {
+    validate: value => value === 'shamseer'
   });
   const isLastNameError = !isEmpty(errors) && errors?.[index]?.last_name ? true : false;
   const lastNameErrorMsg = 'Last name is required.';
@@ -152,16 +152,17 @@ const WindowedRowList = React.memo(({ index, style, data }) => {
             size="small"
             options={options}
             optionLabel="name"
-            onInputChange={async ()=>{
+            onInputChange={async () => {
               const optionsValues = await fetchResults();
               setOptions(optionsValues);
             }}
             name={companyKey}
             rules={{
-              validate : value => false
+              validate: value => false
             }}
             control={control}
             defaultValue={defaultCompanyValue}
+            errorMsg="Company error"
           />
         </Grid>
         <Grid item>
@@ -170,10 +171,11 @@ const WindowedRowList = React.memo(({ index, style, data }) => {
             label="Date picker"
             name={dateKey}
             rules={{
-              validate : value => false
+              validate: value => false
             }}
             control={control}
             defaultValue={defaultDateValue}
+            errorMsg="Date picker error"
           />
         </Grid>
 
@@ -186,28 +188,3 @@ const WindowedRowList = React.memo(({ index, style, data }) => {
   );
 });
 
-//In a bigger project, this would be a seperate component.
-const WindowedRow = React.memo(({ columnIndex , rowIndex, style, data }) => {
-  const { getValues, setValue, errors } = useFormContext();
-  // console.log('data',data);
-  console.log('columnIndex',columnIndex);
-  console.log('rowIndex',rowIndex);
-  const qtyKey = `[${rowIndex}].[${columnIndex}]`;
-  // const qty = getValues()[rowIndex][columnIndex] || data[rowIndex][columnIndex];
-  console.log('getValues()',getValues());
-  console.log('qtyKey',qtyKey);
-  return (
-    <>
-      <div style={style}>
-        <input
-          defaultValue={123}
-          onChange={(e) => {
-            setValue(qtyKey, e.target.value);
-          }}
-          className="form-control"
-        />
-        {errors && errors[rowIndex] && <p>Some error </p>}
-      </div>
-    </>
-  );
-});

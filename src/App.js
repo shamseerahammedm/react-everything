@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import Form from './form/form.component';
-import FormikTag from './form/formik-form/formik-form.component';
+import FormikTag from './form/Formik/formik-form/formik-form.component';
 import LoadMore from './load-more/load-more';
 import LifeCycleMethods from './lifecycle/lifecycle';
 
@@ -20,7 +20,7 @@ import MaterialUIFUll from './material/material-ui-full/MaterialUIFull'; // refe
 import Javascript from './javascript/javscript';
 import Authentication from './authentication/authentication';
 
-import FormikFullFormFormArrayValidation from './form/formik-form-array-validation/FormikFullFormFormArrayValidation';
+import FormikFullFormFormArrayValidation from './form/Formik/formik-form-array-validation/FormikFullFormFormArrayValidation';
 import HooksApiTest from './Hooks/HooksAPITest.component';
 // import ReduxFormTest from './form/redux-form/redux.form';
 import StepForm from './form/step-form/step-form';
@@ -43,7 +43,7 @@ import UseimperativeHandle from './UseimperativeHandle/UseimperativeHandle';
 import Context from './Context/Context';
 import MultiParent from './Stepper/index';
 
-import FormikFormArrays from './form/formik-form-array-validation/bootstrap';
+import FormikFormArrays from './form/Formik/formik-form-array-validation/bootstrap';
 import CssGrid from './css-grids/CssGrid';
 import FormArray from './form/react-hook-form/form-array/form-array';
 import FormArray2 from './form/react-hook-form/FormArray2/FormArray2';
@@ -53,6 +53,7 @@ import AutoResizerHookForms from './form/react-hook-form/AutoResizerHookForms/Au
 import Test from './form/react-hook-form/phase1/Phase1';
 import TestComponent from './TestComponent/TestComponent';
 import BindingComponent from './Binding/Binding';
+import FormikBackEndErrors from 'form/Formik/FormikBackEndErrors/FormikBackEndErrors';
 
 function App() {
 
@@ -66,6 +67,7 @@ function App() {
         <Route exact path="/formikformarray" component={FormikFullFormFormArrayValidation} />
         {/* <Route exact path="/reduxform" component={ReduxFormTest} /> */}
         <Route exact path="/stepform" component={StepForm} />
+        <Route exact path="/formik-backend-errors" component={FormikBackEndErrors} />
 
         {/* Form section ends*/}
 

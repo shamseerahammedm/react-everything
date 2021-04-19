@@ -138,7 +138,6 @@ const DatePicker = ({
           defaultValue={defaultValue}
           value={value}
           onChange={(value) => {
-            console.log('setValue',setValue);
             setValue(name, value);
             // Running the custom on change function if passed
             if (onChange)

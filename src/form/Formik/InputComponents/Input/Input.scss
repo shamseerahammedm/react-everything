@@ -1,0 +1,40 @@
+// @import 'variables';
+
+// .inputWrapper {
+//   position: relative;
+//   .customInput {
+//     .MuiInputBase-root{
+//       border-radius: $inputBorderRadius;
+//     }
+//     &.outlinedInput {
+//       .MuiOutlinedInput-inputMarginDense {
+//         padding-top: 15px;
+//         padding-bottom: 15px;
+//       }
+//     }
+//     &.noOutlineInput {
+//       .MuiOutlinedInput-inputMarginDense {
+//         padding-top: 15px;
+//         padding-bottom: 15px;
+//       }
+//       .MuiOutlinedInput-notchedOutline {
+//         border-color: transparent;
+//       }
+//     }
+//     &.nakedInput{
+//       fieldset{
+//         border-color: transparent;
+//       }
+//     }
+//     /* Chrome, Firefox, Opera, Safari 10.1+ */
+//     ::placeholder { 
+//       color: $darkLight;
+//       /* Firefox */
+//       opacity: 1; 
+//       font-weight: normal;
+//     }
+//     input.Mui-disabled{
+//       background : $disabled;
+//     }
+//   }
+// }
