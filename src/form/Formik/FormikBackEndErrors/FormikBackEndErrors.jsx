@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import { Formik, Form, Field } from 'formik';
 
 import * as Yup from 'yup';
-import Input from '../InputComponents/Input/Input';
+import Input from '../CorrectInputComponents/Input/Input';
 
 const addClientSchema = Yup.object().shape({
   // first_name: Yup.string()

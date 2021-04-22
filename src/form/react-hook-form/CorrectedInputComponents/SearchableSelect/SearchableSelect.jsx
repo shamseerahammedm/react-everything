@@ -5,7 +5,7 @@ import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
 import { CircularProgress, InputAdornment } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import './AutoComplete.scss';
+import './SearchableSelect.scss';
 import CloseIcon from '@material-ui/icons/Close';
 import { useController, useFormContext } from 'react-hook-form';
 import { isEmpty } from 'lodash-es';

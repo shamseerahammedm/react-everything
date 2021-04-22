@@ -1,0 +1,74 @@
+// @import "variables";
+// @import "mixins";
+
+// .customButton {
+//   text-transform: none;
+//   width: auto;
+
+//   // Gradient button
+//   &.gradientBtn {
+//     color: white;
+//     border-radius: 16px;
+//     box-shadow: none;
+//     padding: 8px 20px;
+//     background: $primaryGradient;
+//     &:hover {
+//       background: $primaryGradient;
+//       color: $textWhite;
+//       box-shadow: none;
+//     }
+//   }
+//   // Normal button without gradient
+//   &.normalBtn {
+//     color: $textWhite;
+//     background: $primaryColor;
+//     border-radius: 16px;
+//     box-shadow: none;
+//     padding: 8px 20px;
+//     &:hover {
+//       background: $primaryColor;
+//       box-shadow: none;
+//     }
+//   }
+
+//   &.lightBtn {
+//     color: $darkMain;
+//     background: $primarySuperLight;
+//     border-radius: 16px;
+//     box-shadow: none;
+//     padding: 8px 20px;
+//     &:hover {
+//       background: $primarySuperLight;
+//       box-shadow: none;
+//     }
+//   }
+//   &.noStyleButton {
+//     background: transparent;
+//     color: inherit;
+//     border: none;
+//     font: inherit;
+//     outline: inherit;
+//     box-shadow: none;
+//     width: auto;
+//     padding:0;
+//     min-width: auto;
+//     &:hover {
+//       background: transparent;
+//       box-shadow: none;
+//     }
+//   }
+//   &.Mui-disabled {
+//     background: $disabled;
+//     color: $darkLight;
+//   }
+  
+// }
+
+// .iconButton {
+//   &.disableHoverEffect {
+//     background: transparent;
+//     &:hover {
+//       background: transparent;
+//     }
+//   }
+// }

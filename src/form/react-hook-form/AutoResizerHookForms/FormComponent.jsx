@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
-import { VariableSizeList as List } from 'react-window';
+import { VariableSizeList as List, areEqual } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { Grid, TextField } from '@material-ui/core';
 import { isEmpty } from 'lodash';
+import SearchableSelect from '../CorrectedInputComponents/SearchableSelect/SearchableSelect';
+import DatePicker from '../CorrectedInputComponents/DatePicker/DatePicker';
 
 // autocomplete
 // import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -12,13 +14,14 @@ import { isEmpty } from 'lodash';
 // import { CircularProgress, InputAdornment } from '@material-ui/core';
 // import PropTypes from 'prop-types';
 // import CloseIcon from '@material-ui/icons/Close';
-import SearchableSelect from '../InputComponents/AutoComplete/AutoComplete';
-import DatePicker from '../InputComponents/DatePicker/DatePicker';
 
 const FormComponent = ({
   tableData
 }) => {
-  const formMethods = useForm({ defaultValues: tableData });
+  const formMethods = useForm({
+    defaultValues: tableData,
+
+  });
 
   // useEffect(() => {
   //   tableData.forEach((_, idx) => {
@@ -45,29 +48,35 @@ const FormComponent = ({
       <div className="wrapper">
         <FormProvider {...formMethods}>
           <AutoSizer>
-            {({ height, width }) => (
-              <>
-                <List
-                  height={height}
-                  itemCount={tableData.length}
-                  itemSize={() => 100}
-                  width={width}
-                  itemData={tableData}>
-                  {WindowedRowList}
-                </List>
-                {/* <VGrid
-                  columnCount={Object.keys(tableData[0]).length}
-                  columnWidth={150}
-                  height={height}
-                  rowCount={tableData.length}
-                  rowHeight={50}
-                  width={width}
-                  itemData={tableData}
-                >
-                  {WindowedRow}
-                </VGrid> */}
-              </>
-            )}
+            {({ height, width, ...otherProps }) => {
+              console.log('otherProps', otherProps);
+              return (
+                <>
+                  <List
+                    height={height}
+                    itemCount={tableData.length}
+                    itemSize={() => 100}
+                    width={width}
+                    itemData={tableData}
+                    useIsScrolling
+                  >
+
+                    {WindowedRowList}
+                  </List>
+                  {/* <VGrid
+                    columnCount={Object.keys(tableData[0]).length}
+                    columnWidth={150}
+                    height={height}
+                    rowCount={tableData.length}
+                    rowHeight={50}
+                    width={width}
+                    itemData={tableData}
+                  >
+                    {WindowedRow}
+                  </VGrid> */}
+                </>
+              );
+            }}
           </AutoSizer>
         </FormProvider>
       </div>
@@ -89,14 +98,15 @@ const fetchResults = async () => {
   return companyDetails;
 };
 
-const WindowedRowList = React.memo(({ index, style, data }) => {
-  console.log('data', data);
+const WindowedRowList = React.memo(({ index, style, data, isScrolling, ...otherProps }) => {
+  console.log('otherProps', otherProps);
+
   const { register, formState: { errors }, control, getValues } = useFormContext();
   const [options, setOptions] = useState([]);
 
   const firstNameKey = `[${index}].first_name`;
   const { ref: firstNameRef, ...otherFirstNameValues } = register(firstNameKey, {
-    // validate : value => value === 'shamseer'
+    validate: value => value === 'shamseer'
   });
   const isFirstNameError = !isEmpty(errors) && errors?.[index]?.first_name ? true : false;
   const firstNameErrorMsg = 'First name is required.';
@@ -117,74 +127,77 @@ const WindowedRowList = React.memo(({ index, style, data }) => {
   return (
     <div>
       <Grid style={style} container>
+        {
+          isScrolling
+            ?
 
-        <Grid item>
-          {/* First name */}
-          <TextField
-            label="Last Name"
-            variant="outlined"
-            error={isFirstNameError}
-            helperText={isFirstNameError && firstNameErrorMsg}
-            size="small"
-            {...otherFirstNameValues}
-            inputRef={firstNameRef}
-          />
-        </Grid>
-        <Grid item>
-          {/* Last name */}
-          <TextField
-            label="Last Name"
-            variant="outlined"
-            error={isLastNameError}
-            helperText={isLastNameError && lastNameErrorMsg}
-            size="small"
-            {...otherLastNameValues}
-            inputRef={lastNameRef}
-          />
-        </Grid>
-        <Grid item xs={2}>
-          {/* Last name */}
-          <SearchableSelect
-            label="Company"
-            variant="outlined"
-            error={isLastNameError}
-            helperText={isLastNameError && lastNameErrorMsg}
-            size="small"
-            options={options}
-            optionLabel="name"
-            onInputChange={async () => {
-              const optionsValues = await fetchResults();
-              setOptions(optionsValues);
-            }}
-            name={companyKey}
-            rules={{
-              validate: value => false
-            }}
-            control={control}
-            defaultValue={defaultCompanyValue}
-            errorMsg="Company error"
-          />
-        </Grid>
-        <Grid item>
-          {/* Last name */}
-          <DatePicker
-            label="Date picker"
-            name={dateKey}
-            rules={{
-              validate: value => false
-            }}
-            control={control}
-            defaultValue={defaultDateValue}
-            errorMsg="Date picker error"
-          />
-        </Grid>
-
-        {/* <input
-          className="form-control"
-          {...register(companyKey)}
-        /> */}
+            <p>Scrolling</p>
+            :
+            <>
+              <Grid item>
+                {/* First name */}
+                <TextField
+                  label="Last Name"
+                  variant="outlined"
+                  error={isFirstNameError}
+                  helperText={isFirstNameError && firstNameErrorMsg}
+                  size="small"
+                  {...otherFirstNameValues}
+                  inputRef={firstNameRef}
+                />
+              </Grid>
+              <Grid item>
+                {/* Last name */}
+                <TextField
+                  label="Last Name"
+                  variant="outlined"
+                  error={isLastNameError}
+                  helperText={isLastNameError && lastNameErrorMsg}
+                  size="small"
+                  {...otherLastNameValues}
+                  inputRef={lastNameRef}
+                />
+              </Grid>
+              <Grid item xs={2}>
+                {/* Last name */}
+                <SearchableSelect
+                  label="Company"
+                  variant="outlined"
+                  error={isLastNameError}
+                  helperText={isLastNameError && lastNameErrorMsg}
+                  size="small"
+                  options={options}
+                  optionLabel="name"
+                  onInputChange={async () => {
+                    const optionsValues = await fetchResults();
+                    setOptions(optionsValues);
+                  }}
+                  name={companyKey}
+                  rules={{
+                    validate: value => false
+                  }}
+                  control={control}
+                  defaultValue={defaultCompanyValue}
+                  errorMsg="Company error"
+                />
+              </Grid>
+              <Grid item>
+                {/* Last name */}
+                <DatePicker
+                  label="Date picker"
+                  name={dateKey}
+                  rules={{
+                    validate: value => false
+                  }}
+                  control={control}
+                  defaultValue={defaultDateValue}
+                  errorMsg="Date picker error"
+                />
+              </Grid>
+            </>
+        }
       </Grid>
     </div>
   );
-});
+}, areEqual);
 

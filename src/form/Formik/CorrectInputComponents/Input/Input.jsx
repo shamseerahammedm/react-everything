@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import './Input.scss';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { getError } from 'utils/utils';
+// import correctIcon from 'assets/icons/correct.svg';
+// import wrongIcon from 'assets/icons/wrong.svg';
 
 const Input = ({
   field: { name, value, ...otherFieldProps },
@@ -58,7 +60,7 @@ const Input = ({
           endAdornment: (showCustomIcons && touched[name] && !endIcon) 
             ? 
             <InputAdornment position="end">
-              {isError ? 'E' : 'C'}
+              {isError ? 'c' : 'w'}
             </InputAdornment>
             : 
             (showCustomIcons && endIcon) 

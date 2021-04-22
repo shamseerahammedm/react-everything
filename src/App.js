@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import Form from './form/form.component';
-import FormikTag from './form/Formik/formik-form/formik-form.component';
+import FormikTag from './form/Formik/FormikForm/FormikForm';
 import LoadMore from './load-more/load-more';
 import LifeCycleMethods from './lifecycle/lifecycle';
 
@@ -54,6 +54,8 @@ import Test from './form/react-hook-form/phase1/Phase1';
 import TestComponent from './TestComponent/TestComponent';
 import BindingComponent from './Binding/Binding';
 import FormikBackEndErrors from 'form/Formik/FormikBackEndErrors/FormikBackEndErrors';
+import FormikBackEndErrorsProper from 'form/Formik/FormikBackEndErrors/FormikBackEndErrorsProper';
+import FormikForm from 'form/Formik/FormikForm/FormikForm';
 
 function App() {
 
@@ -64,10 +66,12 @@ function App() {
         {/* Form section starts*/}
         <Route exact path="/" component={Form} />
         <Route exact path="/formtag" component={FormikTag} />
+        <Route exact path="/formik" component={FormikForm} />
         <Route exact path="/formikformarray" component={FormikFullFormFormArrayValidation} />
         {/* <Route exact path="/reduxform" component={ReduxFormTest} /> */}
         <Route exact path="/stepform" component={StepForm} />
         <Route exact path="/formik-backend-errors" component={FormikBackEndErrors} />
+        <Route exact path="/formik-backend-errors-proper" component={FormikBackEndErrorsProper} />
 
         {/* Form section ends*/}
 

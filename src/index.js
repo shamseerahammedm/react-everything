@@ -13,7 +13,6 @@ import { store } from './redux/redux-files/store';
 
 // Section Starts :: materil ui part -- 
 import { createMuiTheme, makeStyles, ThemeProvider } from '@material-ui/core/styles';
-import { orange } from '@material-ui/core/colors';
 import { muiTheme } from './utils/constants';
 // Section Starts :: materil ui part -- 
 

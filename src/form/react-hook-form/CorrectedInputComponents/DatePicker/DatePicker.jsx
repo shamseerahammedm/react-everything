@@ -84,11 +84,6 @@ const theme = createMuiTheme({
         },
       }
     },
-    MuiFormLabel: {
-      '&.Mui-focused legend': {
-        borderColor: `${secondaryColor}!important`,
-      },
-    }
   }
 });
 
@@ -104,7 +99,7 @@ const DatePicker = ({
   showIcon = true,
   className = '',
   fullWidth = true,
-  format = 'd MMM yyyy hh : mm aaaa',
+  format = 'd MMM yyyy hh:mm aa',
   clearable = false,
   autoOk = true,
   placeholder = '',
@@ -135,7 +130,6 @@ const DatePicker = ({
           autoOk={autoOk}
           label={label}
           clearable={clearable}
-          defaultValue={defaultValue}
           value={value}
           onChange={(value) => {
             setValue(name, value);
