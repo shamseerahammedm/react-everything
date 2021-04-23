@@ -13,6 +13,8 @@ import MultiSelect from '../CorrectInputComponents/MultiSelect/MultiSelect';
 import CheckboxGroup2 from '../CorrectInputComponents/CheckboxComponent/CheckboxGroupFieldChildren/CheckboxGroup';
 import SingleSelect from '../CorrectInputComponents/SingleSelect/SingleSelect';
 import SearchableSelect from '../CorrectInputComponents/SearchableSelect/SearchableSelect';
+import RadioButtonGroup from '../CorrectInputComponents/RadioGroupComponent/RadioGroup/RadioGroup';
+import RadioButton from '../CorrectInputComponents/RadioGroupComponent/RadioButton/RadioButton';
 
 const muiSchema = Yup.object().shape({
   first_name: Yup.string().required('This field is required'),
@@ -22,6 +24,7 @@ const muiSchema = Yup.object().shape({
   do_you_agree: Yup.bool().oneOf([true], 'Must agree'),
   group_checkbox: Yup.array().min(1, 'At least one checkbox is required'),
   gender: Yup.array().min(1,'This field must have at least 1 item.'),
+  radioGroup: Yup.string().required('This field is required'),
   age_range: Yup.string()
     .required('This field is required.')
     .max(100, 'Maximum characters upto 100.'),
@@ -52,7 +55,8 @@ const CustomFormikMaterialUI = () => {
           gender: [],
           select : '',
           age_range : '',
-          agency : []
+          agency : [],
+          radioGroup : ''
         }}
         onSubmit={(values) => {
           console.log('$$$$$------ values ------$$$$', values);
@@ -133,6 +137,7 @@ const CustomFormikMaterialUI = () => {
                         // popupIcon={<AngleDownIcon />}
                       />
                     </Grid>
+                
                     <Grid item xs={6}>
                       <p className="info">Autocomplete</p>
                       <Field
@@ -174,7 +179,8 @@ const CustomFormikMaterialUI = () => {
                             touched={touched[name]}
                             setFieldValue={setFieldValue}
                             onBlur={setFieldTouched}
-                            name={name}
+                            label="Pass null to hide checkbox label"
+                            required
                           >
                             {
                               dummyCheckBoxOptions.map(item => (
@@ -192,6 +198,36 @@ const CustomFormikMaterialUI = () => {
                       </Field>
 
                     </Grid>
+                    <Grid item xs={6}>
+                      <p className="info">Radio Group</p>
+                      <Field name="radioGroup">
+                        {({ field: { value, name }, form: { touched, errors, setFieldValue, setFieldTouched } }) => (
+                          <RadioButtonGroup
+                            id={name}
+                            value={value}
+                            error={errors[name]}
+                            touched={touched[name]}
+                            label="Pass null to hide radio label"
+                            required
+                          >
+                            <Field
+                              component={RadioButton}
+                              name="radioGroup"
+                              id="radioOption1"
+                              label="Choose this option"
+                            />
+                            <Field
+                              component={RadioButton}
+                              name="radioGroup"
+                              id="radioOption2"
+                              label="Or choose this one"
+                            />
+                          </RadioButtonGroup>
+                        )}
+                      </Field>
+                      
+                    </Grid>
+                    
                     <Grid item xs={12}>
                       <hr/>
                     </Grid>
@@ -203,14 +239,14 @@ const CustomFormikMaterialUI = () => {
                   </Grid>
 
                 </Grid>
-                {/* <Grid item xs={6}>
+                <Grid item xs={6}>
                   <Typography color="secondary">Values</Typography>
                   <pre>{JSON.stringify(values, null, 2)}</pre>
                   <Typography color="secondary">Touched</Typography>
                   <pre>{JSON.stringify(touched, null, 2)}</pre>
                   <Typography color="secondary">Errors</Typography>
                   <pre>{JSON.stringify(errors, null, 2)}</pre>
-                </Grid> */}
+                </Grid>
               </Grid>
             </Form>
           );
@@ -242,7 +278,11 @@ const dashboardFilterOptions = [
   { label: 'This Month', value: 4 },
 ];
 
-{/* <CheckboxGroup
+{/* 
+
+Insted of render prop CheckboxGroup & RadioButtonGroup is also usable like this
+
+<CheckboxGroup
   id="group_checkbox"
   value={values.group_checkbox}
   error={errors.group_checkbox}
@@ -262,4 +302,29 @@ const dashboardFilterOptions = [
       />
     ))
   }
-</CheckboxGroup>; */}
+</CheckboxGroup>; 
+
+<RadioButtonGroup
+  id="radioGroup"
+  value={values.radioGroup}
+  error={errors.radioGroup}
+  touched={touched.radioGroup}
+  label="Pass null to hide radio label"
+  required
+>
+  <Field
+    component={RadioButton}
+    name="radioGroup"
+    id="radioOption1"
+    label="Choose this option"
+  />
+  <Field
+    component={RadioButton}
+    name="radioGroup"
+    id="radioOption2"
+    label="Or choose this one"
+  />
+</RadioButtonGroup>;
+
+*/ }
+

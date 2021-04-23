@@ -57,6 +57,7 @@ import FormikBackEndErrors from 'form/Formik/FormikBackEndErrors/FormikBackEndEr
 import FormikBackEndErrorsProper from 'form/Formik/FormikBackEndErrors/FormikBackEndErrorsProper';
 import FormikForm from 'form/Formik/FormikForm/FormikForm';
 import CustomFormikMaterialUI from 'form/Formik/CustomFormikMaterilUI/CustomFormikMaterilUI';
+import CustomFormikNormal from 'form/Formik/CustomFormikNormal/CustomFormikNormal';
 
 function App() {
 
@@ -74,6 +75,7 @@ function App() {
         <Route exact path="/formik-backend-errors" component={FormikBackEndErrors} />
         <Route exact path="/formik-backend-errors-proper" component={FormikBackEndErrorsProper} />
         <Route exact path="/formik-custom-material-ui" component={CustomFormikMaterialUI} />
+        <Route exact path="/formik-custom-normal" component={CustomFormikNormal} />
 
         {/* Form section ends*/}
 

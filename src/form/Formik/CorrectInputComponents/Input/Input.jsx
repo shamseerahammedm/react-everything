@@ -25,6 +25,7 @@ const Input = ({
   onChange = () => null,
   endIcon = null
 }) => {
+
   const errorText = getError(name, { touched, status, errors });
   const isError = (errorText) ? true : false;
 

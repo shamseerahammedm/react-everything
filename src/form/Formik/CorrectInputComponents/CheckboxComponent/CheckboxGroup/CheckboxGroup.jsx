@@ -12,7 +12,8 @@ const CheckboxGroup = ({
   children,
   value,
   className= '',
-  formGroupWrapperClassName = ''
+  formGroupWrapperClassName = '',
+  required = false,
 }) => {
   const handleChange = (event) => {
     const target = event.currentTarget;
@@ -31,7 +32,7 @@ const CheckboxGroup = ({
   const isError = error ? true : false;
   return (
     <div className={`customFormGroupWrapper ${formGroupWrapperClassName}`}>
-      <FormControl required error={isError} component="fieldset" >
+      <FormControl required={required} error={isError} component="fieldset" >
         { label && <FormLabel component="legend">{label}</FormLabel>}
         <FormGroup className={`customFormGroup ${className}`}>
           {React.Children.map(children, (child) => {
