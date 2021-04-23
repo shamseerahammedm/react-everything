@@ -5,7 +5,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import PropTypes from 'prop-types';
 import './Switch.scss';
-import { getError } from 'utils/utils';
+import { getError } from 'utils/formik';
 
 const Switch = ({
   field: { name, value },

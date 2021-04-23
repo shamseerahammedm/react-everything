@@ -1,23 +1,23 @@
-@import 'variables';
-.customMultiSelect{
-  .MuiInputBase-root{
-    border-radius: $inputBorderRadius;
-  }
-  &.outlinedInput {
-    .MuiOutlinedInput-inputMarginDense {
-      padding-top: 9px!important;
-      padding-bottom: 9px!important;
-    }
-  }
+// @import 'variables';
+// .customMultiSelect{
+//   .MuiInputBase-root{
+//     border-radius: $inputBorderRadius;
+//   }
+//   &.outlinedInput {
+//     .MuiOutlinedInput-inputMarginDense {
+//       padding-top: 9px!important;
+//       padding-bottom: 9px!important;
+//     }
+//   }
 
-  .MuiAutocomplete-endAdornment{
-    padding-right: 9px;
-  }
+//   .MuiAutocomplete-endAdornment{
+//     padding-right: 9px;
+//   }
 
-  // for preventing icon rotation
-  &.preventIconRotation{
-    .MuiAutocomplete-popupIndicatorOpen{
-      transform: rotate(0);
-    }
-  }
-}
+//   // for preventing icon rotation
+//   &.preventIconRotation{
+//     .MuiAutocomplete-popupIndicatorOpen{
+//       transform: rotate(0);
+//     }
+//   }
+// }

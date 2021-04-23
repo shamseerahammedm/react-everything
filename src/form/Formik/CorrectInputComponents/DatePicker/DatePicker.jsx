@@ -8,7 +8,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import './DatePicker.scss';
 import { theme } from 'utils/constants';
-import { getError } from 'utils/utils';
+import { getError } from 'utils/formik';
 
 const datePickerTheme = createMuiTheme({
   overrides: {

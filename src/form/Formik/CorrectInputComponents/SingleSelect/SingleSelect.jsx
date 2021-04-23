@@ -10,37 +10,10 @@ import './SingleSelect.scss';
 import PropTypes from 'prop-types';
 import { getError } from 'utils/formik';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    width: '100%',
-    marginTop: 0,
-    marginBottom: 0
-  },
-  menuPaper: {
-    marginTop : '10px',
-    backgroundColor: `${theme.palette.common.primaryColor}`,
-    borderRadius: theme.palette.common.inputBorderRadius,
-    boxShadow: 'none',
-    borderBottom: `1px solid ${theme.palette.common.borderColor}`,
-    '& ul ': {
-      paddingTop: 0,
-      paddingBottom: 0
-    },
-    '& li ': {
-      paddingTop: '13px',
-      paddingBottom: '13px',
-      color : 'white',
-    },
-    '& .Mui-selected': {
-      backgroundColor: theme.palette.common.primaryColorDark,
-    }
-  }
-}));
-
 const SingleSelect = ({
-  field: { name, value, ...otherFieldProps },
+  field: { name, value, onChange, ...otherFieldProps },
   form: { touched, errors, setFieldValue, status },
-  onChange,
+  onChange : customOnChange,
   label,
   placeHolder,
   required = false,
@@ -56,7 +29,7 @@ const SingleSelect = ({
 }) => {
 
   const errorText = getError(name, { touched, status, errors });
-  const isError = (errorText) ? true : false;
+  const isError = errorText ? true : false;
 
   // This is for reducing select size as there is no explicit size prop in material ui for select component
   let margin;
@@ -89,11 +62,11 @@ const SingleSelect = ({
         label={label}
         {...otherFieldProps}
         onChange={(e, index, value) => {
-          setFieldValue(name, e.target.value);
+          onChange(e);
           // Running the custom on change function if passed
-          if (onChange)
+          if (customOnChange)
           {
-            onChange(e);
+            customOnChange(e);
           }
         }}
         {...otherProps}
@@ -135,3 +108,30 @@ SingleSelect.propTypes = {
 };
 
 export default SingleSelect;
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    width: '100%',
+    marginTop: 0,
+    marginBottom: 0
+  },
+  // menuPaper: {
+  //   marginTop: '10px',
+  //   backgroundColor: `${theme.palette.common.primaryColor}`,
+  //   borderRadius: theme.palette.common.inputBorderRadius,
+  //   boxShadow: 'none',
+  //   borderBottom: `1px solid ${theme.palette.common.borderColor}`,
+  //   '& ul ': {
+  //     paddingTop: 0,
+  //     paddingBottom: 0
+  //   },
+  //   '& li ': {
+  //     paddingTop: '13px',
+  //     paddingBottom: '13px',
+  //     color: 'white',
+  //   },
+  //   '& .Mui-selected': {
+  //     backgroundColor: theme.palette.common.primaryColorDark,
+  //   }
+  // }
+}));

@@ -3,7 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
 import './Input.scss';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import { getError } from 'utils/utils';
+import { getError } from 'utils/formik';
 // import correctIcon from 'assets/icons/correct.svg';
 // import wrongIcon from 'assets/icons/wrong.svg';
 

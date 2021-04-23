@@ -6,7 +6,7 @@ import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import { InputAdornment, IconButton } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 import PropTypes from 'prop-types';
-import { getError } from 'utils/utils';
+import { getError } from 'utils/formik';
 
 const DateTimePicker = ({
   field: { name, value },

@@ -1,6 +1,6 @@
 import { FormControlLabel, Checkbox as MuiCheckbox, FormHelperText, FormControl } from '@material-ui/core';
 import React from 'react';
-import { getError } from 'utils/utils';
+import { getError } from 'utils/formik';
 import PropTypes from 'prop-types';
 
 const Checkbox = ({

@@ -9,7 +9,9 @@ import Switch from '../CorrectInputComponents/Switch/Switch';
 import Checkbox from '../CorrectInputComponents/CheckboxComponent/Checkbox/Checkbox';
 import './CustomFormikMaterilUI.scss';
 import CheckboxGroup from '../CorrectInputComponents/CheckboxComponent/CheckboxGroup/CheckboxGroup';
+import MultiSelect from '../CorrectInputComponents/MultiSelect/MultiSelect';
 import CheckboxGroup2 from '../CorrectInputComponents/CheckboxComponent/CheckboxGroupFieldChildren/CheckboxGroup';
+import SingleSelect from '../CorrectInputComponents/SingleSelect/SingleSelect';
 
 const muiSchema = Yup.object().shape({
   first_name: Yup.string().required('First name is required'),
@@ -18,6 +20,10 @@ const muiSchema = Yup.object().shape({
   agreement: Yup.bool().oneOf([true], 'Must agree'),
   do_you_agree: Yup.bool().oneOf([true], 'Must agree'),
   group_checkbox: Yup.array().min(1, 'At least one checkbox is required'),
+  gender: Yup.array().min(1,'This field must have at least 1 item.'),
+  age_range: Yup.string()
+    .required('Age range is required.')
+    .max(100, 'Maximum characters upto 100.'),
 });
 
 let render = 0;
@@ -34,6 +40,9 @@ const CustomFormikMaterialUI = () => {
           agreement: false,
           do_you_agree: false,
           group_checkbox: [],
+          gender: [],
+          select : '',
+          age_range : ''
         }}
         onSubmit={(values) => {
           console.log('$$$$$------ values ------$$$$', values);
@@ -127,6 +136,34 @@ const CustomFormikMaterialUI = () => {
                       </Field>
 
                     </Grid>
+                    <Grid item xs={6}>
+                      <p className="info">Select</p>
+                      <Field
+                        component={SingleSelect}
+                        name="age_range"
+                        placeHolder="Select Filter"
+                        variant="outlined"
+                        options={dashboardFilterOptions}
+                        optionLabel="label"
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <p className="info">Multi Select</p>
+                      <Field
+                        component={MultiSelect}
+                        name="gender"
+                        options={genderOptions}
+                        optionLabel="label"
+                        placeholder="Select Gender"
+                        className="outlinedInput"
+                        valueLabel="value"
+                        showLoaderIcon
+                        // popupIcon={<AngleDownIcon />}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <hr/>
+                    </Grid>
                     <Grid item xs={12}>
                       <button type="submit">
                         Submit
@@ -159,6 +196,19 @@ const dummyCheckBoxOptions = [
   { id: 'last_name', label: 'Last Name' },
   { id: 'state', label: 'State' },
   { id: 'city', label: 'City' },
+];
+
+const genderOptions = [
+  { label: 'Male', value: 1 },
+  { label: 'Female', value: 2 },
+  { label: 'Transgender', value: 3 },
+];
+
+const dashboardFilterOptions = [
+  { label: 'All Time', value: 1 },
+  { label: 'Today', value: 2 },
+  { label: 'This Week', value: 3 },
+  { label: 'This Month', value: 4 },
 ];
 
 {/* <CheckboxGroup
