@@ -4,6 +4,7 @@ import { Formik, Form, Field } from 'formik';
 
 import * as Yup from 'yup';
 import Input from '../CorrectInputComponents/Input/Input';
+import DatePicker from '../CorrectInputComponents/DatePicker/DatePicker';
 
 const addClientSchema = Yup.object().shape({
   // first_name: Yup.string()
@@ -53,6 +54,7 @@ const EditClientForm = () => {
           phone_number: '8089847096',
           email: 'mail4shamseer@gmail.com',
           enable_cold_calling: true,
+          date : new Date()
         }));
       }, 2000);
     });
@@ -67,7 +69,8 @@ const EditClientForm = () => {
           setFormErrors({
             apiErrors: {
               first_name: 'This field may not be blank.',
-              last_name: 'This field may not be blank.'
+              last_name: 'This field may not be blank.',
+              date : 'Date backend error'
             }
           });
 
@@ -96,7 +99,8 @@ const EditClientForm = () => {
         status: {
           apiErrors: {
             first_name: 'This field may not be blank.',
-            last_name: 'This field may not be blank.'
+            last_name: 'This field may not be blank.',
+            date : 'Date backend error'
           }
         }
       });
@@ -153,10 +157,15 @@ const EditClientForm = () => {
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <Field
-                      component={Input}
-                      name="email"
-                      label="Email"
+                      component={DatePicker}
+                      name="date"
+                      format="do MMM Y"
+                      disablePast={false}
+                      disableFuture={true}
                       required
+                      clearable
+                      placeholder="Start Date"
+                      // icon={<CalendarIcon />}
                     />
                   </Grid>
                   <Grid item xs={12} >

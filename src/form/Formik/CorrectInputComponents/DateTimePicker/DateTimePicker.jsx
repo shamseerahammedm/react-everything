@@ -1,78 +1,14 @@
 import React from 'react';
-import { DatePicker as MuiDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { DateTimePicker as MuiDateTimePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import { InputAdornment, IconButton } from '@material-ui/core';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import { InputAdornment, IconButton } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import './DatePicker.scss';
-import { theme } from 'utils/constants';
 import { getError } from 'utils/utils';
 
-const datePickerTheme = createMuiTheme({
-  overrides: {
-    MuiPickersClock: {
-      clock: {
-        backgroundColor: theme.palette.common.primaryColor
-      },
-      pin: {
-        backgroundColor: theme.palette.common.primaryColor,
-      }
-    },
-    MuiPickersClockPointer: {
-      pointer: {
-        backgroundColor: theme.palette.common.primaryColor
-      },
-      thumb: {
-        backgroundColor: theme.palette.common.darkLight,
-        borderColor: theme.palette.common.darkLight,
-      }
-    },
-    MuiButton: {
-      textPrimary: {
-        color: theme.palette.common.primaryColor,
-      }
-    },
-    //header
-    MuiPickersToolbar: {
-      toolbar: {
-        backgroundColor: theme.palette.common.primaryColor,
-      },
-    },
-    MuiPickersDay: {
-      daySelected: {
-        backgroundColor: theme.palette.common.primaryColor,
-        '&:hover': {
-          backgroundColor: theme.palette.common.darkLight,
-        }
-      },
-    },
-    MuiOutlinedInput: {
-      root: {
-        // borderRadius: 8,
-        '&.Mui-disabled': {
-          '& fieldset': {
-            borderColor: theme.palette.common.borderColor,
-          }
-        },
-        '&.Mui-focused fieldset': {
-          // border color was getting overridden with default primary color
-          borderColor: `${theme.palette.common.primaryColor}!important`,
-        },
-      },
-      input: {
-        // input padding was getting overridden by margin dense class
-        // paddingTop: '14px!important',
-        // paddingBottom: '14px!important',
-      }
-    }
-  }
-});
-
-// Note : if datepicker needs to be opened conditionally also pass progOpen as true from the component
-
-const DatePicker = ({
+const DateTimePicker = ({
   field: { name, value },
   form: { setFieldValue, setFieldTouched, touched, errors, status },
   onChange = () => null,
@@ -86,7 +22,7 @@ const DatePicker = ({
   showIcon = true,
   className = '',
   fullWidth = true,
-  format = 'do MMM yyyy',
+  format = 'do MMM yyyy hh:mm a',
   clearable = true,
   autoOk = true,
   placeholder = '',
@@ -96,11 +32,13 @@ const DatePicker = ({
   onOpen = false,
   onClose = false,
 }) => {
+
   const errorText = getError(name, { touched, status, errors });
+
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <ThemeProvider theme={datePickerTheme}>
-        <MuiDatePicker
+      <ThemeProvider theme={null}>
+        <MuiDateTimePicker
           className={`customDatePicker ${className}`}
           fullWidth={fullWidth}
           name={name}
@@ -139,11 +77,10 @@ const DatePicker = ({
         />
       </ThemeProvider>
     </MuiPickersUtilsProvider>
-
   );
 };
 
-DatePicker.propTypes = {
+DateTimePicker.propTypes = {
   onChange: PropTypes.func,
   label: PropTypes.string,
   variant: PropTypes.string,
@@ -164,5 +101,4 @@ DatePicker.propTypes = {
   onOpen: PropTypes.func,
   onClose: PropTypes.func,
 };
-
-export default DatePicker;
+export default DateTimePicker;

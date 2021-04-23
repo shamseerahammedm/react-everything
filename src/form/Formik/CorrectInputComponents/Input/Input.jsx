@@ -9,7 +9,7 @@ import { getError } from 'utils/utils';
 
 const Input = ({
   field: { name, value, ...otherFieldProps },
-  form: { touched, errors, setFieldValue, status },
+  form: { touched, errors, status },
   type,
   label,
   variant = 'outlined',
@@ -25,7 +25,6 @@ const Input = ({
   onChange = () => null,
   endIcon = null
 }) => {
-  console.log('otherFieldProps',otherFieldProps);
   const errorText = getError(name, { touched, status, errors });
   const isError = (errorText) ? true : false;
   return (
@@ -39,14 +38,14 @@ const Input = ({
         helperText={errorText}
         error={isError}
         variant={variant}
-        {...otherFieldProps}
         size={size}
         className={`customInput ${className}` }
         required={required}
         multiline={multiline}
         placeholder={placeholder || null}
+        onBlur={otherFieldProps.onBlur}
         onChange={(e) => {
-          setFieldValue(name, e.target.value);
+          otherFieldProps.onChange(e);
           if(onChange)
           {
             onChange(e);
