@@ -9,7 +9,7 @@ import { getError } from 'utils/formik';
 
 const Input = ({
   field: { name, value, ...otherFieldProps },
-  form: { touched, errors, status, setFieldValue },
+  form: { touched, errors, status },
   type,
   label,
   variant = 'outlined',
@@ -27,6 +27,7 @@ const Input = ({
 }) => {
   const errorText = getError(name, { touched, status, errors });
   const isError = (errorText) ? true : false;
+
   return (
     <div className="inputWrapper">
       <TextField
@@ -45,8 +46,7 @@ const Input = ({
         placeholder={placeholder || null}
         onBlur={otherFieldProps.onBlur}
         onChange={(e) => {
-          setFieldValue(name, e.target.value);
-          // otherFieldProps.onChange(e);
+          otherFieldProps.onChange(e);
           if(onChange)
           {
             onChange(e);
@@ -61,14 +61,16 @@ const Input = ({
           endAdornment: (showCustomIcons && touched[name] && !endIcon) 
             ? 
             <InputAdornment position="end">
-              {isError ? <p>e</p> : <p>c</p>}
+              {
+                isError 
+                  ? <p>e</p> 
+                  : <p>c</p>
+              }
             </InputAdornment>
             : 
             (showCustomIcons && endIcon) 
-              ?
-              <>{endIcon}</>
-              :
-              null
+              ? <>{endIcon}</>
+              : null
         }}
         disabled={disabled}
       />

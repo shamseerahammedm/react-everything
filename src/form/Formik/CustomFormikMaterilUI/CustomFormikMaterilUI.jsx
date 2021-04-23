@@ -203,14 +203,14 @@ const CustomFormikMaterialUI = () => {
                   </Grid>
 
                 </Grid>
-                <Grid item xs={6}>
+                {/* <Grid item xs={6}>
                   <Typography color="secondary">Values</Typography>
                   <pre>{JSON.stringify(values, null, 2)}</pre>
                   <Typography color="secondary">Touched</Typography>
                   <pre>{JSON.stringify(touched, null, 2)}</pre>
                   <Typography color="secondary">Errors</Typography>
                   <pre>{JSON.stringify(errors, null, 2)}</pre>
-                </Grid>
+                </Grid> */}
               </Grid>
             </Form>
           );
