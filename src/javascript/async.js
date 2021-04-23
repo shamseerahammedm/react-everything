@@ -12,18 +12,14 @@
 //     }, Math.random() * 2000);
 // }
 
-
-
 // ------------ async callback -------------- starts  
 
 var outerScopeVar;
 
-
 // es6 implementation consoleIt is function thats passed 
 helloCatAsync((consoleIt)=>{
-    console.log(consoleIt);
+  // console.log(consoleIt);
 });
-
 
 // normal function implementation
 
@@ -34,19 +30,17 @@ helloCatAsync((consoleIt)=>{
 
 // helloCatAsync(consoler);
 
-
 // function that takes a function as an argument( callback in this eg) and passing resolved 
 // value as argument to this function ( callback(outerScopeVar) --> callback is function, outerscope is resolved value )
 
 function helloCatAsync(callback) {
-    setTimeout(function() {
-        outerScopeVar = 'Nya';
-        callback(outerScopeVar)
-    }, Math.random() * 2000);
+  setTimeout(function() {
+    outerScopeVar = 'Nya';
+    callback(outerScopeVar);
+  }, Math.random() * 2000);
 }
 
 // -----  same problem solved with promises
-
 
 // let helloCatAsync = new Promise((resolve, reject) => {
 //     let outerScopeVar;
@@ -56,13 +50,9 @@ function helloCatAsync(callback) {
 //     }, Math.random() * 2000);
 // });
 
-
 // helloCatAsync.then(value => {
 //     // console.log(value);
 // })
 
-
 // ------------ async callback -------------- ends  
-
-
 

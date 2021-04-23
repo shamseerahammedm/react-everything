@@ -25,6 +25,7 @@ const Input = ({
   onChange = () => null,
   endIcon = null
 }) => {
+  console.log('otherFieldProps',otherFieldProps);
   const errorText = getError(name, { touched, status, errors });
   const isError = (errorText) ? true : false;
   return (
@@ -60,7 +61,7 @@ const Input = ({
           endAdornment: (showCustomIcons && touched[name] && !endIcon) 
             ? 
             <InputAdornment position="end">
-              {isError ? 'c' : 'w'}
+              {isError ? <p>e</p> : <p>c</p>}
             </InputAdornment>
             : 
             (showCustomIcons && endIcon) 

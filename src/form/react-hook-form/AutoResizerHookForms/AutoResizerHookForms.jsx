@@ -25,7 +25,7 @@ export const AutoResizerHookForms = () => {
         // also remove last item from parsed result array coz last item comes as undefined by default 
         results.splice(results.length - 1, 1);
         const formattedResults = fileHeaderMapper(results, config);
-        console.log('formattedResults',formattedResults);
+        // console.log('formattedResults',formattedResults);
         setTableData(formattedResults);
       }
     });
@@ -722,7 +722,7 @@ const dummyValues = [
     'referred_date': '2020-06-10T00:00:00.000Z'
   }
 ];
-console.log('dummyValues',dummyValues);
+// console.log('dummyValues',dummyValues);
 const dummyDataRaw = [
   [
     'Mehmet',
@@ -746,4 +746,4 @@ const dummyDataRaw = [
   ]
 ];
 
-console.log('dummyDataRaw',dummyDataRaw);
+// console.log('dummyDataRaw',dummyDataRaw);

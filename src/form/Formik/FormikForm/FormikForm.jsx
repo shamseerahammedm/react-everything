@@ -50,7 +50,6 @@ const FormikForm = () => {
                     label="First Name"
                     
                   />
-                  {/* {errors.first_name && touched.first_name && <div>{errors.first_name}</div>} */}
                 </Grid>
                 <Grid item xs={6}>
                   <Field
@@ -59,7 +58,6 @@ const FormikForm = () => {
                     label="Last Name"
                     validate={validateLastName}
                   />
-                  {/* {errors.last_name && touched.last_name && <div>{errors.first_name}</div>} */}
                 </Grid>
                 <Grid item xs={12} spacing={2}>
                   <button type="button" onClick={() => validateField('last_name')}> Validate Particular field</button>

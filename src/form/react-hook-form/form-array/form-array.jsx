@@ -1070,7 +1070,6 @@
 //         name: "master"
 //     });
 
-
 //     return (
 //         <>
 //             {console.log('getValues', getValues())}
@@ -1186,8 +1185,6 @@
 //     );
 // }
 
-
-
 // const NestedArray = ({ nestIndex, control, register }) => {
 //     const { fields, remove, append } = useFieldArray({
 //         control,
@@ -1236,10 +1233,6 @@
 //     );
 // };
 
-
-
-
-
 // let count = 0;
 // function FormArray() {
 //     const {
@@ -1278,7 +1271,5 @@
 //         </form>
 //     );
 // }
-
-
 
 // export default FormArray;

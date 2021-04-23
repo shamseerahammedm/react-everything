@@ -56,6 +56,7 @@ import BindingComponent from './Binding/Binding';
 import FormikBackEndErrors from 'form/Formik/FormikBackEndErrors/FormikBackEndErrors';
 import FormikBackEndErrorsProper from 'form/Formik/FormikBackEndErrors/FormikBackEndErrorsProper';
 import FormikForm from 'form/Formik/FormikForm/FormikForm';
+import CustomFormikMaterialUI from 'form/Formik/CustomFormikMaterilUI/CustomFormikMaterilUI';
 
 function App() {
 
@@ -72,6 +73,7 @@ function App() {
         <Route exact path="/stepform" component={StepForm} />
         <Route exact path="/formik-backend-errors" component={FormikBackEndErrors} />
         <Route exact path="/formik-backend-errors-proper" component={FormikBackEndErrorsProper} />
+        <Route exact path="/formik-custom-material-ui" component={CustomFormikMaterialUI} />
 
         {/* Form section ends*/}
 
@@ -118,8 +120,8 @@ function App() {
         <Route exact path="/css-grid" component={CssGrid} />
 
         {/* React Hook Form */}
-        <Route exact path="/react-hook-form/field-array" component={FormArray} />
-        <Route exact path="/react-hook-form/field-array2" component={FormArray2} />
+        {/* <Route exact path="/react-hook-form/field-array" component={FormArray} /> */}
+        {/* <Route exact path="/react-hook-form/field-array2" component={FormArray2} /> */}
         <Route exact path="/react-hook-form/phase1" component={Phase1} />
         <Route exact path="/resizer" component={AutoResizerHookForms} />
 
