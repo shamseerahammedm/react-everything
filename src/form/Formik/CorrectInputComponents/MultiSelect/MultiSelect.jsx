@@ -61,13 +61,14 @@ const MultiSelect = ({
             onChange(e, newValue);
           }
         }}
-        required={required}
+
         id={name}
         options={options}
         loading={loading}
         renderInput={(params) => (
           <TextField
             {...params}
+            required={required}
             variant={variant}
             label={label}
             placeholder={placeholder}

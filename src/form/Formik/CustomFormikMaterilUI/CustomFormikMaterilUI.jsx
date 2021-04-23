@@ -1,6 +1,6 @@
 import { Grid, Typography } from '@material-ui/core';
 import { Field, Form, Formik } from 'formik';
-import React from 'react';
+import React, { useState } from 'react';
 import Input from '../CorrectInputComponents/Input/Input';
 import * as Yup from 'yup';
 import DatePicker from '../CorrectInputComponents/DatePicker/DatePicker';
@@ -12,6 +12,7 @@ import CheckboxGroup from '../CorrectInputComponents/CheckboxComponent/CheckboxG
 import MultiSelect from '../CorrectInputComponents/MultiSelect/MultiSelect';
 import CheckboxGroup2 from '../CorrectInputComponents/CheckboxComponent/CheckboxGroupFieldChildren/CheckboxGroup';
 import SingleSelect from '../CorrectInputComponents/SingleSelect/SingleSelect';
+import SearchableSelect from '../CorrectInputComponents/SearchableSelect/SearchableSelect';
 
 const muiSchema = Yup.object().shape({
   first_name: Yup.string().required('First name is required'),
@@ -26,8 +27,15 @@ const muiSchema = Yup.object().shape({
     .max(100, 'Maximum characters upto 100.'),
 });
 
+const optionsGenerator = async () => {
+  const options = await fetch('https://reqres.in/api/unknown');
+  const optionsJson = await options.json();
+  return optionsJson.data;
+};
+
 let render = 0;
 const CustomFormikMaterialUI = () => {
+  const [ options , setOptions ] = useState([]);
   render = render + 1;
   return (
     <div className="CustomFormikMaterialUI" >
@@ -61,6 +69,7 @@ const CustomFormikMaterialUI = () => {
                         component={Input}
                         name="first_name"
                         label="First Name"
+                        required
                       />
                     </Grid>
                     <Grid item xs={6}>
@@ -97,6 +106,51 @@ const CustomFormikMaterialUI = () => {
                         label="Agreement"
                       />
                     </Grid>
+                    <Grid item xs={6}>
+                      <p className="info">Select</p>
+                      <Field
+                        component={SingleSelect}
+                        name="age_range"
+                        placeHolder="Select Filter"
+                        options={dashboardFilterOptions}
+                        optionLabel="label"
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <p className="info">Multi Select</p>
+                      <Field
+                        component={MultiSelect}
+                        name="gender"
+                        options={genderOptions}
+                        optionLabel="label"
+                        placeholder="Select Gender"
+                        className="outlinedInput"
+                        valueLabel="value"
+                        showLoaderIcon
+                        required
+                        // popupIcon={<AngleDownIcon />}
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <p className="info">Autocomplete</p>
+                      <Field
+                        component={SearchableSelect}
+                        name="company"
+                        label="Company"
+                        options={options}
+                        onInputChange={async (e, value, reason) => {
+                          const optionsData = await optionsGenerator();
+                          setOptions(optionsData);
+                        }}
+                        // loading={isLoading}
+                        optionLabel="name"
+                        creatable
+                        clearOnBlur
+                        noOptionsText="Type here to search"
+                        required
+                      />
+                    </Grid>
+
                     <Grid item xs={6}>
                       <p className="info">Checkbox Single</p>
                       <Field
@@ -135,31 +189,6 @@ const CustomFormikMaterialUI = () => {
                         )}
                       </Field>
 
-                    </Grid>
-                    <Grid item xs={6}>
-                      <p className="info">Select</p>
-                      <Field
-                        component={SingleSelect}
-                        name="age_range"
-                        placeHolder="Select Filter"
-                        variant="outlined"
-                        options={dashboardFilterOptions}
-                        optionLabel="label"
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <p className="info">Multi Select</p>
-                      <Field
-                        component={MultiSelect}
-                        name="gender"
-                        options={genderOptions}
-                        optionLabel="label"
-                        placeholder="Select Gender"
-                        className="outlinedInput"
-                        valueLabel="value"
-                        showLoaderIcon
-                        // popupIcon={<AngleDownIcon />}
-                      />
                     </Grid>
                     <Grid item xs={12}>
                       <hr/>
