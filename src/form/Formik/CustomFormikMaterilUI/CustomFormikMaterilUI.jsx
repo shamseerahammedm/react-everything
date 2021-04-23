@@ -15,16 +15,17 @@ import SingleSelect from '../CorrectInputComponents/SingleSelect/SingleSelect';
 import SearchableSelect from '../CorrectInputComponents/SearchableSelect/SearchableSelect';
 
 const muiSchema = Yup.object().shape({
-  first_name: Yup.string().required('First name is required'),
-  date: Yup.date().nullable().required('Date is required'),
-  date_time_picker: Yup.date().nullable().required('Date time picker is required'),
+  first_name: Yup.string().required('This field is required'),
+  date: Yup.date().nullable().required('This field is required'),
+  date_time_picker: Yup.date().nullable().required('This field is required'),
   agreement: Yup.bool().oneOf([true], 'Must agree'),
   do_you_agree: Yup.bool().oneOf([true], 'Must agree'),
   group_checkbox: Yup.array().min(1, 'At least one checkbox is required'),
   gender: Yup.array().min(1,'This field must have at least 1 item.'),
   age_range: Yup.string()
-    .required('Age range is required.')
+    .required('This field is required.')
     .max(100, 'Maximum characters upto 100.'),
+  agency: Yup.object().nullable().required('This field is required'),
 });
 
 const optionsGenerator = async () => {
@@ -50,7 +51,8 @@ const CustomFormikMaterialUI = () => {
           group_checkbox: [],
           gender: [],
           select : '',
-          age_range : ''
+          age_range : '',
+          agency : []
         }}
         onSubmit={(values) => {
           console.log('$$$$$------ values ------$$$$', values);
@@ -69,7 +71,7 @@ const CustomFormikMaterialUI = () => {
                         component={Input}
                         name="first_name"
                         label="First Name"
-                        required
+                        // required
                       />
                     </Grid>
                     <Grid item xs={6}>
@@ -127,7 +129,7 @@ const CustomFormikMaterialUI = () => {
                         className="outlinedInput"
                         valueLabel="value"
                         showLoaderIcon
-                        required
+                        // required
                         // popupIcon={<AngleDownIcon />}
                       />
                     </Grid>
@@ -135,8 +137,8 @@ const CustomFormikMaterialUI = () => {
                       <p className="info">Autocomplete</p>
                       <Field
                         component={SearchableSelect}
-                        name="company"
-                        label="Company"
+                        name="agency"
+                        label="Agency"
                         options={options}
                         onInputChange={async (e, value, reason) => {
                           const optionsData = await optionsGenerator();
@@ -147,7 +149,7 @@ const CustomFormikMaterialUI = () => {
                         creatable
                         clearOnBlur
                         noOptionsText="Type here to search"
-                        required
+                        // required
                       />
                     </Grid>
 
