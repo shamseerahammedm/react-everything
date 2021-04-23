@@ -15,6 +15,7 @@ const Switch = ({
   color = 'primary',
   size = 'medium',
   labelPlacement = 'end',
+  className = ''
 }) => {
   const errorText = getError(name, { touched, status, errors });
   const isError = errorText ? true : false;
@@ -24,7 +25,7 @@ const Switch = ({
         <FormControlLabel
           control={
             <MuiSwitch
-              className="customSwitch"
+              className={`customSwitch ${className}`}
               checked={value}
               color={color}
               size={size}
@@ -53,6 +54,7 @@ Switch.propTypes = {
   color: PropTypes.string,
   size: PropTypes.string,
   labelPlacement: PropTypes.string,
+  className: PropTypes.string,
   onChange: PropTypes.func,
 };
 

@@ -1,47 +1,56 @@
-import { FormControlLabel, Checkbox as MuiCheckbox, FormHelperText } from '@material-ui/core';
+import { FormControlLabel, Checkbox as MuiCheckbox, FormHelperText, FormControl } from '@material-ui/core';
 import React from 'react';
-import { getError } from 'utils/formik';
+import { getError } from 'utils/utils';
+import PropTypes from 'prop-types';
 
 const Checkbox = ({
-  field: { name, value, onChange, onBlur },
-  form: { errors, touched, status },
+  field: { name, value, onChange },
+  form: { errors, touched, status, setFieldTouched },
   id,
-  label,
+  label = '',
   className = '',
   formControlClassName = '',
-  onChange : customOnChange,
-  labelPlacement = ''
+  onChange: customOnChange,
+  labelPlacement = 'end'
 }) => {
   const errorText = getError(name, { touched, status, errors });
   const isError = errorText ? true : false;
   return (
-    <>
+    <FormControl error={isError} className="checkboxWrapper">
       <FormControlLabel
         label={label}
         className={`customCheckboxFormControl ${formControlClassName}`}
         labelPlacement={labelPlacement}
         control={
           <MuiCheckbox
-            id={id}
+            id={id || name}
             checked={value}
             value={value}
-            onChange={(e)=>{
+            onChange={(e) => {
+              setFieldTouched(name, true);
               onChange(e);
-              if(customOnChange)
+              if (customOnChange)
               {
                 customOnChange(e);
               }
             }}
-            onBlur={onBlur}
             name={name}
             color="primary"
             className={`customCheckBox ${className}`}
           />
         }
       />
-      {touched[name] && isError && <FormHelperText>{errorText}</FormHelperText>}
-    </>
+      {errorText && <FormHelperText>{errorText}</FormHelperText>}
+    </FormControl>
   );
 };
 
+Checkbox.propTypes = {
+  id: PropTypes.string,
+  label: PropTypes.string,
+  labelPlacement: PropTypes.string,
+  onChange: PropTypes.func,
+  className: PropTypes.string,
+  formControlClassName: PropTypes.string,
+};
 export default Checkbox;
