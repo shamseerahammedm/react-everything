@@ -4,13 +4,13 @@ import { getError } from 'utils/utils';
 import PropTypes from 'prop-types';
 
 const Checkbox = ({
-  field: { name, value, onChange },
-  form: { errors, touched, status, setFieldTouched },
+  field: { name, value, onChange, onBlur },
+  form: { errors, touched, status },
   id,
-  label = '',
+  label,
   className = '',
   formControlClassName = '',
-  onChange: customOnChange,
+  onChange : customOnChange,
   labelPlacement = 'end'
 }) => {
   const errorText = getError(name, { touched, status, errors });
@@ -23,28 +23,27 @@ const Checkbox = ({
         labelPlacement={labelPlacement}
         control={
           <MuiCheckbox
-            id={id || name}
+            id={id}
             checked={value}
             value={value}
-            onChange={(e) => {
-              setFieldTouched(name, true);
+            onChange={(e)=>{
               onChange(e);
-              if (customOnChange)
+              if(customOnChange)
               {
                 customOnChange(e);
               }
             }}
+            onBlur={onBlur}
             name={name}
             color="primary"
             className={`customCheckBox ${className}`}
           />
         }
       />
-      {errorText && <FormHelperText>{errorText}</FormHelperText>}
+      {touched[name] && isError && <FormHelperText>{errorText}</FormHelperText>}
     </FormControl>
   );
 };
-
 Checkbox.propTypes = {
   id: PropTypes.string,
   label: PropTypes.string,

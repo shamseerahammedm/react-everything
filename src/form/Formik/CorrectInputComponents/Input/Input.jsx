@@ -9,7 +9,7 @@ import { getError } from 'utils/utils';
 
 const Input = ({
   field: { name, value, ...otherFieldProps },
-  form: { touched, errors, status },
+  form: { touched, errors, status, setFieldValue },
   type,
   label,
   variant = 'outlined',
@@ -45,7 +45,8 @@ const Input = ({
         placeholder={placeholder || null}
         onBlur={otherFieldProps.onBlur}
         onChange={(e) => {
-          otherFieldProps.onChange(e);
+          setFieldValue(name, e.target.value);
+          // otherFieldProps.onChange(e);
           if(onChange)
           {
             onChange(e);
