@@ -1,11 +1,14 @@
 import { FormControl, FormGroup, FormHelperText, FormLabel } from '@material-ui/core';
 import React from 'react';
 import './CheckboxGroup.scss';
+import { getError } from 'utils/formik';
 
 // Note :: id on CheckboxGroup should be name used on checkbox 
 const CheckboxGroup = ({
   label,
-  error,
+  errors,
+  touched,
+  status,
   setFieldValue,
   onBlur,
   id,
@@ -15,6 +18,7 @@ const CheckboxGroup = ({
   formGroupWrapperClassName = '',
   required = false,
 }) => {
+
   const handleChange = (event) => {
     const target = event.currentTarget;
     let valueArray = [...value] || [];
@@ -29,10 +33,11 @@ const CheckboxGroup = ({
     setFieldValue(id, valueArray);
   };
   const handleBlur = () => onBlur(id, true);
-  const isError = error ? true : false;
+  const errorText = getError(id, { touched, status, errors });
+
   return (
     <div className={`customFormGroupWrapper ${formGroupWrapperClassName}`}>
-      <FormControl required={required} error={isError} component="fieldset" >
+      <FormControl required={required} error={!!errorText} component="fieldset" >
         { label && <FormLabel component="legend">{label}</FormLabel>}
         <FormGroup className={`customFormGroup ${className}`}>
           {React.Children.map(children, (child) => {
@@ -45,7 +50,7 @@ const CheckboxGroup = ({
             });
           })}
         </FormGroup>
-        {error && <FormHelperText>{error}</FormHelperText>}
+        {!!errorText && <FormHelperText>{errorText}</FormHelperText>}
       </FormControl>
     </div>
   );

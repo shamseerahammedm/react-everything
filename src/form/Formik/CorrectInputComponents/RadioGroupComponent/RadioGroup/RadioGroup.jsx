@@ -1,5 +1,6 @@
 import { FormControl, FormHelperText, FormLabel, makeStyles } from '@material-ui/core';
 import React from 'react';
+import { getError } from 'utils/formik';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -9,8 +10,9 @@ const useStyles = makeStyles((theme) => ({
 
 const RadioButtonGroup = ({
   value,
-  error,
+  errors,
   touched,
+  status,
   id,
   label,
   className,
@@ -18,11 +20,12 @@ const RadioButtonGroup = ({
   required= false
 }) => {
   const classes = useStyles();
+  const errorText = getError(id, { touched, status, errors });
   return (
-    <FormControl  required={required} component="fieldset" error={error} className={classes.formControl}>
+    <FormControl  required={required} component="fieldset" error={!!errorText} className={classes.formControl}>
       {label && <FormLabel component="legend">{label}</FormLabel>}
       {children}
-      {touched && error && <FormHelperText>{error}</FormHelperText>}
+      {!!errorText && <FormHelperText>{errorText}</FormHelperText>}
     </FormControl>
   );
 };

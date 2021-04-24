@@ -10,11 +10,12 @@ import Checkbox from '../CorrectInputComponents/CheckboxComponent/Checkbox/Check
 import './CustomFormikMaterilUI.scss';
 import CheckboxGroup from '../CorrectInputComponents/CheckboxComponent/CheckboxGroup/CheckboxGroup';
 import MultiSelect from '../CorrectInputComponents/MultiSelect/MultiSelect';
-import CheckboxGroup2 from '../CorrectInputComponents/CheckboxComponent/CheckboxGroupFieldChildren/CheckboxGroup';
+// import CheckboxGroup2 from '../CorrectInputComponents/CheckboxComponent/CheckboxGroupFieldChildren/CheckboxGroup';
 import SingleSelect from '../CorrectInputComponents/SingleSelect/SingleSelect';
 import SearchableSelect from '../CorrectInputComponents/SearchableSelect/SearchableSelect';
-import RadioButtonGroup from '../CorrectInputComponents/RadioGroupComponent/RadioGroup/RadioGroup';
+import RadioGroup from '../CorrectInputComponents/RadioGroupComponent/RadioGroup/RadioGroup';
 import RadioButton from '../CorrectInputComponents/RadioGroupComponent/RadioButton/RadioButton';
+import { useDispatch } from 'react-redux';
 
 const muiSchema = Yup.object().shape({
   first_name: Yup.string().required('This field is required'),
@@ -23,7 +24,7 @@ const muiSchema = Yup.object().shape({
   agreement: Yup.bool().oneOf([true], 'Must agree'),
   do_you_agree: Yup.bool().oneOf([true], 'Must agree'),
   group_checkbox: Yup.array().min(1, 'At least one checkbox is required'),
-  gender: Yup.array().min(1,'This field must have at least 1 item.'),
+  gender: Yup.array().min(1, 'This field must have at least 1 item.'),
   radioGroup: Yup.string().required('This field is required'),
   age_range: Yup.string()
     .required('This field is required.')
@@ -39,7 +40,8 @@ const optionsGenerator = async () => {
 
 let render = 0;
 const CustomFormikMaterialUI = () => {
-  const [ options , setOptions ] = useState([]);
+  const dispatch = useDispatch();
+  const [options, setOptions] = useState([]);
   render = render + 1;
   return (
     <div className="CustomFormikMaterialUI" >
@@ -53,12 +55,13 @@ const CustomFormikMaterialUI = () => {
           do_you_agree: false,
           group_checkbox: [],
           gender: [],
-          select : '',
-          age_range : '',
-          agency : [],
-          radioGroup : ''
+          select: '',
+          age_range: '',
+          agency: [],
+          radioGroup: ''
         }}
         onSubmit={(values) => {
+          dispatch({ type: 'SUBMIT_MUI_FORMIK_FORM ', payload: values });
           console.log('$$$$$------ values ------$$$$', values);
         }}
       >
@@ -75,7 +78,7 @@ const CustomFormikMaterialUI = () => {
                         component={Input}
                         name="first_name"
                         label="First Name"
-                        // required
+                      // required
                       />
                     </Grid>
                     <Grid item xs={6}>
@@ -133,11 +136,11 @@ const CustomFormikMaterialUI = () => {
                         className="outlinedInput"
                         valueLabel="value"
                         showLoaderIcon
-                        // required
-                        // popupIcon={<AngleDownIcon />}
+                      // required
+                      // popupIcon={<AngleDownIcon />}
                       />
                     </Grid>
-                
+
                     <Grid item xs={6}>
                       <p className="info">Autocomplete</p>
                       <Field
@@ -154,7 +157,7 @@ const CustomFormikMaterialUI = () => {
                         creatable
                         clearOnBlur
                         noOptionsText="Type here to search"
-                        // required
+                      // required
                       />
                     </Grid>
 
@@ -171,12 +174,13 @@ const CustomFormikMaterialUI = () => {
                       <Field
                         name="group_checkbox"
                       >
-                        {({ field: { value, name }, form: { touched, errors, setFieldValue, setFieldTouched } }) => (
+                        {({ field: { value, name }, form: { status, touched, errors, setFieldValue, setFieldTouched } }) => (
                           <CheckboxGroup
                             id={name}
                             value={value}
-                            error={touched[name] && errors[name]}
-                            touched={touched[name]}
+                            errors={errors}
+                            touched={touched}
+                            status={status}
                             setFieldValue={setFieldValue}
                             onBlur={setFieldTouched}
                             label="Pass null to hide checkbox label"
@@ -201,12 +205,13 @@ const CustomFormikMaterialUI = () => {
                     <Grid item xs={6}>
                       <p className="info">Radio Group</p>
                       <Field name="radioGroup">
-                        {({ field: { value, name }, form: { touched, errors, setFieldValue, setFieldTouched } }) => (
-                          <RadioButtonGroup
+                        {({ field: { value, name }, form: { touched, errors, status } }) => (
+                          <RadioGroup
                             id={name}
                             value={value}
-                            error={errors[name]}
-                            touched={touched[name]}
+                            errors={errors}
+                            touched={touched}
+                            status={status}
                             label="Pass null to hide radio label"
                             required
                           >
@@ -222,14 +227,14 @@ const CustomFormikMaterialUI = () => {
                               id="radioOption2"
                               label="Or choose this one"
                             />
-                          </RadioButtonGroup>
+                          </RadioGroup>
                         )}
                       </Field>
-                      
+
                     </Grid>
-                    
+
                     <Grid item xs={12}>
-                      <hr/>
+                      <hr />
                     </Grid>
                     <Grid item xs={12}>
                       <button type="submit">
