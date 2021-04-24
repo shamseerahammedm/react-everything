@@ -1,6 +1,6 @@
 import { Grid, Typography } from '@material-ui/core';
 import { Field, Form, Formik } from 'formik';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Input from '../CorrectInputComponents/Input/Input';
 import * as Yup from 'yup';
 import DatePicker from '../CorrectInputComponents/DatePicker/DatePicker';
@@ -15,7 +15,8 @@ import SingleSelect from '../CorrectInputComponents/SingleSelect/SingleSelect';
 import SearchableSelect from '../CorrectInputComponents/SearchableSelect/SearchableSelect';
 import RadioGroup from '../CorrectInputComponents/RadioGroupComponent/RadioGroup/RadioGroup';
 import RadioButton from '../CorrectInputComponents/RadioGroupComponent/RadioButton/RadioButton';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router';
 
 const muiSchema = Yup.object().shape({
   first_name: Yup.string().required('This field is required'),
@@ -39,27 +40,39 @@ const optionsGenerator = async () => {
 };
 
 let render = 0;
+const INITIAL_FORM_DATA = {
+  first_name: '',
+  date: null,
+  date_time_picker: new Date(),
+  agreement: false,
+  do_you_agree: false,
+  group_checkbox: [],
+  gender: [],
+  select: '',
+  age_range: '',
+  agency: {},
+  radioGroup: ''
+};
 const CustomFormikMaterialUI = () => {
   const dispatch = useDispatch();
+  const params = useParams();
   const [options, setOptions] = useState([]);
+  const editFormData = useSelector(state => state.generalReducer.formData);
+  const isFormOpenForEditing = (editFormData && params.Id) ? true : false;
+  useEffect(() => {
+    if (params.Id)
+    {
+      dispatch({ type: 'FETCH_MUI_FORMIK_FORM_DATA' });
+    }
+  }, [params]);
+
   render = render + 1;
   return (
     <div className="CustomFormikMaterialUI" >
       <Formik
+        enableReinitialize={isFormOpenForEditing ? true : false}
         validationSchema={muiSchema}
-        initialValues={{
-          first_name: '',
-          date: null,
-          date_time_picker: new Date(),
-          agreement: false,
-          do_you_agree: false,
-          group_checkbox: [],
-          gender: [],
-          select: '',
-          age_range: '',
-          agency: [],
-          radioGroup: ''
-        }}
+        initialValues={isFormOpenForEditing ? editFormData : INITIAL_FORM_DATA}
         onSubmit={(values) => {
           dispatch({ type: 'SUBMIT_MUI_FORMIK_FORM ', payload: values });
           console.log('$$$$$------ values ------$$$$', values);
