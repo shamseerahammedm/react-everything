@@ -1,0 +1,46 @@
+@import "variables";
+.customRadioGroupWrapper{
+  width:100%;
+  .buttonRadios{
+    //hiding checkobx
+    .MuiButtonBase-root{
+      display:none;
+    }
+    .MuiFormControlLabel-root{
+      margin-left: 0;
+    }
+    .activeBtn{
+      .MuiTypography-body1{
+        color: $textWhite;
+      }
+      background: $primaryColor;
+      border-radius: 16px;
+      box-shadow: none;
+      padding: 12px 20px;
+      &:hover {
+        background: $primaryColor;
+        box-shadow: none;
+      }
+      width: 100%;
+      box-sizing: border-box;
+      &.Mui-disabled{
+        background: $disabled;
+      }
+    }
+    .normalBtn{
+      background: $primarySuperLight;
+      border-radius: 16px;
+      box-shadow: none;
+      padding: 12px 20px;
+      &:hover {
+        background: $primarySuperLight;
+        box-shadow: none;
+      }
+      width: 100%;
+      box-sizing: border-box;
+      &.Mui-disabled{
+        background: $disabled;
+      }
+    }
+  }
+}

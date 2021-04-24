@@ -59,6 +59,8 @@ import FormikForm from 'form/Formik/FormikForm/FormikForm';
 import CustomFormikMaterialUI from 'form/Formik/CustomFormikMaterilUI/CustomFormikMaterilUI';
 import CustomFormikNormal from 'form/Formik/CustomFormikNormal/CustomFormikNormal';
 import CustomFormikMaterilUIPage from 'form/Formik/CustomFormikMaterilUI/Page';
+import CustomHookFormMaterilUIPage from 'form/react-hook-form/CustomHookFormMaterilUI/Page';
+import CustomHookFormMaterilUI from 'form/react-hook-form/CustomHookFormMaterilUI/CustomHookFormMaterilUI';
 
 function App() {
 
@@ -79,6 +81,10 @@ function App() {
         <Route exact path="/formik-custom-material-ui" component={CustomFormikMaterilUIPage} />
         <Route exact path="/formik-custom-material-ui-create" component={CustomFormikMaterialUI} />
         <Route exact path="/formik-custom-material-ui-edit/:Id" component={CustomFormikMaterialUI} />
+
+        <Route exact path="/react-hook-from-custom-material-ui" component={CustomHookFormMaterilUIPage} />
+        <Route exact path="/react-hook-from-custom-material-ui-create" component={CustomHookFormMaterilUI} />
+        <Route exact path="/react-hook-from-custom-material-ui-edit/:Id" component={CustomHookFormMaterilUI} />
 
         <Route exact path="/formik-custom-normal" component={CustomFormikNormal} />
 
