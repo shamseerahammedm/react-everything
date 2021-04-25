@@ -55,6 +55,8 @@ const MultiSelect = ({
     rules: rules
   });
 
+  console.log('error',error);
+
   return (
     <>
       <Autocomplete

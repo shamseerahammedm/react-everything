@@ -32,9 +32,9 @@ const Checkbox = ({
 
   const errorToUse = isCheckBoxGroup ? groupError : error;
 
-  console.log('groupValue', groupValue);
-  console.log('groupHandleChange', groupHandleChange);
-  console.log('groupValue', groupValue);
+  // console.log('groupValue', groupValue);
+  // console.log('groupHandleChange', groupHandleChange);
+  // console.log('groupValue', groupValue);
 
   return (
     <FormControl error={!!errorToUse} className="checkboxWrapper">

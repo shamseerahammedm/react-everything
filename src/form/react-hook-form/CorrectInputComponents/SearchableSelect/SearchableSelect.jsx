@@ -73,12 +73,6 @@ const SearchableSelect = ({
     defaultValue: {},
     rules : rules
   });
-
-  console.log('error',error);
-
-  // console.log('name',name);
-  // console.log('fieldName',fieldName);
-  // console.log('error',error);
   
   return (
     <Autocomplete

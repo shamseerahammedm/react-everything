@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { isEmpty } from 'lodash';
 
 const muiSchema = Yup.object().shape({
   first_name: Yup.string().required('This field is required'),
@@ -32,7 +33,13 @@ const muiSchema = Yup.object().shape({
   age_range: Yup.string()
     .required('This field is required.')
     .max(100, 'Maximum characters upto 100.'),
-  agency: Yup.object().nullable().required('This field is required'),
+  agency: Yup.object().test('Check Object Empty', 'This field is required', function (value) {
+    if (isEmpty(value))
+    {
+      return false;
+    }
+    return true;
+  })
 });
 
 const optionsGenerator = async () => {
@@ -57,7 +64,7 @@ const INITIAL_FORM_DATA = {
 };
 
 const printErrors = async (errors) => {
-  console.log('errors',errors);
+  console.log('errors', errors);
   // const errorsData = await JSON.stringify(errors, null, 2);
   // return <pre>{  JSON.stringify(errorsData, null, 2)}</pre>;
 };
@@ -76,10 +83,10 @@ const CustomHookFormMaterilUI = () => {
   }, [params]);
 
   // Section Starts :: Hook form -- 
-  const { 
+  const {
     control,
     handleSubmit,
-    formState : { errors },
+    formState: { errors },
     getValues,
     watch,
     setValue
@@ -107,7 +114,7 @@ const CustomHookFormMaterilUI = () => {
                   label="First Name"
                   control={control}
                   defaultValue={{}}
-                  // required
+                // required
                 />
               </Grid>
               <Grid item xs={6}>
@@ -120,7 +127,7 @@ const CustomHookFormMaterilUI = () => {
                   clearable
                   placeholder="Start Date"
                   control={control}
-                  // icon={<CalendarIcon />}
+                // icon={<CalendarIcon />}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -132,7 +139,7 @@ const CustomHookFormMaterilUI = () => {
                   clearable
                   placeholder="Date time"
                   control={control}
-                  // icon={<CalendarIcon />}
+                // icon={<CalendarIcon />}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -156,16 +163,16 @@ const CustomHookFormMaterilUI = () => {
               <Grid item xs={6}>
                 <p className="info">Multi Select</p>
                 <MultiSelect
+                  label="Gender"
                   name="gender"
                   options={genderOptions}
                   optionLabel="label"
-                  placeholder="Select Gender"
                   className="outlinedInput"
                   valueLabel="value"
                   showLoaderIcon
                   control={control}
-                  // required
-                  // popupIcon={<AngleDownIcon />}
+                // required
+                // popupIcon={<AngleDownIcon />}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -185,7 +192,7 @@ const CustomHookFormMaterilUI = () => {
                   noOptionsText="Type here to search"
                   // required
                   control={control}
-                  // defaultValue={{}}
+                // defaultValue={{}}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -196,7 +203,7 @@ const CustomHookFormMaterilUI = () => {
                   control={control}
                 />
               </Grid>
-              <Grid item xs={6}>
+              {/* <Grid item xs={6}>
                 <p className="info">Checkbox group</p>
                 <CheckboxGroup
                   name="group_checkbox"
@@ -218,22 +225,22 @@ const CustomHookFormMaterilUI = () => {
                   }
                 </CheckboxGroup>
 
-              </Grid>
+              </Grid> */}
               <Grid item xs={12}>
                 <hr />
               </Grid>
               <Grid item xs={12}>
                 <button type="submit">
-                        Submit
+                  Submit
                 </button>
               </Grid>
             </Grid>
-            
+
           </Grid>
           <Grid item xs={6}>
             <Typography color="secondary">Values</Typography>
             <pre>{JSON.stringify(watchAllFields, null, 2)}</pre>
-            {console.log('errors',errors)}
+            {console.log('errors', errors)}
             {/* <Typography color="secondary">Touched</Typography>
                 <pre>{JSON.stringify(touched, null, 2)}</pre> */}
             {/* <Typography color="secondary">Errors</Typography> */}
