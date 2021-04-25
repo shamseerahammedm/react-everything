@@ -72,7 +72,7 @@ const MultiSelect = ({
             customOnChange(e, newValue);
           }
         }}
-
+        onBlur={onBlur}
         id={name}
         options={options}
         loading={loading}

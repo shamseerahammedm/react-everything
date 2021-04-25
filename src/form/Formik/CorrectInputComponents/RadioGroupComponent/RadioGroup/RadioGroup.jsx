@@ -1,15 +1,9 @@
-import { FormControl, FormHelperText, FormLabel, makeStyles } from '@material-ui/core';
+import { FormControl, FormHelperText, FormLabel } from '@material-ui/core';
 import React from 'react';
 import { getError } from 'utils/formik';
+import PropTypes from 'prop-types';
 
-const useStyles = makeStyles((theme) => ({
-  formControl: {
-    // margin: theme.spacing(3),
-  },
-}));
-
-const RadioButtonGroup = ({
-  value,
+const RadioGroup = ({
   errors,
   touched,
   status,
@@ -19,10 +13,9 @@ const RadioButtonGroup = ({
   children,
   required= false
 }) => {
-  const classes = useStyles();
   const errorText = getError(id, { touched, status, errors });
   return (
-    <FormControl  required={required} component="fieldset" error={!!errorText} className={classes.formControl}>
+    <FormControl  required={required} component="fieldset" error={!!errorText} className={`customRadioGroup ${className}`}>
       {label && <FormLabel component="legend">{label}</FormLabel>}
       {children}
       {!!errorText && <FormHelperText>{errorText}</FormHelperText>}
@@ -30,4 +23,15 @@ const RadioButtonGroup = ({
   );
 };
 
-export default RadioButtonGroup;
+RadioGroup.propTypes = { 
+  errors: PropTypes.object,
+  touched: PropTypes.object,
+  status: PropTypes.object,
+  id : PropTypes.string,
+  label : PropTypes.string,
+  className : PropTypes.string,
+  children: PropTypes.any,
+  required: PropTypes.bool,
+};
+
+export default RadioGroup;

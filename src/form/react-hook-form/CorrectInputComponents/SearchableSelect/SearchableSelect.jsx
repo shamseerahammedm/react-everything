@@ -4,8 +4,8 @@ import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
 import { makeStyles } from '@material-ui/core';
-import { getError } from 'utils/formik';
-import { useController, useFormContext } from 'react-hook-form';
+import { useController} from 'react-hook-form';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles({
   underline: {
@@ -166,6 +166,26 @@ const SearchableSelect = ({
       ref={ref}
     />
   );
+};
+
+SearchableSelect.prototype = {
+  customOnChange: PropTypes.func,
+  label: PropTypes.string,
+  variant: PropTypes.string,
+  options: PropTypes.array.isRequired,
+  optionLabel: PropTypes.string.isRequired,
+  size: PropTypes.string,
+  required: PropTypes.bool,
+  onInputChange: PropTypes.func,
+  onClear: PropTypes.func,
+  withIcon: PropTypes.bool,
+  creatable: PropTypes.bool,
+  selectOnFocus: PropTypes.bool,
+  clearOnBlur: PropTypes.bool,
+  creatableLabel: PropTypes.bool,
+  disabled: PropTypes.bool,
+  noOptionsText: PropTypes.string,
+  placeholder: PropTypes.placeholder,
 };
 
 export default SearchableSelect;

@@ -218,10 +218,9 @@ const CustomFormikMaterialUI = () => {
                     <Grid item xs={6}>
                       <p className="info">Radio Group</p>
                       <Field name="radioGroup">
-                        {({ field: { value, name }, form: { touched, errors, status } }) => (
+                        {({ field: {  name }, form: { touched, errors, status } }) => (
                           <RadioGroup
                             id={name}
-                            value={value}
                             errors={errors}
                             touched={touched}
                             status={status}

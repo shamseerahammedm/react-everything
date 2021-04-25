@@ -5,6 +5,7 @@ import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
 import { makeStyles } from '@material-ui/core';
 import { getError } from 'utils/formik';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles({
   underline: {
@@ -38,20 +39,20 @@ const filterOptions = (options, params, creatableLabel, creatable, optionLabel) 
 const SearchableSelect = ({
   field: { name, value, ...otherFieldProps },
   form: { touched, errors, setFieldValue, status },
-  onChange,
+  onChange = null,
   label = '',
   variant = 'outlined',
   options,
   optionLabel,
   size = 'small',
   required,
-  onInputChange,
+  onInputChange = null,
   withIcon = false,
   resultIcon: ResultIcon,
   creatable = false,
   selectOnFocus = false,
   clearOnBlur = false,
-  onClear = () => null,
+  onClear = null,
   creatableLabel = true,
   disabled = false,
   noOptionsText = null,
@@ -151,6 +152,26 @@ const SearchableSelect = ({
       noOptionsText={noOptionsText ? noOptionsText : React.ReactNode}
     />
   );
+};
+
+SearchableSelect.prototype = {
+  onChange: PropTypes.func,
+  label: PropTypes.string,
+  variant: PropTypes.string,
+  options: PropTypes.array.isRequired,
+  optionLabel: PropTypes.string.isRequired,
+  size: PropTypes.string,
+  required: PropTypes.bool,
+  onInputChange: PropTypes.func,
+  onClear: PropTypes.func,
+  withIcon: PropTypes.bool,
+  creatable: PropTypes.bool,
+  selectOnFocus: PropTypes.bool,
+  clearOnBlur: PropTypes.bool,
+  creatableLabel: PropTypes.bool,
+  disabled: PropTypes.bool,
+  noOptionsText: PropTypes.string,
+  placeholder: PropTypes.placeholder,
 };
 
 export default SearchableSelect;

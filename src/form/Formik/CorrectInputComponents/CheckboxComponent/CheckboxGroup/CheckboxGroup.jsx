@@ -2,10 +2,11 @@ import { FormControl, FormGroup, FormHelperText, FormLabel } from '@material-ui/
 import React from 'react';
 import './CheckboxGroup.scss';
 import { getError } from 'utils/formik';
+import PropTypes from 'prop-types';
 
 // Note :: id on CheckboxGroup should be name used on checkbox 
 const CheckboxGroup = ({
-  label,
+  label = '',
   errors,
   touched,
   status,
@@ -56,4 +57,16 @@ const CheckboxGroup = ({
   );
 };
 
+CheckboxGroup.propTypes = { 
+  label : PropTypes.string,
+  errors: PropTypes.object,
+  touched: PropTypes.object,
+  status: PropTypes.object,
+  id : PropTypes.string,
+  className : PropTypes.string,
+  formGroupWrapperClassName : PropTypes.string,
+  children: PropTypes.any,
+  setFieldValue: PropTypes.func,
+  required: PropTypes.bool,
+};
 export default CheckboxGroup;

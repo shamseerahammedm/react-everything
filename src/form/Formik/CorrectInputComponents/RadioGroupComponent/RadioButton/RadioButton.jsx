@@ -1,9 +1,10 @@
 import { FormControl, FormControlLabel, FormHelperText, Radio } from '@material-ui/core';
 import React from 'react';
 import { getError } from 'utils/formik';
+import PropTypes from 'prop-types';
 
 const RadioButton = ({
-  field: { name, value, onChange, onBlur },
+  field: { name, value, onBlur },
   form: { errors, touched, status, setFieldValue },
   id,
   label,
@@ -44,6 +45,16 @@ const RadioButton = ({
       {showError && touched[name] && isError && <FormHelperText>{errorText}</FormHelperText>}
     </FormControl>
   );
+};
+
+RadioButton.propTypes = { 
+  id : PropTypes.string,
+  label : PropTypes.string,
+  labelPlacement : PropTypes.string,
+  onChange: PropTypes.func,
+  formControlClassName : PropTypes.string,
+  className : PropTypes.string,
+  showError: PropTypes.bool,
 };
 
 export default RadioButton;

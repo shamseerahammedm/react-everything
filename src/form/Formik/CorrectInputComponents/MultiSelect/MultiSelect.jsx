@@ -22,7 +22,7 @@ const generateOptions = (matches, parts) => {
 };
 
 const MultiSelect = ({
-  field: { name, value, ...otherFieldProps },
+  field: { name, value, onBlur },
   form: { touched, errors, setFieldValue, status },
   onChange = null,
   label = '',
@@ -52,7 +52,7 @@ const MultiSelect = ({
         multiple
         name={name}
         value={value}
-        {...otherFieldProps}
+        onBlur={onBlur}
         onChange={(e, newValue) => {
           setFieldValue(name, newValue);
           // Running the custom on change function if passed

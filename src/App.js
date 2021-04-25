@@ -30,11 +30,7 @@ import StepForm from './form/step-form/step-form';
 
 // Material ui starts 
 
-import Dashboard from './material/dashboard/dashboard';
-// import MaterialEmail from './material/MaterialEmail/MaterialEmail';
-import MaterialUiTheme from './material/MaterialUiTheme/MaterialUiTheme';
 import Questionare from './material/questionare/Qustionare';
-import Login from './material/login/Login';
 import MaterilFileTree from './FileManager/MaterilFileTree/MaterilFileTree';
 import FolderBrowser from './FileManager/FolderBrowser';
 import UseimperativeHandle from './UseimperativeHandle/UseimperativeHandle';
@@ -107,10 +103,6 @@ function App() {
 
         <Route exact path="/full-form" component={MaterialUiFullForm} />
         <Route exact path="/materialui" component={MaterialUIFUll} />
-        <Route exact path="/dashboard" component={Dashboard} />
-        {/* <Route exact path="/materialemail" component={MaterialEmail} /> */}
-        <Route exact path="/materialtheme" component={MaterialUiTheme} />
-        <Route exact path="/login" component={Login} />
 
         <Route exact path="/handle" component={UseimperativeHandle} />
         <Route exact path="/context" component={Context} />
