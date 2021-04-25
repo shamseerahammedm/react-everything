@@ -104,7 +104,7 @@ function App() {
         <Route exact path="/full-form" component={MaterialUiFullForm} />
         <Route exact path="/materialui" component={MaterialUIFUll} />
 
-        <Route exact path="/handle" component={UseimperativeHandle} />
+        <Route exact path="/userimperativehandle" component={UseimperativeHandle} />
         <Route exact path="/context" component={Context} />
 
         <Route exact path="/authentication" component={Authentication} />
