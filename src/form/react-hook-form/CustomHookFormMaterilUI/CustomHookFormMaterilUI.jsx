@@ -17,6 +17,8 @@ import RadioGroup from '../CorrectInputComponents/RadioGroupComponent/RadioGroup
 import RadioButton from '../CorrectInputComponents/RadioGroupComponent/RadioButton/RadioButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 const muiSchema = Yup.object().shape({
   first_name: Yup.string().required('This field is required'),
@@ -43,7 +45,7 @@ let render = 0;
 const INITIAL_FORM_DATA = {
   first_name: '',
   date: null,
-  date_time_picker: new Date(),
+  date_time_picker: null,
   agreement: false,
   do_you_agree: false,
   group_checkbox: [],
@@ -53,6 +55,13 @@ const INITIAL_FORM_DATA = {
   agency: {},
   radioGroup: ''
 };
+
+const printErrors = async (errors) => {
+  console.log('errors',errors);
+  // const errorsData = await JSON.stringify(errors, null, 2);
+  // return <pre>{  JSON.stringify(errorsData, null, 2)}</pre>;
+};
+
 const CustomHookFormMaterilUI = () => {
   const dispatch = useDispatch();
   const params = useParams();
@@ -66,9 +75,173 @@ const CustomHookFormMaterilUI = () => {
     }
   }, [params]);
 
+  // Section Starts :: Hook form -- 
+  const { 
+    control,
+    handleSubmit,
+    formState : { errors },
+    getValues,
+    watch,
+    setValue
+  } = useForm({
+    defaultValues: INITIAL_FORM_DATA,
+    resolver: yupResolver(muiSchema)
+  });
+
+  const onSubmit = (values) => console.log('$$$$$------ values ------$$$$', values);
+  const watchAllFields = watch(); // when pass nothing as argument, you are watching everything
+  // Section Starts :: Hook form -- 
+
   render = render + 1;
   return (
     <div className="CustomFormikMaterialUI" >
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <p>React hook form with material ui integrated - Render Count : {render}</p>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <p className="info">Input</p>
+                <Input
+                  name="first_name"
+                  label="First Name"
+                  control={control}
+                  defaultValue={{}}
+                  // required
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <p className="info">Date picker</p>
+                <DatePicker
+                  name="date"
+                  disablePast={false}
+                  disableFuture={true}
+                  required
+                  clearable
+                  placeholder="Start Date"
+                  control={control}
+                  // icon={<CalendarIcon />}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <p className="info">Date time picker</p>
+                <DateTimePicker
+                  name="date_time_picker"
+                  disablePast={false}
+                  disableFuture={true}
+                  clearable
+                  placeholder="Date time"
+                  control={control}
+                  // icon={<CalendarIcon />}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <p className="info">Switch</p>
+                <Switch
+                  name="agreement"
+                  label="Agreement"
+                  control={control}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <p className="info">Select</p>
+                <SingleSelect
+                  name="age_range"
+                  placeHolder="Select Filter"
+                  options={dashboardFilterOptions}
+                  optionLabel="label"
+                  control={control}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <p className="info">Multi Select</p>
+                <MultiSelect
+                  name="gender"
+                  options={genderOptions}
+                  optionLabel="label"
+                  placeholder="Select Gender"
+                  className="outlinedInput"
+                  valueLabel="value"
+                  showLoaderIcon
+                  control={control}
+                  // required
+                  // popupIcon={<AngleDownIcon />}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <p className="info">Autocomplete</p>
+                <SearchableSelect
+                  name="agency"
+                  label="Agency"
+                  options={options}
+                  onInputChange={async (e, value, reason) => {
+                    const optionsData = await optionsGenerator();
+                    setOptions(optionsData);
+                  }}
+                  // loading={isLoading}
+                  optionLabel="name"
+                  creatable
+                  clearOnBlur
+                  noOptionsText="Type here to search"
+                  // required
+                  control={control}
+                  // defaultValue={{}}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <p className="info">Checkbox Single</p>
+                <Checkbox
+                  name="do_you_agree"
+                  label="Do you agree ?"
+                  control={control}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <p className="info">Checkbox group</p>
+                <CheckboxGroup
+                  name="group_checkbox"
+                  control={control}
+                  label="Pass null to hide checkbox label"
+                  required
+                  setValue={setValue}
+                >
+                  {
+                    dummyCheckBoxOptions.map(item => (
+                      <Checkbox
+                        name="group_checkbox"
+                        id={item.id}
+                        label={item.label}
+                        key={item.id}
+                        control={control}
+                      />
+                    ))
+                  }
+                </CheckboxGroup>
+
+              </Grid>
+              <Grid item xs={12}>
+                <hr />
+              </Grid>
+              <Grid item xs={12}>
+                <button type="submit">
+                        Submit
+                </button>
+              </Grid>
+            </Grid>
+            
+          </Grid>
+          <Grid item xs={6}>
+            <Typography color="secondary">Values</Typography>
+            <pre>{JSON.stringify(watchAllFields, null, 2)}</pre>
+            {console.log('errors',errors)}
+            {/* <Typography color="secondary">Touched</Typography>
+                <pre>{JSON.stringify(touched, null, 2)}</pre> */}
+            {/* <Typography color="secondary">Errors</Typography> */}
+            {/* {printErrors(errors)} */}
+          </Grid>
+        </Grid>
+      </form>
+      {/* 
       <Formik
         enableReinitialize={isFormOpenForEditing ? true : false}
         validationSchema={muiSchema}
@@ -83,7 +256,7 @@ const CustomHookFormMaterilUI = () => {
             <Form>
               <Grid container spacing={2}>
                 <Grid item xs={6}>
-                  <p>Formik with material ui integrated - Render Count : {render}</p>
+                  <p>React hook form with material ui integrated - Render Count : {render}</p>
                   <Grid container spacing={2}>
                     <Grid item xs={6}>
                       <p className="info">Input</p>
@@ -270,6 +443,7 @@ const CustomHookFormMaterilUI = () => {
           );
         }}
       </Formik>
+     */}
     </div>
   );
 };

@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import './MultiSelect.scss';
 import CloseIcon from '@material-ui/icons/Close';
 import { getError } from 'utils/formik';
+import { useController } from 'react-hook-form';
 
 const generateOptions = (matches, parts) => {
   return (
@@ -22,9 +23,7 @@ const generateOptions = (matches, parts) => {
 };
 
 const MultiSelect = ({
-  field: { name, value, ...otherFieldProps },
-  form: { touched, errors, setFieldValue, status },
-  onChange = null,
+  onChange : customOnChange = null,
   label = '',
   variant = 'outlined',
   options = [],
@@ -42,9 +41,20 @@ const MultiSelect = ({
   showLoaderIcon = false,
   hideChips = false,
   valueLabel = 'id',
+
+  // hook form specific
+  name, control, defaultValue, rules = {}
 }) => {
-  const errorText = getError(name, { touched, status, errors });
-  const isError = (errorText) ? true : false;
+  const {
+    field: { ref, value, onBlur, onChange },
+    fieldState: { error },
+  } = useController({
+    name,
+    control,
+    defaultValue: {},
+    rules: rules
+  });
+
   return (
     <>
       <Autocomplete
@@ -52,13 +62,12 @@ const MultiSelect = ({
         multiple
         name={name}
         value={value}
-        {...otherFieldProps}
         onChange={(e, newValue) => {
-          setFieldValue(name, newValue);
+          onChange(newValue);
           // Running the custom on change function if passed
-          if (onChange)
+          if (customOnChange)
           {
-            onChange(e, newValue);
+            customOnChange(e, newValue);
           }
         }}
 
@@ -72,8 +81,8 @@ const MultiSelect = ({
             variant={variant}
             label={label}
             placeholder={placeholder}
-            error={isError}
-            helperText={errorText}
+            error={!!error}
+            helperText={error && error.message}
             InputProps={{
               ...params.InputProps,
               endAdornment: (

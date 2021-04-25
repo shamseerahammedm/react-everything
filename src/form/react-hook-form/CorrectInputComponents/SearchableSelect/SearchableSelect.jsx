@@ -5,6 +5,7 @@ import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
 import { makeStyles } from '@material-ui/core';
 import { getError } from 'utils/formik';
+import { useController, useFormContext } from 'react-hook-form';
 
 const useStyles = makeStyles({
   underline: {
@@ -36,9 +37,9 @@ const filterOptions = (options, params, creatableLabel, creatable, optionLabel) 
 };
 
 const SearchableSelect = ({
-  field: { name, value, ...otherFieldProps },
-  form: { touched, errors, setFieldValue, status },
-  onChange,
+  // field: { name, value, ...otherFieldProps },
+  // form: { touched, errors, setFieldValue, status },
+  onChange : customOnChange,
   label = '',
   variant = 'outlined',
   options,
@@ -56,21 +57,38 @@ const SearchableSelect = ({
   disabled = false,
   noOptionsText = null,
   placeholder = '',
+  
+  // hook form specific
+  name, control, defaultValue,
+  rules = {}
 }) => {
-
-  const errorText = getError(name, { touched, status, errors });
   const classes = useStyles();
+
+  const {
+    field: { ref, value, onChange },
+    fieldState : { error },
+  } = useController({
+    name,
+    control,
+    defaultValue: {},
+    rules : rules
+  });
+
+  console.log('error',error);
+
+  // console.log('name',name);
+  // console.log('fieldName',fieldName);
+  // console.log('error',error);
+  
   return (
     <Autocomplete
-      {...otherFieldProps}
       onChange={(e, newValue) => {
         const value = newValue || '';
-        setFieldValue(name, value);
-
+        onChange(value);
         // Running the custom on change function if passed
-        if (onChange)
+        if (customOnChange)
         {
-          onChange(e, newValue);
+          customOnChange(e, newValue);
         }
       }}
       id={name}
@@ -83,8 +101,8 @@ const SearchableSelect = ({
             required={required}
             label={label}
             variant={variant}
-            error={!!errorText}
-            helperText={errorText}
+            error={!!error}
+            helperText={error && error.message}
             placeholder={placeholder}
             inputProps={{
               ...params.inputProps,
@@ -149,6 +167,9 @@ const SearchableSelect = ({
       value={value || ''}
       disabled={disabled}
       noOptionsText={noOptionsText ? noOptionsText : React.ReactNode}
+      
+      //hook form specific
+      ref={ref}
     />
   );
 };

@@ -6,21 +6,32 @@ import FormGroup from '@material-ui/core/FormGroup';
 import PropTypes from 'prop-types';
 import './Switch.scss';
 import { getError } from 'utils/formik';
+import { useController } from 'react-hook-form';
 
 const Switch = ({
-  field: { name, value },
-  form: { touched, errors, status, setFieldValue, setFieldTouched },
-  onChange = () => null,
+  onChange : customOnChange =  null,
   label = '',
   color = 'primary',
   size = 'medium',
   labelPlacement = 'end',
-  className = ''
+  className = '',
+
+  // hook form specific
+  name, control, defaultValue, rules = {}
 }) => {
-  const errorText = getError(name, { touched, status, errors });
-  const isError = errorText ? true : false;
+
+  const {
+    field: { ref, value, onBlur, onChange },
+    fieldState: { error },
+  } = useController({
+    name,
+    control,
+    defaultValue: {},
+    rules: rules
+  }); 
+
   return (
-    <FormControl className="switchWrapper" component="fieldset" error={isError}>
+    <FormControl className="switchWrapper" component="fieldset" error={!!error}>
       <FormGroup aria-label="position">
         <FormControlLabel
           control={
@@ -30,12 +41,11 @@ const Switch = ({
               color={color}
               size={size}
               onChange={(e) => {
-                setFieldTouched(name, true);
-                setFieldValue(name, e.target.checked);
+                onChange(e);
                 // Running the custom on change function if passed
-                if (onChange)
+                if (customOnChange)
                 {
-                  onChange(e);
+                  customOnChange(e);
                 }
               }}
             />
@@ -44,7 +54,7 @@ const Switch = ({
           labelPlacement={labelPlacement}
         />
       </FormGroup>
-      {errorText && <FormHelperText>{errorText}</FormHelperText>}
+      {!!error && <FormHelperText>{error.message}</FormHelperText>}
     </FormControl>
   );
 };

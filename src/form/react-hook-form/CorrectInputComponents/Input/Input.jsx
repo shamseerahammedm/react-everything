@@ -4,12 +4,13 @@ import PropTypes from 'prop-types';
 import './Input.scss';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { getError } from 'utils/formik';
+import { useController } from 'react-hook-form';
 // import correctIcon from 'assets/icons/correct.svg';
 // import wrongIcon from 'assets/icons/wrong.svg';
 
 const Input = ({
-  field: { name, value, ...otherFieldProps },
-  form: { touched, errors, status },
+  // field: { name, value, ...otherFieldProps },
+  // form: { touched, errors, status },
   type,
   label,
   variant = 'outlined',
@@ -22,12 +23,22 @@ const Input = ({
   disabled = false,
   placeholder,
   showCustomIcons = false,
-  onChange = () => null,
-  endIcon = null
+  onChange: customOnChange = null,
+  endIcon = null,
+
+  // hook form specific
+  name, control, defaultValue, rules = {}
 }) => {
 
-  const errorText = getError(name, { touched, status, errors });
-  const isError = (errorText) ? true : false;
+  const {
+    field: { ref, value, onBlur, onChange },
+    fieldState: { error },
+  } = useController({
+    name,
+    control,
+    defaultValue: {},
+    rules: rules
+  });
 
   return (
     <div className="inputWrapper">
@@ -35,22 +46,21 @@ const Input = ({
         fullWidth
         label={label || null}
         type={type}
-        name={name}
         value={value}
-        helperText={errorText}
-        error={isError}
+        helperText={error && error.message}
+        error={!!error}
         variant={variant}
         size={size}
-        className={`customInput ${className}` }
+        className={`customInput ${className}`}
         required={required}
         multiline={multiline}
         placeholder={placeholder || null}
-        onBlur={otherFieldProps.onBlur}
+        onBlur={onBlur}
         onChange={(e) => {
-          otherFieldProps.onChange(e);
-          if(onChange)
+          onChange(e);
+          if (customOnChange)
           {
-            onChange(e);
+            customOnChange(e);
           }
         }}
         rows={rows}
@@ -58,22 +68,10 @@ const Input = ({
           // disable autocomplete and autofill
           autoComplete: 'off',
           readOnly: readOnly,
-          // if customEndIcon is passed use that, else use normal error and success icons
-          endAdornment: (showCustomIcons && touched[name] && !endIcon) 
-            ? 
-            <InputAdornment position="end">
-              {
-                isError 
-                  ? <p>e</p> 
-                  : <p>c</p>
-              }
-            </InputAdornment>
-            : 
-            (showCustomIcons && endIcon) 
-              ? <>{endIcon}</>
-              : null
         }}
         disabled={disabled}
+        // Hook form specific
+        inputRef={ref}
       />
     </div>
   );
@@ -92,7 +90,7 @@ Input.propTypes = {
   disabled: PropTypes.bool,
   showCustomIcons: PropTypes.bool,
   rows: PropTypes.number,
-  onChange: PropTypes.func,
+  customOnChange: PropTypes.func,
 };
 
 export default Input;

@@ -2,22 +2,29 @@ import { FormControl, FormGroup, FormHelperText, FormLabel } from '@material-ui/
 import React from 'react';
 import './CheckboxGroup.scss';
 import { getError } from 'utils/formik';
+import { useController } from 'react-hook-form';
 
 // Note :: id on CheckboxGroup should be name used on checkbox 
 const CheckboxGroup = ({
   label,
-  errors,
-  touched,
-  status,
-  setFieldValue,
-  onBlur,
-  id,
   children,
-  value,
   className= '',
   formGroupWrapperClassName = '',
   required = false,
+
+  // hook form specific
+  name, control, defaultValue, rules = {},setValue
 }) => {
+
+  const {
+    field: { ref, value, onBlur, onChange },
+    fieldState: { error },
+  } = useController({
+    name,
+    control,
+    defaultValue: {},
+    rules: rules
+  });
 
   const handleChange = (event) => {
     const target = event.currentTarget;
@@ -30,27 +37,26 @@ const CheckboxGroup = ({
     {
       valueArray.splice(valueArray.indexOf(target.id), 1);
     }
-    setFieldValue(id, valueArray);
+    setValue(name, valueArray);
   };
-  const handleBlur = () => onBlur(id, true);
-  const errorText = getError(id, { touched, status, errors });
+  const handleBlur = () => onBlur(true);
 
   return (
     <div className={`customFormGroupWrapper ${formGroupWrapperClassName}`}>
-      <FormControl required={required} error={!!errorText} component="fieldset" >
+      <FormControl required={required} error={!!error} component="fieldset" >
         { label && <FormLabel component="legend">{label}</FormLabel>}
         <FormGroup className={`customFormGroup ${className}`}>
           {React.Children.map(children, (child) => {
             return React.cloneElement(child, {
-              field: {
-                value: value.includes(child.props.id),
-                onChange: handleChange,
-                onBlur: handleBlur,
-              }
+              isCheckBoxGroup : true,
+              groupHandleChange : handleChange,
+              groupHandleBlur : handleBlur,
+              groupValue : value.includes(child.props.id),
+              groupError : error
             });
           })}
         </FormGroup>
-        {!!errorText && <FormHelperText>{errorText}</FormHelperText>}
+        {!!error && <FormHelperText>{error.message}</FormHelperText>}
       </FormControl>
     </div>
   );

@@ -43,46 +43,53 @@ const FormComponent = ({
   const onSubmit = (data) => console.log('############### submit data ########', data);
 
   return (
-
-    <form className="form" onSubmit={formMethods.handleSubmit(onSubmit)}>
-      <div className="wrapper">
-        <FormProvider {...formMethods}>
-          <AutoSizer>
-            {({ height, width, ...otherProps }) => {
-              console.log('otherProps', otherProps);
-              return (
-                <>
-                  <List
-                    height={height}
-                    itemCount={tableData.length}
-                    itemSize={() => 100}
-                    width={width}
-                    itemData={tableData}
-                    useIsScrolling
-                  >
-
-                    {WindowedRowList}
-                  </List>
-                  {/* <VGrid
-                    columnCount={Object.keys(tableData[0]).length}
-                    columnWidth={150}
-                    height={height}
-                    rowCount={tableData.length}
-                    rowHeight={50}
-                    width={width}
-                    itemData={tableData}
-                  >
-                    {WindowedRow}
-                  </VGrid> */}
-                </>
-              );
-            }}
-          </AutoSizer>
-        </FormProvider>
-      </div>
-      <button type="submit">Submit</button>
-    </form>
-
+    <Grid container>
+      <Grid item xs={9} >
+        <form className="form" style={{ minHeight : '100vh'}} onSubmit={formMethods.handleSubmit(onSubmit)}>
+          <div className="wrapper">
+            <FormProvider {...formMethods}>
+              <AutoSizer>
+                {({ height, width, ...otherProps }) => {
+                  console.log('otherProps', otherProps);
+                  return (
+                    <>
+                      <List
+                        height={height}
+                        itemCount={tableData.length}
+                        itemSize={() => 100}
+                        width={width}
+                        itemData={tableData}
+                        useIsScrolling
+                      >
+                        {WindowedRowList}
+                      </List>
+                      {/* <VGrid
+                      columnCount={Object.keys(tableData[0]).length}
+                      columnWidth={150}
+                      height={height}
+                      rowCount={tableData.length}
+                      rowHeight={50}
+                      width={width}
+                      itemData={tableData}
+                    >
+                      {WindowedRow}
+                    </VGrid> */}
+                    </>
+                  );
+                }}
+              </AutoSizer>
+            </FormProvider>
+          </div>
+          <button type="submit">Submit</button>
+        </form>
+      </Grid>
+      <Grid item xs={3}> 
+        <div className="div">
+          {/* Removing watch will increase performace */}
+          <pre>{JSON.stringify(formMethods.watch(), null, 2)}</pre>
+        </div>
+      </Grid>
+    </Grid>
   );
 };
 

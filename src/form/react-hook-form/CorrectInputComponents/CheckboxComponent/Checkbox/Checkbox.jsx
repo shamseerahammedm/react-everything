@@ -1,22 +1,43 @@
 import { FormControlLabel, Checkbox as MuiCheckbox, FormHelperText, FormControl } from '@material-ui/core';
 import React from 'react';
-import { getError } from 'utils/formik';
 import PropTypes from 'prop-types';
+import { useController } from 'react-hook-form';
 
 const Checkbox = ({
-  field: { name, value, onChange, onBlur },
-  form: { errors, touched, status },
   id,
   label,
   className = '',
   formControlClassName = '',
-  onChange : customOnChange,
-  labelPlacement = 'end'
+  onChange: customOnChange = null,
+  labelPlacement = 'end',
+
+  // hook form specific
+  isCheckBoxGroup,
+  groupHandleChange,
+  groupHandleBlur,
+  groupValue,
+  groupError,
+  name, control, defaultValue, rules = {}
 }) => {
-  const errorText = getError(name, { touched, status, errors });
-  const isError = errorText ? true : false;
+
+  const {
+    field: { ref, value, onBlur, onChange },
+    fieldState: { error },
+  } = useController({
+    name,
+    control,
+    defaultValue: {},
+    rules: rules
+  });
+
+  const errorToUse = isCheckBoxGroup ? groupError : error;
+
+  console.log('groupValue', groupValue);
+  console.log('groupHandleChange', groupHandleChange);
+  console.log('groupValue', groupValue);
+
   return (
-    <FormControl error={isError} className="checkboxWrapper">
+    <FormControl error={!!errorToUse} className="checkboxWrapper">
       <FormControlLabel
         label={label}
         className={`customCheckboxFormControl ${formControlClassName}`}
@@ -24,11 +45,19 @@ const Checkbox = ({
         control={
           <MuiCheckbox
             id={id}
-            checked={value}
-            value={value}
-            onChange={(e)=>{
-              onChange(e);
-              if(customOnChange)
+            checked={isCheckBoxGroup ? groupValue : value}
+            value={isCheckBoxGroup ? groupValue : value}
+            onChange={(e) => {
+              if (isCheckBoxGroup)
+              {
+                groupHandleChange(e);
+              }
+              else
+              {
+                onChange(e);
+              }
+
+              if (customOnChange)
               {
                 customOnChange(e);
               }
@@ -40,7 +69,7 @@ const Checkbox = ({
           />
         }
       />
-      {touched[name] && isError && <FormHelperText>{errorText}</FormHelperText>}
+      { !!errorToUse && <FormHelperText>{errorToUse.message}</FormHelperText>}
     </FormControl>
   );
 };

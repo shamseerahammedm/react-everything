@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import './DatePicker.scss';
 import { theme } from 'utils/constants';
 import { getError } from 'utils/formik';
+import { useController } from 'react-hook-form';
 
 const datePickerTheme = createMuiTheme({
   overrides: {
@@ -73,9 +74,9 @@ const datePickerTheme = createMuiTheme({
 // Note : if datepicker needs to be opened conditionally also pass progOpen as true from the component
 
 const DatePicker = ({
-  field: { name, value },
-  form: { setFieldValue, setFieldTouched, touched, errors, status },
-  onChange = () => null,
+  // field: { name, value },
+  // form: { setFieldValue, setFieldTouched, touched, errors, status },
+  onChange : customOnChange = null,
   label = '',
   variant = 'outlined',
   size = 'small',
@@ -95,33 +96,44 @@ const DatePicker = ({
   open = false,
   onOpen = false,
   onClose = false,
+
+  // hook form specific
+  name, control, defaultValue, rules = {}
 }) => {
-  const errorText = getError(name, { touched, status, errors });
+
+  const {
+    field: { ref, value, onBlur, onChange },
+    fieldState : { error },
+  } = useController({
+    name,
+    control,
+    defaultValue: {},
+    rules : rules
+  });
+  
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <ThemeProvider theme={datePickerTheme}>
         <MuiDatePicker
           className={`customDatePicker ${className}`}
           fullWidth={fullWidth}
-          name={name}
           autoOk={autoOk}
           label={label}
           clearable={clearable}
           value={value}
           onChange={(value) => {
-            setFieldTouched(name, true);
-            setFieldValue(name, value);
+            onChange(value);
             // Running the custom on change function if passed
-            if (onChange)
+            if (customOnChange)
             {
-              onChange(value);
+              customOnChange(value);
             }
           }}
           inputVariant={variant}
           format={format}
           size={size}
-          error={!!errorText}
-          helperText={errorText}
+          error={!!error}
+          helperText={error && error.message}
           InputProps={showIcon ? {
             endAdornment: (
               <InputAdornment position="end">
@@ -163,6 +175,7 @@ DatePicker.propTypes = {
   open: PropTypes.bool,
   onOpen: PropTypes.func,
   onClose: PropTypes.func,
+  customOnChange: PropTypes.func,
 };
 
 export default DatePicker;

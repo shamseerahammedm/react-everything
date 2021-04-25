@@ -9,11 +9,10 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import './SingleSelect.scss';
 import PropTypes from 'prop-types';
 import { getError } from 'utils/formik';
+import { useController } from 'react-hook-form';
 
 const SingleSelect = ({
-  field: { name, value, onChange, ...otherFieldProps },
-  form: { touched, errors, setFieldValue, status },
-  onChange : customOnChange,
+  onChange : customOnChange = null,
   label,
   placeHolder,
   required = false,
@@ -25,11 +24,22 @@ const SingleSelect = ({
   disabled = false,
   disablePlaceholder = false,
   showValidationError = true,
+
+  // hook form specific
+  name, control, defaultValue, rules = {},
+
   ...otherProps
 }) => {
-
-  const errorText = getError(name, { touched, status, errors });
-  const isError = errorText ? true : false;
+  
+  const {
+    field: { ref, value, onBlur, onChange },
+    fieldState: { error },
+  } = useController({
+    name,
+    control,
+    defaultValue: {},
+    rules: rules
+  }); 
 
   // This is for reducing select size as there is no explicit size prop in material ui for select component
   let margin;
@@ -39,7 +49,7 @@ const SingleSelect = ({
   }
   const classes = useStyles();
   return (
-    <FormControl variant={variant} error={isError} margin={margin} className={classes.root}>
+    <FormControl variant={variant} error={!!error} margin={margin} className={classes.root}>
       <InputLabel className={classes.labelClass} required={required} shrink={false} id={label}>{label}</InputLabel>
       <Select
         IconComponent={ExpandMoreIcon}
@@ -60,7 +70,6 @@ const SingleSelect = ({
         displayEmpty
         name={name}
         label={label}
-        {...otherFieldProps}
         onChange={(e, index, value) => {
           onChange(e);
           // Running the custom on change function if passed
@@ -85,7 +94,7 @@ const SingleSelect = ({
         }
       </Select>
       {
-        isError && showValidationError && <FormHelperText className="errorMessageText">{errorText}</FormHelperText>
+        !!error && showValidationError && <FormHelperText className="errorMessageText">{error.message}</FormHelperText>
       }
     </FormControl>
   );

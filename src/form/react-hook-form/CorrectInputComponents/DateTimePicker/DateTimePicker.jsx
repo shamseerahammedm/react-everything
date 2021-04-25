@@ -7,11 +7,10 @@ import { InputAdornment, IconButton } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 import PropTypes from 'prop-types';
 import { getError } from 'utils/formik';
+import { useController } from 'react-hook-form';
 
 const DateTimePicker = ({
-  field: { name, value },
-  form: { setFieldValue, setFieldTouched, touched, errors, status },
-  onChange = () => null,
+  onChange : customOnChange = null,
   label = '',
   variant = 'outlined',
   size = 'small',
@@ -31,9 +30,20 @@ const DateTimePicker = ({
   open = false,
   onOpen = false,
   onClose = false,
+
+  // hook form specific
+  name, control, defaultValue, rules = {}
 }) => {
 
-  const errorText = getError(name, { touched, status, errors });
+  const {
+    field: { ref, value, onBlur, onChange },
+    fieldState : { error },
+  } = useController({
+    name,
+    control,
+    defaultValue: {},
+    rules : rules
+  });
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -41,25 +51,23 @@ const DateTimePicker = ({
         <MuiDateTimePicker
           className={`customDatePicker ${className}`}
           fullWidth={fullWidth}
-          name={name}
           autoOk={autoOk}
           label={label}
           clearable={clearable}
           value={value}
           onChange={(value) => {
-            setFieldTouched(name, true);
-            setFieldValue(name, value);
+            onChange(value);
             // Running the custom on change function if passed
-            if (onChange)
+            if (customOnChange)
             {
-              onChange(value);
+              customOnChange(value);
             }
           }}
           inputVariant={variant}
           format={format}
           size={size}
-          error={!!errorText}
-          helperText={errorText}
+          error={!!error}
+          helperText={error && error.message}
           InputProps={showIcon ? {
             endAdornment: (
               <InputAdornment position="end">
