@@ -14,12 +14,12 @@
 
 // ------------ async callback -------------- starts  
 
-var outerScopeVar;
+let outerScopeVar;
 
 // es6 implementation consoleIt is function thats passed 
-helloCatAsync((consoleIt)=>{
-  // console.log(consoleIt);
-});
+// helloCatAsync((consoleIt)=>{
+//   // console.log(consoleIt);
+// });
 
 // normal function implementation
 

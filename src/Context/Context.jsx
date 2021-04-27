@@ -10,19 +10,21 @@ const Context = () => {
     <UserProvider value={userName}>
       <ComponentA />
     </UserProvider>
-  )
-}
+  );
+};
 
 export default Context;
 
-
-
-
 const ComponentA = () => {
+
+  if(true)
+  {
+    const data = 1;
+  }
   return (
     <ComponentB />
   );
-}
+};
 
 const ComponentB = () => {
   return (
@@ -31,7 +33,7 @@ const ComponentB = () => {
       <ComponentCUseContext />
     </>
   );
-}
+};
 
 const ComponentC = () => {
   return (
@@ -44,13 +46,12 @@ const ComponentC = () => {
 
             </>
 
-          )
+          );
         }
       }
     </UserConsumer>
   );
-}
-
+};
 
 const ComponentCUseContext = () => {
   const userName = useContext(UserContext);  // if using useContext hook this no need to wrap everything with UserConsumer.
@@ -59,4 +60,4 @@ const ComponentCUseContext = () => {
       {userName} - comes using usecontext
     </>
   );
-}
+};

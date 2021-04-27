@@ -57,6 +57,7 @@ import CustomFormikNormal from 'form/Formik/CustomFormikNormal/CustomFormikNorma
 import CustomFormikMaterilUIPage from 'form/Formik/CustomFormikMaterilUI/Page';
 import CustomHookFormMaterilUIPage from 'form/react-hook-form/CustomHookFormMaterilUI/Page';
 import CustomHookFormMaterilUI from 'form/react-hook-form/CustomHookFormMaterilUI/CustomHookFormMaterilUI';
+import ReactTable from './ReactTable/ReactTable';
 
 function App() {
 
@@ -135,11 +136,13 @@ function App() {
 
         {/* Non react starts */}
         <Route exact path="/tailwind" component={TailWind} />
-        <Route path="*" render={() => <p> 404 Not found </p>} />
 
         {/* <Route exact path="/reactlazy" component={ReactLazy} /> */}
 
         <Route exact path="/material_file_tree" component={MaterilFileTree} />
+        <Route exact path="/react-table" component={ReactTable} />
+
+        <Route path="*" render={() => <p> 404 Not found </p>} />
       </Switch>
 
     </div>

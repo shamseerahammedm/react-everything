@@ -37,7 +37,7 @@ function renderSections (name, props) {
   switch (name)
   {
   case 'categories':
-    return  <Categories {...props} /> ;
+    return  <Categories {...props} />;
   case 'forms':
     return <Forms {...props}/>;
   case 'submit':

@@ -13,6 +13,7 @@
     "autosuggest-highlight": "^3.1.1",
     "axios": "^0.21.1",
     "cross-fetch": "^3.1.4",
+    "date-fns": "^2.0.0-beta.5",
     "formik": "^2.2.6",
     "inline-worker": "^1.1.0",
     "jquery": "^3.6.0",
@@ -22,6 +23,7 @@
     "material-ui-audio-player": "^1.6.2",
     "mic-recorder-to-mp3": "^2.2.2",
     "moment": "^2.29.1",
+    "namor": "^2.0.2",
     "papaparse": "^5.3.0",
     "plyr": "^3.6.4",
     "plyr-react": "^3.0.8",
@@ -38,6 +40,7 @@
     "react-redux": "^7.2.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "react-table": "^7.7.0",
     "react-virtualized-auto-sizer": "^1.0.5",
     "react-window": "^1.8.6",
     "redux": "^4.0.5",
@@ -45,6 +48,7 @@
     "redux-saga": "^1.1.3",
     "redux-thunk": "^2.3.0",
     "sass": "^1.32.8",
+    "styled-components": "^5.2.3",
     "tailwindcss": "^2.1.1",
     "yup": "^0.32.9"
   },
@@ -83,7 +87,29 @@
           "maxBOF": 1,
           "maxEOF": 1
         }
-      ]
+      ],
+      "object-curly-newline": [
+        "warn",
+        {
+          "consistent": true
+        }
+      ],
+      "semi-spacing": [
+        "error",
+        {
+          "before": false,
+          "after": true
+        }
+      ],
+      "no-use-before-define": [
+        "error",
+        {
+          "functions": true,
+          "classes": true,
+          "variables": false
+        }
+      ],
+      "no-var": "warn"
     }
   },
   "browserslist": {
