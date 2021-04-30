@@ -30,6 +30,7 @@
     "react": "^16.13.1",
     "react-audio-recorder": "^2.2.0",
     "react-bootstrap": "^1.5.2",
+    "react-charts": "^2.0.0-beta.7",
     "react-cropper": "^2.1.7",
     "react-dom": "^16.13.1",
     "react-dropzone": "^11.3.2",
@@ -95,21 +96,21 @@
         }
       ],
       "semi-spacing": [
-        "error",
+        "warn",
         {
           "before": false,
           "after": true
         }
       ],
-      "no-use-before-define": [
-        "error",
+      "comma-spacing": [
+        "warn",
         {
-          "functions": true,
-          "classes": true,
-          "variables": false
+          "before": false,
+          "after": true
         }
       ],
-      "no-var": "warn"
+      "no-var": "warn",
+      "object-curly-spacing" : ["warn", "always"]
     }
   },
   "browserslist": {

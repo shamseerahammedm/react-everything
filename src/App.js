@@ -58,6 +58,7 @@ import CustomFormikMaterilUIPage from 'form/Formik/CustomFormikMaterilUI/Page';
 import CustomHookFormMaterilUIPage from 'form/react-hook-form/CustomHookFormMaterilUI/Page';
 import CustomHookFormMaterilUI from 'form/react-hook-form/CustomHookFormMaterilUI/CustomHookFormMaterilUI';
 import ReactTable from './ReactTable/ReactTable';
+import BarChart from './Charts/ReactChart/ReactChart';
 
 function App() {
 
@@ -124,6 +125,7 @@ function App() {
         <Route exact path="/stepper" component={MultiParent} />
         <Route exact path="/formarray" component={FormikFormArrays} />
         <Route exact path="/css-grid" component={CssGrid} />
+        <Route exact path="/react-chart" component={BarChart} />
 
         {/* React Hook Form */}
         {/* <Route exact path="/react-hook-form/field-array" component={FormArray} /> */}
@@ -131,14 +133,12 @@ function App() {
         <Route exact path="/react-hook-form/phase1" component={Phase1} />
         <Route exact path="/resizer" component={AutoResizerHookForms} />
 
-        {/* Render props */}
         <Route exact path="/render-props" component={RenderProps} />
 
         {/* Non react starts */}
         <Route exact path="/tailwind" component={TailWind} />
 
         {/* <Route exact path="/reactlazy" component={ReactLazy} /> */}
-
         <Route exact path="/material_file_tree" component={MaterilFileTree} />
         <Route exact path="/react-table" component={ReactTable} />
 

@@ -69,7 +69,7 @@ const formatData = (data) => {
     else if(isObject(item))
     {
       const details = item;
-      console.log('details o',details);
+
       return  {
         age: details.trips,
         firstName: details.airline.country,
@@ -276,7 +276,6 @@ function Table({
 
 // Let's simulate a large dataset on the server (outside of our component)
 const serverData = makeData(100);
-console.log(serverData);
 
 function App() {
   const columns = React.useMemo(
@@ -347,7 +346,7 @@ function App() {
 
         const data = await fetchAPIData(pageIndex, pageSize);
         const details = formatData(data);
-        console.log('details',details);
+
         setData(details);
 
         // Your server could send back total page count.

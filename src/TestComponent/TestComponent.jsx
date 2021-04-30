@@ -1,343 +1,487 @@
-// import './formik-demo.css';
 import React from 'react';
-import { Formik, Field } from 'formik';
-import * as Yup from 'yup';
-import classNames from 'classnames';
-import { Button, FormControl, FormControlLabel, FormHelperText, FormLabel, makeStyles, Radio, RadioGroup } from '@material-ui/core';
-import { getError } from 'utils/formik';
-const useStyles = makeStyles((theme) => ({
-  formControl: {
-    margin: theme.spacing(3),
-  },
-  button: {
-    margin: theme.spacing(1, 1, 0, 0),
-  },
-}));
 
-// Input feedback
-const InputFeedback = ({ error }) =>
-  error ? <div className={classNames('input-feedback')}>{error}</div> : null;
+import { Chart } from 'react-charts';
 
-// Checkbox input
-const Checkbox = ({
-  field: { name, value, onChange, onBlur },
-  form: { errors, touched, setFieldValue },
-  id,
-  label,
-  className,
-  ...props
-}) => {
-  return (
-    <div>
-      <input
-        name={name}
-        id={id}
-        type="checkbox"
-        value={value}
-        checked={value}
-        onChange={onChange}
-        onBlur={onBlur}
-        className={classNames('radio-button')}
-      />
-      <label htmlFor={id}>{label}</label>
-      {touched[name] && <InputFeedback error={errors[name]} />}
-    </div>
+// import useDemoConfig from './useDemoConfig';
+// import useLagRadar from './useLagRadar';
+// import ResizableBox from './ResizableBox';
+// import './styles.css';
+
+function TestComponent() {
+  // useLagRadar();
+
+  const { data, randomizeData } = useChartConfig({
+    series: 3,
+    dataType: 'ordinal',
+    datums : 4
+  });
+
+  console.log(data);
+
+  const series = React.useMemo(() => ({ type: 'bar' }), []);
+
+  const axes = React.useMemo(
+    () => [
+      { primary: true, position: 'bottom', type: 'ordinal' },
+      { position: 'left', type: 'linear', stacked: true }
+    ],
+    []
   );
-};
 
-// Checkbox group
-class CheckboxGroup extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  const tooltip = React.useMemo(
+    () => ({
+      render: ({ datum, primaryAxis, getStyle }) => {
+        return <CustomTooltip {...{ getStyle, primaryAxis, datum }} />;
+      }
+    }),
+    []
+  );
 
-  handleChange = event => {
-    const target = event.currentTarget;
-    let valueArray = [...this.props.value] || [];
-
-    if (target.checked) {
-      valueArray.push(target.id);
-    } else {
-      valueArray.splice(valueArray.indexOf(target.id), 1);
-    }
-
-    this.props.onChange(this.props.id, valueArray);
-  };
-
-  handleBlur = () => {
-    // take care of touched
-    this.props.onBlur(this.props.id, true);
-  };
-
-  render() {
-    const { value, error, touched, label, className, children } = this.props;
-
-    const classes = classNames(
-      'input-field',
-      {
-        'is-success': value || (!error && touched), // handle prefilled or user-filled
-        'is-error': !!error && touched
-      },
-      className
-    );
-
-    return (
-      <div className={classes}>
-        <fieldset>
-          <legend>{label}</legend>
-          {React.Children.map(children, child => {
-            return React.cloneElement(child, {
-              field: {
-                value: value.includes(child.props.id),
-                onChange: this.handleChange,
-                onBlur: this.handleBlur
-              }
-            });
-          })}
-          {touched && <InputFeedback error={error} />}
-        </fieldset>
+  return (
+    <>
+      <button onClick={randomizeData}>Randomize Data</button>
+      <br />
+      <br />
+      <div style={{ width : '500px', height : '500px' }}>
+        <Chart
+          data={data}
+          series={series}
+          axes={axes}
+          primaryCursor
+          tooltip={tooltip}
+        />
       </div>
-    );
-  }
+    </>
+  );
 }
 
-// Radio input
-const RadioButton = ({
-  field: { name, value, onChange, onBlur },
-  form: { errors, touched, status ,setFieldValue},
-  id,
-  label,
-  labelPlacement = 'start',
-  onChange : customOnChange = null,
-  formControlClassName = '',
-  className = '',
-  ...props
-}) => {
+function CustomTooltip({ getStyle, primaryAxis, datum }) {
+  const data = React.useMemo(
+    () =>
+      datum
+        ? [
+          {
+            data: datum.group.map(d => ({
+              primary: d.series.label,
+              secondary: d.secondary,
+              color: getStyle(d).fill
+            }))
+          }
+        ]
+        : [],
+    [datum, getStyle]
+  );
+  console.log('datum', datum);
+  return datum ? (
+    <div
+      style={{
+        color: 'white',
+        pointerEvents: 'none'
+      }}
+    >
+      <h3
+        style={{
+          display: 'block',
+          textAlign: 'center'
+        }}
+      >
+        {primaryAxis.format(datum.primary)}
+      </h3>
+      <div
+        style={{
+          width: '300px',
+          height: '200px',
+          display: 'flex'
+        }}
+      >
+        <Chart
+          data={data}
+          dark
+          series={{ type: 'bar' }}
+          axes={[
+            {
+              primary: true,
+              position: 'bottom',
+              type: 'ordinal'
+            },
+            {
+              position: 'left',
+              type: 'linear'
+            }
+          ]}
+          getDatumStyle={datum => ({
+            color: datum.originalDatum.color
+          })}
+          primaryCursor={{
+            value: datum.size
+          }}
+        />
+      </div>
+    </div>
+  ) : null;
+}
 
-  console.log('value',value);
-  console.log('id',id);
+export default TestComponent;
 
-  const errorText = getError(name, { touched, status, errors });
-  const isError = errorText ? true : false;
+function ResizableBox({
+  children,
+  width = 500,
+  height = 300,
+  resizable = true,
+  style = {},
+  className
+}) {
   return (
     <div>
-      {/* <input
-        name={name}
-        id={id}
-        type="radio"
-        value={id} // could be something else for output?
-        checked={id === value}
-        onChange={onChange}
-        onBlur={onBlur}
-        className={classNames('radio-button')}
-        {...props}
-      />
-      <label htmlFor={id}>{label}</label> */}
+      {resizable ? (
+        <div width={width} height={height}>
+          <div
+            style={{
+              ...style,
+              width: '100%',
+              height: '100%'
+            }}
+            className={className}
+          >
+            {children}
+          </div>
+        </div>
+      ) : (
+        <div
+          style={{
+            width: `${width}px`,
+            height: `${height}px`,
+            ...style
+          }}
+          className={className}
+        >
+          {children}
+        </div>
+      )}
+    </div>
+  );
+}
 
-      <FormControl error={isError} className="customRadioFormControl">
-        <FormControlLabel
-          label={label}
-          className={`customRadioFormControlLabel ${formControlClassName}`}
-          labelPlacement={labelPlacement}
-          control={
-            <Radio
-              id={id}
-              checked={id === value}
-              value={id}
-              onChange={(e)=>{
-                setFieldValue(name, e.target.value);
-                if(customOnChange)
-                {
-                  customOnChange(e);
-                }
-              }}
-              onBlur={onBlur}
-              name={name}
-              color="primary"
-              className={`customRadio ${className}`}
-            />
+const options = {
+  elementType: ['line', 'area', 'bar', 'bubble'],
+  primaryAxisType: ['linear', 'time', 'log', 'ordinal'],
+  secondaryAxisType: ['linear', 'time', 'log', 'ordinal'],
+  primaryAxisPosition: ['top', 'left', 'right', 'bottom'],
+  secondaryAxisPosition: ['top', 'left', 'right', 'bottom'],
+  secondaryAxisStack: [true, false],
+  primaryAxisShow: [true, false],
+  secondaryAxisShow: [true, false],
+  grouping: ['single', 'series', 'primary', 'secondary'],
+  tooltipAnchor: [
+    'closest',
+    'top',
+    'bottom',
+    'left',
+    'right',
+    'center',
+    'gridTop',
+    'gridBottom',
+    'gridLeft',
+    'gridRight',
+    'gridCenter',
+    'pointer'
+  ],
+  tooltipAlign: [
+    'auto',
+    'top',
+    'bottom',
+    'left',
+    'right',
+    'topLeft',
+    'topRight',
+    'bottomLeft',
+    'bottomRight',
+    'center'
+  ],
+  snapCursor: [true, false]
+};
+
+const optionKeys = Object.keys(options);
+
+function makeSeries(i, dataType, useR, datums) {
+  const start = 0;
+  const startDate = new Date();
+  startDate.setMinutes(0);
+  startDate.setSeconds(0);
+  startDate.setMilliseconds(0);
+  // const length = 5 + Math.round(Math.random() * 15)
+  const length = datums;
+  const min = 0;
+  const max = 100;
+  const rMin = 2;
+  const rMax = 20;
+  const nullChance = 0;
+  return {
+    label: `Series ${i + 1}`,
+    data: [...new Array(length)].map((_, i) => {
+      let x = start + i;
+      if (dataType === 'ordinal') {
+        x = `Ordinal Group ${x}`;
+      }
+      if (dataType === 'time') {
+        x = new Date(startDate.getTime() + 60 * 1000 * 30 * i);
+      }
+      if (dataType === 'linear') {
+        x =
+          Math.random() < nullChance
+            ? null
+            : min + Math.round(Math.random() * (max - min));
+      }
+      const distribution = 1.1;
+      const y =
+        Math.random() < nullChance
+          ? null
+          : min + Math.round(Math.random() * (max - min));
+      const r = !useR
+        ? undefined
+        : rMax -
+          Math.floor(
+            Math.log(Math.random() * (distribution ** rMax - rMin) + rMin) /
+              Math.log(distribution)
+          );
+      return {
+        primary: x,
+        secondary: y,
+        radius: r
+      };
+    })
+  };
+}
+
+function makeDataFrom(dataType, series, useR, datums) {
+  return [
+    ...new Array(series || Math.max(Math.round(Math.random() * 5), 1))
+  ].map((d, i) => makeSeries(i, dataType, useR, datums));
+}
+
+function useChartConfig({
+  series,
+  useR,
+  show = [],
+  count = 1,
+  resizable = true,
+  canRandomize = true,
+  dataType = 'time',
+  elementType = 'line',
+  primaryAxisType = 'time',
+  secondaryAxisType = 'linear',
+  primaryAxisPosition = 'bottom',
+  secondaryAxisPosition = 'left',
+  primaryAxisStack = false,
+  secondaryAxisStack = true,
+  primaryAxisShow = true,
+  secondaryAxisShow = true,
+  tooltipAnchor = 'closest',
+  tooltipAlign = 'auto',
+  grouping = 'primary',
+  snapCursor = true,
+  datums = 10
+}) {
+  const [state, setState] = React.useState({
+    count,
+    resizable,
+    canRandomize,
+    dataType,
+    elementType,
+    primaryAxisType,
+    secondaryAxisType,
+    primaryAxisPosition,
+    secondaryAxisPosition,
+    primaryAxisStack,
+    secondaryAxisStack,
+    primaryAxisShow,
+    secondaryAxisShow,
+    tooltipAnchor,
+    tooltipAlign,
+    grouping,
+    snapCursor,
+    datums,
+    data: makeDataFrom(dataType, series, useR, datums)
+  });
+
+  React.useEffect(() => {
+    setState(old => ({
+      ...old,
+      data: makeDataFrom(dataType, series, useR, datums)
+    }));
+  }, [count, dataType, datums, series, useR]);
+
+  const randomizeData = () =>
+    setState(old => ({
+      ...old,
+      data: makeDataFrom(dataType, series, useR, datums)
+    }));
+
+  const Options = optionKeys
+    .filter(option => show.indexOf(option) > -1)
+    .map(option => (
+      <div key={option}>
+        {option}: &nbsp;
+        <select
+          value={state[option]}
+          onChange={({ target: { value } }) =>
+            setState(old => ({
+              ...old,
+              [option]:
+                typeof options[option][0] === 'boolean'
+                  ? value === 'true'
+                  : value
+            }))
           }
-        />
-        {touched[name] && isError && <FormHelperText>{errorText}</FormHelperText>}
-      </FormControl>
-    </div>
-  );
-};
+        >
+          {options[option].map(d => (
+            <option value={d} key={d.toString()}>
+              {d.toString()}
+            </option>
+          ))}
+        </select>
+        <br />
+      </div>
+    ));
 
-// Radio group
-const RadioButtonGroup = ({
-  value,
-  error,
-  touched,
-  id,
-  label,
-  className,
-  children
-}) => {
-  const classes = classNames(
-    'input-field',
-    {
-      'is-success': value || (!error && touched), // handle prefilled or user-filled
-      'is-error': !!error && touched
-    },
-    className
-  );
+  return {
+    ...state,
+    randomizeData,
+    Options
+  };
+}
 
-  return (
-    <div className={classes}>
-      <fieldset>
-        <legend>{label}</legend>
-        {children}
-        {touched && <InputFeedback error={error} />}
-      </fieldset>
+/**
+ * lagRadar
+ * Licence: ISC copyright: @mobz 2018
+ */
 
-      <FormControl component="fieldset" error={error} className={classes.formControl}>
-        <FormLabel component="legend">{label}</FormLabel>
-        {children}
-        {/* <FormHelperText>{helperText}</FormHelperText> */}
-      </FormControl>
-    </div>
-  );
-};
+function lagRadar(config = {}) {
+  const {
+    frames = 50, // number of frames to draw, more = worse performance
+    speed = 0.0017, // how fast the sweep moves (rads per ms)
+    size = 300, // outer frame px
+    inset = 3, // circle inset px
+    parent = document.body, // DOM node to attach to
+  } = config;
 
-const App = () => {
-  const classes = useStyles();
-  const [value, setValue] = React.useState('');
-  const [error, setError] = React.useState(false);
-  const [helperText, setHelperText] = React.useState('Choose wisely');
+  const svgns = 'http://www.w3.org/2000/svg';
 
-  const handleRadioChange = (event) => {
-    setValue(event.target.value);
-    setHelperText(' ');
-    setError(false);
+  const styles = document.createTextNode(`
+    .lagRadar {
+  pointer-events: none;
+}
+.lagRadar-sweep > * {
+      shape-rendering: crispEdges;
+    }
+    .lagRadar-face {
+      fill: transparent;
+    }
+    .lagRadar-hand {
+      stroke-width: 4px;
+      stroke-linecap: round;
+    }
+  `);
+
+  function $svg(tag, props = {}, children = []) {
+    const el = document.createElementNS(svgns, tag);
+    Object.keys(props).forEach((prop) => el.setAttribute(prop, props[prop]));
+    children.forEach((child) => el.appendChild(child));
+    return el;
+  }
+
+  const PI2 = Math.PI * 2;
+  const middle = size / 2;
+  const radius = middle - inset;
+
+  const $hand = $svg('path', { class: 'lagRadar-hand' });
+  const $arcs = new Array(frames).fill('path').map((t) => $svg(t));
+  const $root = $svg('svg', { class: 'lagRadar', height: size, width: size }, [
+    $svg('style', { type: 'text/css' }, [styles]),
+    $svg('g', { class: 'lagRadar-sweep' }, $arcs),
+    $hand,
+    $svg('circle', {
+      class: 'lagRadar-face',
+      cx: middle,
+      cy: middle,
+      r: radius,
+    }),
+  ]);
+
+  parent.appendChild($root);
+
+  let frame;
+  let framePtr = 0;
+  let last = {
+    rotation: 0,
+    now: Date.now(),
+    tx: middle + radius,
+    ty: middle,
   };
 
-  return (
-    <div className="app">
-      <h1>Radio & checkbox inputs with Formik</h1>
-      <Formik
-        initialValues={{
-          radioGroup: '',
-          checkboxGroup: [],
-          singleCheckbox: false,
-          seperate : ''
-        }}
-        validationSchema={Yup.object().shape({
-          radioGroup: Yup.string().required('A radio option is required'),
-          checkboxGroup: Yup.array().required(
-            'At least one checkbox is required'
-          ),
-          singleCheckbox: Yup.bool().oneOf([true], 'Must agree to something'),
-          seperate : Yup.string().required('A radio option is required'),
-        })}
-        onSubmit={(values, actions) => {
-          setTimeout(() => {
-            console.log(JSON.stringify(values, null, 2));
-            actions.setSubmitting(false);
-          }, 500);
-        }}
-        render={({
-          handleSubmit,
-          setFieldValue,
-          setFieldTouched,
-          values,
-          errors,
-          touched,
-          isSubmitting
-        }) => (
-          <form onSubmit={handleSubmit}>
-            <h2>Single checkbox</h2>
-            <Field
-              component={Checkbox}
-              name="singleCheckbox"
-              id="singleCheckbox"
-              label="Agree to something"
-            />
+  const calcHue = (() => {
+    const max_hue = 120;
+    const max_ms = 1000;
+    const log_f = 10;
+    const mult = max_hue / Math.log(max_ms / log_f);
+    return function (ms_delta) {
+      return (
+        max_hue -
+        Math.max(0, Math.min(mult * Math.log(ms_delta / log_f), max_hue))
+      );
+    };
+  })();
 
-            <h2>Checkbox group</h2>
-            <CheckboxGroup
-              id="checkboxGroup"
-              label="Which of these?"
-              value={values.checkboxGroup}
-              error={errors.checkboxGroup}
-              touched={touched.checkboxGroup}
-              onChange={setFieldValue}
-              onBlur={setFieldTouched}
-            >
-              <Field
-                component={Checkbox}
-                name="checkboxGroup"
-                id="checkbox1"
-                label="Option 1"
-              />
-              <Field
-                component={Checkbox}
-                name="checkboxGroup"
-                id="checkbox2"
-                label="Option 2"
-              />
-              <Field
-                component={Checkbox}
-                name="checkboxGroup"
-                id="checkbox3"
-                label="Option 3"
-              />
-            </CheckboxGroup>
+  function animate() {
+    const now = Date.now();
+    const rdelta = Math.min(PI2 - speed, speed * (now - last.now));
+    const rotation = (last.rotation + rdelta) % PI2;
+    const tx = middle + radius * Math.cos(rotation);
+    const ty = middle + radius * Math.sin(rotation);
+    const bigArc = rdelta < Math.PI ? '0' : '1';
+    const path = `M${tx} ${ty}A${radius} ${radius} 0 ${bigArc} 0 ${last.tx} ${last.ty}L${middle} ${middle}`;
+    const hue = calcHue(rdelta / speed);
 
-            <h2>Radio group</h2>
-            <RadioButtonGroup
-              id="radioGroup"
-              label="One of these please"
-              value={values.radioGroup}
-              error={errors.radioGroup}
-              touched={touched.radioGroup}
-            >
-              <Field
-                component={RadioButton}
-                name="radioGroup"
-                id="radioOption1"
-                label="Choose this option"
-              />
-              <Field
-                component={RadioButton}
-                name="radioGroup"
-                id="radioOption2"
-                label="Or choose this one"
-              />
-            </RadioButtonGroup>
-            
-            <h2>Radio single</h2>
-            <Field
-              component={RadioButton}
-              name="seperate"
-              id="radioOption2"
-              label="Or choose this one"
-            />
+    $arcs[framePtr % frames].setAttribute('d', path);
+    $arcs[framePtr % frames].setAttribute('fill', `hsl(${hue}, 80%, 40%)`);
+    $hand.setAttribute('d', `M${middle} ${middle}L${tx} ${ty}`);
+    $hand.setAttribute('stroke', `hsl(${hue}, 80%, 60%)`);
 
-            <FormControl component="fieldset" error={error} className={classes.formControl}>
-              <FormLabel component="legend">Pop quiz: Material-UI is...</FormLabel>
-              <RadioGroup aria-label="quiz" name="quiz" value={value} onChange={handleRadioChange}>
-                <FormControlLabel value="best" control={<Radio />} label="The best!" />
-                <FormControlLabel value="worst" control={<Radio />} label="The worst." />
-              </RadioGroup>
-              <FormHelperText>{helperText}</FormHelperText>
-              <Button type="submit" variant="outlined" color="primary" className={classes.button}>
-    Check Answer
-              </Button>
-            </FormControl>
+    for (let i = 0; i < frames; i++) {
+      $arcs[(frames + framePtr - i) % frames].style.fillOpacity =
+        1 - i / frames;
+    }
 
-            <h2>Single radio</h2>
-            <p>Is that a valid use case?</p>
-            <pre>{JSON.stringify(values, null, 2)}</pre>
-            <button type="submit" disabled={isSubmitting}>
-          Submit
-            </button>
-          </form>
-        )}
-      />
-    </div>
+    framePtr++;
+    last = {
+      now,
+      rotation,
+      tx,
+      ty,
+    };
 
-  );
-};
+    frame = window.requestAnimationFrame(animate);
+  }
 
-export default App;
+  animate();
+
+  return function destroy() {
+    if (frame) {
+      window.cancelAnimationFrame(frame);
+    }
+    $root.remove();
+  };
+}
+
+function useLagRadar() {
+
+  React.useEffect(() => {
+    return lagRadar({
+      frames: 60, // number of frames to draw, more = worse performance
+      speed: 0.0017, // how fast the sweep moves (rads per ms)
+      size: Math.min(500, 500) / 3, // outer frame px
+      inset: 3, // circle inset px
+      parent: document.body, // DOM node to attach to
+    });
+  }, []);
+}
