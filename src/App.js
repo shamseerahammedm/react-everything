@@ -21,7 +21,6 @@ import Javascript from './javascript/javscript';
 import Authentication from './authentication/authentication';
 
 import FormikFullFormFormArrayValidation from './form/Formik/formik-form-array-validation/FormikFullFormFormArrayValidation';
-import HooksApiTest from './Hooks/HooksAPITest.component';
 // import ReduxFormTest from './form/redux-form/redux.form';
 import StepForm from './form/step-form/step-form';
 // import Calendar from './calendar/calendar';
@@ -59,6 +58,7 @@ import CustomHookFormMaterilUIPage from 'form/react-hook-form/CustomHookFormMate
 import CustomHookFormMaterilUI from 'form/react-hook-form/CustomHookFormMaterilUI/CustomHookFormMaterilUI';
 import ReactTable from './ReactTable/ReactTable';
 import BarChart from './Charts/ReactChart/ReactChart';
+import CustomHook from 'Hooks/CustomHook/CustomHook';
 
 function App() {
 
@@ -101,7 +101,6 @@ function App() {
         <Route exact path="/promise" component={Promise} />
 
         <Route exact path="/hooks" component={Hooks} />
-        <Route exact path="/hooks_difference" component={HooksApiTest} />
 
         <Route exact path="/full-form" component={MaterialUiFullForm} />
         <Route exact path="/materialui" component={MaterialUIFUll} />
@@ -141,6 +140,7 @@ function App() {
         {/* <Route exact path="/reactlazy" component={ReactLazy} /> */}
         <Route exact path="/material_file_tree" component={MaterilFileTree} />
         <Route exact path="/react-table" component={ReactTable} />
+        <Route exact path="/custom-hook" component={CustomHook} />
 
         <Route path="*" render={() => <p> 404 Not found </p>} />
       </Switch>
@@ -150,3 +150,4 @@ function App() {
 }
 
 export default App;
+
