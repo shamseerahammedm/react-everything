@@ -1,15 +1,20 @@
 import React, { useContext } from 'react';
 import { UserProvider, UserConsumer } from './userContext';
 import UserContext from './userContext';
+import { Link } from 'react-router-dom';
 
 const Context = () => {
 
   const userName = 'shamseer';
 
   return (
-    <UserProvider value={userName}>
-      <ComponentA />
-    </UserProvider>
+    <>
+      <UserProvider value={userName}>
+        <ComponentA />
+      </UserProvider>
+      <hr />
+      <Link to="/to-do-context">Context App</Link>
+    </>
   );
 };
 

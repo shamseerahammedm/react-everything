@@ -59,6 +59,7 @@ import CustomHookFormMaterilUI from 'form/react-hook-form/CustomHookFormMaterilU
 import ReactTable from './ReactTable/ReactTable';
 import BarChart from './Charts/ReactChart/ReactChart';
 import CustomHook from 'Hooks/CustomHook/CustomHook';
+import ToDoApp from 'Context/TodoApp/TodoApp';
 
 function App() {
 
@@ -106,7 +107,6 @@ function App() {
         <Route exact path="/materialui" component={MaterialUIFUll} />
 
         <Route exact path="/userimperativehandle" component={UseimperativeHandle} />
-        <Route exact path="/context" component={Context} />
 
         <Route exact path="/authentication" component={Authentication} />
         <Route exact path="/javascript" component={Javascript} />
@@ -141,6 +141,12 @@ function App() {
         <Route exact path="/material_file_tree" component={MaterilFileTree} />
         <Route exact path="/react-table" component={ReactTable} />
         <Route exact path="/custom-hook" component={CustomHook} />
+
+        {/* -----------------------  Context starts ----------------------- */}
+        <Route exact path="/context" component={Context} />
+        <Route exact path="/to-do-context" component={ToDoApp} />
+        
+        {/* -----------------------  Context ends ----------------------- */}
 
         <Route path="*" render={() => <p> 404 Not found </p>} />
       </Switch>

@@ -111,6 +111,7 @@ const MultiSelect = ({
             onClear();
           }
         }}
+
         renderOption={(option, { inputValue }) => {
           const matches = match(option[optionLabel], inputValue);
           const parts = parse(option[optionLabel], matches);

@@ -79,6 +79,24 @@ const generalReducer = (state = INITIAL_STATE, action) => {
 
     };
 
+  case 'FETCH_DATA':
+    return {
+      ...state,
+      data : action.payload
+    };
+
+  case 'FETCH_DETAILS':
+    return {
+      ...state,
+      details : action.payload
+    };
+
+  case 'FETCH_FUNCTIONS':
+    return {
+      ...state,
+      functions : action.payload
+    };
+
   default:
     return state;
   }
