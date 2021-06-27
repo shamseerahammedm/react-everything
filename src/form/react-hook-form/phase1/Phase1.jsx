@@ -8,7 +8,7 @@ const schema = yup.object().shape({
   select: yup.string().required(),
 });
 
-const Test = () => {
+const PhaseOne = () => {
   const formProperties = useForm({
     resolver: yupResolver(schema)
   });
@@ -66,9 +66,6 @@ const Select = ({
   );
 };
 
-export default Test;
-
-
-
+export default PhaseOne;
 
 // example updated to v7 of rect hook form, currently 6 is installed remove 6 and install 7

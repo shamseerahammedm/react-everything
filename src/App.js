@@ -43,7 +43,7 @@ import FormikFormArrays from './form/Formik/formik-form-array-validation/bootstr
 import CssGrid from './css-grids/CssGrid';
 import FormArray from './form/react-hook-form/form-array/form-array';
 import FormArray2 from './form/react-hook-form/FormArray2/FormArray2';
-import Phase1 from './form/react-hook-form/phase1/Phase1';
+
 import RenderProps from './RenderProps/RenderProps';
 import AutoResizerHookForms from './form/react-hook-form/AutoResizerHookForms/AutoResizerHookForms';
 import Test from './form/react-hook-form/phase1/Phase1';
@@ -63,6 +63,7 @@ import CustomHook from 'Hooks/CustomHook/CustomHook';
 import ToDoApp from 'Context/TodoApp/TodoApp';
 import MultistepWizard from 'form/Formik/MultistepWizard/MultistepWizard';
 import Catalogue from 'Catalogue/Catalogue';
+import PhaseOne from 'form/react-hook-form/phase1/Phase1';
 
 
 export const routePaths = [
@@ -72,13 +73,15 @@ export const routePaths = [
       {
         linkName: "Root Page",
         path: "/",
+        linkDescription: null,
         exact: true,
-        exclude: false,
+        exclude: true,
         component: Catalogue
       },
       {
-        linkName: "Simple form",
+        linkName: "formtag",
         path: "/formtag",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: FormikTag
@@ -86,6 +89,7 @@ export const routePaths = [
       {
         linkName: "Simple form",
         path: "/formik",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: FormikForm
@@ -93,6 +97,7 @@ export const routePaths = [
       {
         linkName: "Simple form",
         path: "/formikformarray",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: FormikFullFormFormArrayValidation
@@ -100,6 +105,7 @@ export const routePaths = [
       {
         linkName: "Simple form",
         path: "/stepform",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: StepForm
@@ -107,62 +113,16 @@ export const routePaths = [
       {
         linkName: "Simple form",
         path: "/formik-backend-errors",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: FormikBackEndErrors
       },
-      {
-        linkName: "Simple form",
-        path: "/formik-backend-errors-proper",
-        exact: true,
-        exclude: false,
-        component: FormikBackEndErrorsProper
-      },
-      {
-        linkName: "Simple form",
-        path: "/formik-custom-material-ui",
-        exact: true,
-        exclude: false,
-        component: CustomFormikMaterilUIPage
-      },
-      {
-        linkName: "Simple form",
-        path: "/formik-custom-material-ui-create",
-        exact: true,
-        exclude: false,
-        component: CustomFormikMaterialUI
-      },
-      {
-        linkName: "Simple form",
-        path: "/formik-custom-material-ui-edit/:Id",
-        exact: true,
-        exclude: false,
-        component: CustomFormikMaterialUI
-      },
-      {
-        linkName: "Simple form",
-        path: "/react-hook-from-custom-material-ui",
-        exact: true,
-        exclude: false,
-        component: CustomHookFormMaterilUIPage
-      },
-      {
-        linkName: "Simple form",
-        path: "/react-hook-from-custom-material-ui-create",
-        exact: true,
-        exclude: false,
-        component: CustomHookFormMaterilUI
-      },
-      {
-        linkName: "Simple form",
-        path: "/react-hook-from-custom-material-ui-edit/:Id",
-        exact: true,
-        exclude: false,
-        component: CustomHookFormMaterilUI
-      },
+     
       {
         linkName: "Simple form",
         path: "/formik-custom-normal",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: CustomFormikNormal
@@ -170,6 +130,7 @@ export const routePaths = [
       {
         linkName: "Simple form",
         path: "/binding",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: BindingComponent
@@ -177,6 +138,7 @@ export const routePaths = [
       {
         linkName: "Simple form",
         path: "/pagination",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: LoadMore
@@ -184,6 +146,7 @@ export const routePaths = [
       {
         linkName: "Simple form",
         path: "/refs",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: Refs
@@ -191,6 +154,7 @@ export const routePaths = [
       {
         linkName: "Simple form",
         path: "/lifecyclemethods",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: LifeCycleMethods
@@ -198,6 +162,7 @@ export const routePaths = [
       {
         linkName: "Simple form",
         path: "/intersectionobserver",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: IntersectionObserverTesting
@@ -205,6 +170,7 @@ export const routePaths = [
       {
         linkName: "Simple form",
         path: "/test",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: TestComponent
@@ -212,6 +178,7 @@ export const routePaths = [
       {
         linkName: "Simple form",
         path: "/route",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: RouteComponent
@@ -219,6 +186,7 @@ export const routePaths = [
       {
         linkName: "Simple form",
         path: "/transitiongroup",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: TransitionGroup
@@ -226,6 +194,7 @@ export const routePaths = [
       {
         linkName: "Simple form",
         path: "/csstransition",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: Csstransition
@@ -233,6 +202,7 @@ export const routePaths = [
       {
         linkName: "Simple form",
         path: "/redux",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: Redux
@@ -240,6 +210,7 @@ export const routePaths = [
       {
         linkName: "Simple form",
         path: "/promise",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: Promise
@@ -247,6 +218,7 @@ export const routePaths = [
       {
         linkName: "Simple form",
         path: "/hooks",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: Hooks
@@ -254,6 +226,7 @@ export const routePaths = [
       {
         linkName: "Simple form",
         path: "/full-form",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: MaterialUiFullForm
@@ -261,6 +234,7 @@ export const routePaths = [
       {
         linkName: "Simple form",
         path: "/materialui",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: MaterialUIFUll
@@ -268,6 +242,7 @@ export const routePaths = [
       {
         linkName: "Simple form",
         path: "/userimperativehandle",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: UseimperativeHandle
@@ -275,6 +250,7 @@ export const routePaths = [
       {
         linkName: "Simple form",
         path: "/authentication",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: Authentication
@@ -282,6 +258,7 @@ export const routePaths = [
       {
         linkName: "Simple form",
         path: "/javascript",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: Javascript
@@ -289,6 +266,7 @@ export const routePaths = [
       {
         linkName: "Simple form",
         path: "/material_file_tree",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: MaterilFileTree
@@ -296,6 +274,7 @@ export const routePaths = [
       {
         linkName: "Simple form",
         path: "/stepper",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: MultiParent
@@ -303,6 +282,7 @@ export const routePaths = [
       {
         linkName: "Simple form",
         path: "/formarray",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: FormikFormArrays
@@ -310,6 +290,7 @@ export const routePaths = [
       {
         linkName: "Simple form",
         path: "/css-grid",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: CssGrid
@@ -317,20 +298,16 @@ export const routePaths = [
       {
         linkName: "Simple form",
         path: "/react-chart",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: BarChart
       },
-      {
-        linkName: "Simple form",
-        path: "/react-hook-form/phase1",
-        exact: true,
-        exclude: false,
-        component: Phase1
-      },
+      
       {
         linkName: "Simple form",
         path: "/resizer",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: AutoResizerHookForms
@@ -338,6 +315,7 @@ export const routePaths = [
       {
         linkName: "Simple form",
         path: "/render-props",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: RenderProps
@@ -345,6 +323,7 @@ export const routePaths = [
       {
         linkName: "Simple form",
         path: "/tailwind",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: TailWind
@@ -352,6 +331,7 @@ export const routePaths = [
       {
         linkName: "Simple form",
         path: "/material_file_tree",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: MaterilFileTree
@@ -359,14 +339,16 @@ export const routePaths = [
       {
         linkName: "Simple form",
         path: "/react-table",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: ReactTable
       },
-      
+
       {
         linkName: "Simple form",
         path: "/to-do-context",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: ToDoApp
@@ -374,6 +356,7 @@ export const routePaths = [
       {
         linkName: "Simple form",
         path: "/multistep1",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: MultistepWizard
@@ -386,6 +369,7 @@ export const routePaths = [
       {
         linkName: "Simple form",
         path: "/custom-hook",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: CustomHook
@@ -393,19 +377,95 @@ export const routePaths = [
       {
         linkName: "Simple form",
         path: "/context",
+        linkDescription: null,
         exact: true,
         exclude: false,
         component: Context
+      }
+    ]
+  },
+  {
+    name: 'React hook form',
+    linksDetails: [
+      {
+        linkName: "React hook form",
+        path: "/react-hook-form/phase1",
+        linkDescription: null,
+        exact: true,
+        exclude: false,
+        component: PhaseOne
+      },
+      {
+        linkName: "Custom material ui ",
+        path: "/react-hook-from-custom-material-ui",
+        linkDescription: null,
+        exact: true,
+        exclude: false,
+        component: CustomHookFormMaterilUIPage
+      },
+      {
+        linkName: "Custom material ui :: Create",
+        path: "/react-hook-from-custom-material-ui-create",
+        linkDescription: null,
+        exact: true,
+        exclude: false,
+        component: CustomHookFormMaterilUI
+      },
+      {
+        linkName: "Custom material ui :: Edit",
+        path: "/react-hook-from-custom-material-ui-edit/:Id",
+        linkDescription: null,
+        exact: true,
+        exclude: false,
+        component: CustomHookFormMaterilUI
+      },
+    ]
+  },
+  {
+    name: 'Formik',
+    linksDetails: [
+      {
+        linkName: "Formik back end error",
+        path: "/formik-backend-errors-proper",
+        linkDescription: null,
+        exact: true,
+        exclude: false,
+        component: FormikBackEndErrorsProper
+      },
+      {
+        linkName: "Custom material ui",
+        path: "/formik-custom-material-ui",
+        linkDescription: null,
+        exact: true,
+        exclude: false,
+        component: CustomFormikMaterilUIPage
+      },
+      {
+        linkName: "Custom material ui :: Create",
+        path: "/formik-custom-material-ui-create",
+        linkDescription: null,
+        exact: true,
+        exclude: false,
+        component: CustomFormikMaterialUI
+      },
+      {
+        linkName: "Custom material ui :: Edit",
+        path: "/formik-custom-material-ui-edit/:Id",
+        linkDescription: null,
+        exact: true,
+        exclude: false,
+        component: CustomFormikMaterialUI
       },
       {
         linkName: "Simple form",
         path: "*",
-        exclude: false,
-        component: <p> 404 Not found </p>
+        exclude: true,
+        component: <p> 404 Not found :: Dont change this object position </p>
       }
     ]
   },
 ]
+
 
 
 
@@ -416,6 +476,7 @@ function App() {
         {
           routePaths.map(item => {
             return item.linksDetails.map(linkItem => {
+              console.log('linkItem',linkItem);
               return (
                 <Route
                   exact={linkItem.exact}
@@ -440,44 +501,44 @@ export default App;
 // Section Starts :: old links that exists in repo but not included in link array -- 
 
 const details =
-<>
+  <>
 
-  {/* Form section starts*/}
+    {/* Form section starts*/}
 
-  {/* <Route exact path="/reduxform" component={ReduxFormTest} /> */}
+    {/* <Route exact path="/reduxform" component={ReduxFormTest} /> */}
 
-  {/* Form section ends*/}
-
-
-
-  {/* <Route exact path="/calendar" component={Calendar} /> */}
-  {/* <Route exact path="/text_editor" component={TextEditor} /> */}
- 
-  {/* <Route exact path="/chonky" component={Chonky} /> */}
-  {/* <Route exact path="/folder_browser" component={FolderBrowser} /> */}
-  {/* <Route exact path="/soundrecord" component={RecordView} /> */}
-  {/* <Route exact path="/audiorecorder" component={AudioRecorderComponent} /> */}
-  {/* // the one that worked */}
-  {/* <Route exact path="/soundrecorder" component={SoundRecorder} /> */}
-  {/* <Route exact path="/multistep" component={MultiStepForm} /> */}
-  
-
-  {/* React Hook Form */}
-  {/* <Route exact path="/react-hook-form/field-array" component={FormArray} /> */}
-  {/* <Route exact path="/react-hook-form/field-array2" component={FormArray2} /> */}
-  
-
-  {/* Non react starts */}
+    {/* Form section ends*/}
 
 
-  {/* <Route exact path="/reactlazy" component={ReactLazy} /> */}
+
+    {/* <Route exact path="/calendar" component={Calendar} /> */}
+    {/* <Route exact path="/text_editor" component={TextEditor} /> */}
+
+    {/* <Route exact path="/chonky" component={Chonky} /> */}
+    {/* <Route exact path="/folder_browser" component={FolderBrowser} /> */}
+    {/* <Route exact path="/soundrecord" component={RecordView} /> */}
+    {/* <Route exact path="/audiorecorder" component={AudioRecorderComponent} /> */}
+    {/* // the one that worked */}
+    {/* <Route exact path="/soundrecorder" component={SoundRecorder} /> */}
+    {/* <Route exact path="/multistep" component={MultiStepForm} /> */}
 
 
-  {/* -----------------------  Context starts ----------------------- */}
+    {/* React Hook Form */}
+    {/* <Route exact path="/react-hook-form/field-array" component={FormArray} /> */}
+    {/* <Route exact path="/react-hook-form/field-array2" component={FormArray2} /> */}
 
-  {/* -----------------------  Context ends ----------------------- */}
 
-  {/* formik multi step form */}
-</>
+    {/* Non react starts */}
+
+
+    {/* <Route exact path="/reactlazy" component={ReactLazy} /> */}
+
+
+    {/* -----------------------  Context starts ----------------------- */}
+
+    {/* -----------------------  Context ends ----------------------- */}
+
+    {/* formik multi step form */}
+  </>
 
 // Section Starts :: old links that exists in repo but not included in link array -- 
