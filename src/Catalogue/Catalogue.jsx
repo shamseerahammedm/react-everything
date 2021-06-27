@@ -2,6 +2,7 @@ import { routePaths } from 'App';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import './Catalogue.scss';
+import { NavLink } from 'react-router-dom';
 
 const Catalogue = () => {
   const history = useHistory();
@@ -20,10 +21,17 @@ const Catalogue = () => {
                     {
                       item.linksDetails.map(linkItem => {
                         return !linkItem.exclude && (
-                          <div className="col-sm-3 cardWrapper" onClick={() => history.push(linkItem.path)}>
+                          <div className="col-sm-3 cardWrapper" >
                             <div className="card mb-3" >
                               <div className="card-body">
-                                <h5 className="card-title">{linkItem.linkName}</h5>
+                                <NavLink 
+                                  className="card-title" 
+                                  to={linkItem.path} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                > 
+                                  {linkItem.linkName} 
+                                </NavLink>
                                 {linkItem.linkDescription && <p className="card-text">{linkItem.linkDescription}</p>}
                               </div>
                             </div>
