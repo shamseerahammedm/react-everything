@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
@@ -60,100 +61,423 @@ import ReactTable from './ReactTable/ReactTable';
 import BarChart from './Charts/ReactChart/ReactChart';
 import CustomHook from 'Hooks/CustomHook/CustomHook';
 import ToDoApp from 'Context/TodoApp/TodoApp';
+import MultistepWizard from 'form/Formik/MultistepWizard/MultistepWizard';
+import Catalogue from 'Catalogue/Catalogue';
+
+
+export const routePaths = [
+  {
+    name: 'Formik section',
+    linksDetails: [
+      {
+        linkName: "Root Page",
+        path: "/",
+        exact: true,
+        exclude: false,
+        component: Catalogue
+      },
+      {
+        linkName: "Simple form",
+        path: "/formtag",
+        exact: true,
+        exclude: false,
+        component: FormikTag
+      },
+      {
+        linkName: "Simple form",
+        path: "/formik",
+        exact: true,
+        exclude: false,
+        component: FormikForm
+      },
+      {
+        linkName: "Simple form",
+        path: "/formikformarray",
+        exact: true,
+        exclude: false,
+        component: FormikFullFormFormArrayValidation
+      },
+      {
+        linkName: "Simple form",
+        path: "/stepform",
+        exact: true,
+        exclude: false,
+        component: StepForm
+      },
+      {
+        linkName: "Simple form",
+        path: "/formik-backend-errors",
+        exact: true,
+        exclude: false,
+        component: FormikBackEndErrors
+      },
+      {
+        linkName: "Simple form",
+        path: "/formik-backend-errors-proper",
+        exact: true,
+        exclude: false,
+        component: FormikBackEndErrorsProper
+      },
+      {
+        linkName: "Simple form",
+        path: "/formik-custom-material-ui",
+        exact: true,
+        exclude: false,
+        component: CustomFormikMaterilUIPage
+      },
+      {
+        linkName: "Simple form",
+        path: "/formik-custom-material-ui-create",
+        exact: true,
+        exclude: false,
+        component: CustomFormikMaterialUI
+      },
+      {
+        linkName: "Simple form",
+        path: "/formik-custom-material-ui-edit/:Id",
+        exact: true,
+        exclude: false,
+        component: CustomFormikMaterialUI
+      },
+      {
+        linkName: "Simple form",
+        path: "/react-hook-from-custom-material-ui",
+        exact: true,
+        exclude: false,
+        component: CustomHookFormMaterilUIPage
+      },
+      {
+        linkName: "Simple form",
+        path: "/react-hook-from-custom-material-ui-create",
+        exact: true,
+        exclude: false,
+        component: CustomHookFormMaterilUI
+      },
+      {
+        linkName: "Simple form",
+        path: "/react-hook-from-custom-material-ui-edit/:Id",
+        exact: true,
+        exclude: false,
+        component: CustomHookFormMaterilUI
+      },
+      {
+        linkName: "Simple form",
+        path: "/formik-custom-normal",
+        exact: true,
+        exclude: false,
+        component: CustomFormikNormal
+      },
+      {
+        linkName: "Simple form",
+        path: "/binding",
+        exact: true,
+        exclude: false,
+        component: BindingComponent
+      },
+      {
+        linkName: "Simple form",
+        path: "/pagination",
+        exact: true,
+        exclude: false,
+        component: LoadMore
+      },
+      {
+        linkName: "Simple form",
+        path: "/refs",
+        exact: true,
+        exclude: false,
+        component: Refs
+      },
+      {
+        linkName: "Simple form",
+        path: "/lifecyclemethods",
+        exact: true,
+        exclude: false,
+        component: LifeCycleMethods
+      },
+      {
+        linkName: "Simple form",
+        path: "/intersectionobserver",
+        exact: true,
+        exclude: false,
+        component: IntersectionObserverTesting
+      },
+      {
+        linkName: "Simple form",
+        path: "/test",
+        exact: true,
+        exclude: false,
+        component: TestComponent
+      },
+      {
+        linkName: "Simple form",
+        path: "/route",
+        exact: true,
+        exclude: false,
+        component: RouteComponent
+      },
+      {
+        linkName: "Simple form",
+        path: "/transitiongroup",
+        exact: true,
+        exclude: false,
+        component: TransitionGroup
+      },
+      {
+        linkName: "Simple form",
+        path: "/csstransition",
+        exact: true,
+        exclude: false,
+        component: Csstransition
+      },
+      {
+        linkName: "Simple form",
+        path: "/redux",
+        exact: true,
+        exclude: false,
+        component: Redux
+      },
+      {
+        linkName: "Simple form",
+        path: "/promise",
+        exact: true,
+        exclude: false,
+        component: Promise
+      },
+      {
+        linkName: "Simple form",
+        path: "/hooks",
+        exact: true,
+        exclude: false,
+        component: Hooks
+      },
+      {
+        linkName: "Simple form",
+        path: "/full-form",
+        exact: true,
+        exclude: false,
+        component: MaterialUiFullForm
+      },
+      {
+        linkName: "Simple form",
+        path: "/materialui",
+        exact: true,
+        exclude: false,
+        component: MaterialUIFUll
+      },
+      {
+        linkName: "Simple form",
+        path: "/userimperativehandle",
+        exact: true,
+        exclude: false,
+        component: UseimperativeHandle
+      },
+      {
+        linkName: "Simple form",
+        path: "/authentication",
+        exact: true,
+        exclude: false,
+        component: Authentication
+      },
+      {
+        linkName: "Simple form",
+        path: "/javascript",
+        exact: true,
+        exclude: false,
+        component: Javascript
+      },
+      {
+        linkName: "Simple form",
+        path: "/material_file_tree",
+        exact: true,
+        exclude: false,
+        component: MaterilFileTree
+      },
+      {
+        linkName: "Simple form",
+        path: "/stepper",
+        exact: true,
+        exclude: false,
+        component: MultiParent
+      },
+      {
+        linkName: "Simple form",
+        path: "/formarray",
+        exact: true,
+        exclude: false,
+        component: FormikFormArrays
+      },
+      {
+        linkName: "Simple form",
+        path: "/css-grid",
+        exact: true,
+        exclude: false,
+        component: CssGrid
+      },
+      {
+        linkName: "Simple form",
+        path: "/react-chart",
+        exact: true,
+        exclude: false,
+        component: BarChart
+      },
+      {
+        linkName: "Simple form",
+        path: "/react-hook-form/phase1",
+        exact: true,
+        exclude: false,
+        component: Phase1
+      },
+      {
+        linkName: "Simple form",
+        path: "/resizer",
+        exact: true,
+        exclude: false,
+        component: AutoResizerHookForms
+      },
+      {
+        linkName: "Simple form",
+        path: "/render-props",
+        exact: true,
+        exclude: false,
+        component: RenderProps
+      },
+      {
+        linkName: "Simple form",
+        path: "/tailwind",
+        exact: true,
+        exclude: false,
+        component: TailWind
+      },
+      {
+        linkName: "Simple form",
+        path: "/material_file_tree",
+        exact: true,
+        exclude: false,
+        component: MaterilFileTree
+      },
+      {
+        linkName: "Simple form",
+        path: "/react-table",
+        exact: true,
+        exclude: false,
+        component: ReactTable
+      },
+      
+      {
+        linkName: "Simple form",
+        path: "/to-do-context",
+        exact: true,
+        exclude: false,
+        component: ToDoApp
+      },
+      {
+        linkName: "Simple form",
+        path: "/multistep1",
+        exact: true,
+        exclude: false,
+        component: MultistepWizard
+      },
+    ]
+  },
+  {
+    name: 'context routes',
+    linksDetails: [
+      {
+        linkName: "Simple form",
+        path: "/custom-hook",
+        exact: true,
+        exclude: false,
+        component: CustomHook
+      },
+      {
+        linkName: "Simple form",
+        path: "/context",
+        exact: true,
+        exclude: false,
+        component: Context
+      },
+      {
+        linkName: "Simple form",
+        path: "*",
+        exclude: false,
+        component: <p> 404 Not found </p>
+      }
+    ]
+  },
+]
+
+
 
 function App() {
-
   return (
     <div className="App">
       <Switch>
-
-        {/* Form section starts*/}
-        <Route exact path="/" component={Form} />
-        <Route exact path="/formtag" component={FormikTag} />
-        <Route exact path="/formik" component={FormikForm} />
-        <Route exact path="/formikformarray" component={FormikFullFormFormArrayValidation} />
-        {/* <Route exact path="/reduxform" component={ReduxFormTest} /> */}
-        <Route exact path="/stepform" component={StepForm} />
-        <Route exact path="/formik-backend-errors" component={FormikBackEndErrors} />
-        <Route exact path="/formik-backend-errors-proper" component={FormikBackEndErrorsProper} />
-
-        <Route exact path="/formik-custom-material-ui" component={CustomFormikMaterilUIPage} />
-        <Route exact path="/formik-custom-material-ui-create" component={CustomFormikMaterialUI} />
-        <Route exact path="/formik-custom-material-ui-edit/:Id" component={CustomFormikMaterialUI} />
-
-        <Route exact path="/react-hook-from-custom-material-ui" component={CustomHookFormMaterilUIPage} />
-        <Route exact path="/react-hook-from-custom-material-ui-create" component={CustomHookFormMaterilUI} />
-        <Route exact path="/react-hook-from-custom-material-ui-edit/:Id" component={CustomHookFormMaterilUI} />
-
-        <Route exact path="/formik-custom-normal" component={CustomFormikNormal} />
-
-        {/* Form section ends*/}
-
-        <Route exact path="/binding" component={BindingComponent} />
-        <Route exact path="/pagination" component={LoadMore} />
-        <Route exact path="/refs" component={Refs} />
-        <Route exact path="/lifecyclemethods" component={LifeCycleMethods} />
-        <Route exact path="/intersectionobserver" component={IntersectionObserverTesting} />
-        <Route exact path="/test" component={TestComponent} />
-        <Route exact path="/route" component={RouteComponent} />
-        <Route exact path="/transitiongroup" component={TransitionGroup} />
-        <Route exact path="/csstransition" component={Csstransition} />
-        <Route exact path="/redux" component={Redux} />
-        <Route exact path="/promise" component={Promise} />
-
-        <Route exact path="/hooks" component={Hooks} />
-
-        <Route exact path="/full-form" component={MaterialUiFullForm} />
-        <Route exact path="/materialui" component={MaterialUIFUll} />
-
-        <Route exact path="/userimperativehandle" component={UseimperativeHandle} />
-
-        <Route exact path="/authentication" component={Authentication} />
-        <Route exact path="/javascript" component={Javascript} />
-
-        {/* <Route exact path="/calendar" component={Calendar} /> */}
-        {/* <Route exact path="/text_editor" component={TextEditor} /> */}
-        <Route exact path="/material_file_tree" component={MaterilFileTree} />
-        {/* <Route exact path="/chonky" component={Chonky} /> */}
-        {/* <Route exact path="/folder_browser" component={FolderBrowser} /> */}
-        {/* <Route exact path="/soundrecord" component={RecordView} /> */}
-        {/* <Route exact path="/audiorecorder" component={AudioRecorderComponent} /> */}
-        {/* // the one that worked */}
-        {/* <Route exact path="/soundrecorder" component={SoundRecorder} /> */}
-        {/* <Route exact path="/multistep" component={MultiStepForm} /> */}
-        <Route exact path="/stepper" component={MultiParent} />
-        <Route exact path="/formarray" component={FormikFormArrays} />
-        <Route exact path="/css-grid" component={CssGrid} />
-        <Route exact path="/react-chart" component={BarChart} />
-
-        {/* React Hook Form */}
-        {/* <Route exact path="/react-hook-form/field-array" component={FormArray} /> */}
-        {/* <Route exact path="/react-hook-form/field-array2" component={FormArray2} /> */}
-        <Route exact path="/react-hook-form/phase1" component={Phase1} />
-        <Route exact path="/resizer" component={AutoResizerHookForms} />
-
-        <Route exact path="/render-props" component={RenderProps} />
-
-        {/* Non react starts */}
-        <Route exact path="/tailwind" component={TailWind} />
-
-        {/* <Route exact path="/reactlazy" component={ReactLazy} /> */}
-        <Route exact path="/material_file_tree" component={MaterilFileTree} />
-        <Route exact path="/react-table" component={ReactTable} />
-        <Route exact path="/custom-hook" component={CustomHook} />
-
-        {/* -----------------------  Context starts ----------------------- */}
-        <Route exact path="/context" component={Context} />
-        <Route exact path="/to-do-context" component={ToDoApp} />
-        
-        {/* -----------------------  Context ends ----------------------- */}
-
-        <Route path="*" render={() => <p> 404 Not found </p>} />
+        {
+          routePaths.map(item => {
+            return item.linksDetails.map(linkItem => {
+              return (
+                <Route
+                  exact={linkItem.exact}
+                  path={linkItem.path}
+                  component={linkItem.component}
+                />
+              );
+            });
+          })
+        }
       </Switch>
-
     </div>
   );
 }
 
 export default App;
 
+
+
+
+
+// Section Starts :: old links that exists in repo but not included in link array -- 
+
+const details =
+<>
+
+  {/* Form section starts*/}
+
+  {/* <Route exact path="/reduxform" component={ReduxFormTest} /> */}
+
+  {/* Form section ends*/}
+
+
+
+  {/* <Route exact path="/calendar" component={Calendar} /> */}
+  {/* <Route exact path="/text_editor" component={TextEditor} /> */}
+ 
+  {/* <Route exact path="/chonky" component={Chonky} /> */}
+  {/* <Route exact path="/folder_browser" component={FolderBrowser} /> */}
+  {/* <Route exact path="/soundrecord" component={RecordView} /> */}
+  {/* <Route exact path="/audiorecorder" component={AudioRecorderComponent} /> */}
+  {/* // the one that worked */}
+  {/* <Route exact path="/soundrecorder" component={SoundRecorder} /> */}
+  {/* <Route exact path="/multistep" component={MultiStepForm} /> */}
+  
+
+  {/* React Hook Form */}
+  {/* <Route exact path="/react-hook-form/field-array" component={FormArray} /> */}
+  {/* <Route exact path="/react-hook-form/field-array2" component={FormArray2} /> */}
+  
+
+  {/* Non react starts */}
+
+
+  {/* <Route exact path="/reactlazy" component={ReactLazy} /> */}
+
+
+  {/* -----------------------  Context starts ----------------------- */}
+
+  {/* -----------------------  Context ends ----------------------- */}
+
+  {/* formik multi step form */}
+</>
+
+// Section Starts :: old links that exists in repo but not included in link array -- 

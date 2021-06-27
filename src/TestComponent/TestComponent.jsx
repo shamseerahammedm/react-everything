@@ -1,137 +1,80 @@
-import { Dialog, Grid } from '@material-ui/core';
-import { Field, Form, Formik } from 'formik';
+import { Switch } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getDataAsync, getDetailsAsync, fetchFunctionsOptionsAsync } from 'redux/redux-files/general/general.actions';
-import MultiSelect from 'form/Formik/CorrectInputComponents/MultiSelect/MultiSelect';
-import Input from 'form/Formik/CorrectInputComponents/Input/Input';
 
-const TestComponent = () => {
-  const dispatch = useDispatch();
-  const { data, details, functions } = useSelector(state => state.generalReducer);
-  const [ update, setUpdate ] = useState();
-  const [ initialValues, setinitialValues ] = useState({ 
-    first_name : '',
-    last_name : '',
-    functions : [],
-    reasons : [],
-  });
+const ToggleOn = ({
+  on,
+  children
+}) => {
+  return on ? children : null;
+};
 
-  useEffect(() => {
-    dispatch(getDataAsync());
-    dispatch(fetchFunctionsOptionsAsync());
-  }, []);
+const ToggleOff = ({
+  on,
+  children
+}) => {
+  return on ? null : children;
+};
 
-  useEffect(()=>{
-    if(data && update)
-    {
-      setinitialValues({
-        first_name : data.first_name,
-        last_name : data.last_name,
-        functions : data.functions,
-        reasons : data.reasons,
-      });
-    }
-  }, [data, update]);
-  
-  // Section Starts ::  -- 
-  const [open, setOpen] = React.useState(false);
-  const handleClickOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  // Section Starts ::  -- 
-
+const ToggleButton = ({
+  on,
+  onToggle,
+  ...otherProps
+}) => {
   return (
-    <div>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-      >
-        <Formik
-          enableReinitialize
-          initialValues={initialValues}
-          onSubmit={(values) => {
-            console.log('values', values);
-          }}
-        >
-          {({ values }) => {
-            return (
-              <Form>
-                
-                <div className="div" style={{ padding : '20px' }}>
-                  <Grid container spacing={2}>
-                    <Grid item xs={6}>
-                      <Field
-                        component={Input}
-                        name="first_name"
-                        label="First Name"
-                        // required
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <Field
-                        component={Input}
-                        name="last_name"
-                        label="First Name"
-                        // required
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-
-                      <Field
-                        component={MultiSelect}
-                        name="functions"
-                        options={functions}
-                        optionLabel="name"
-                        placeholder="Select Functions"
-                        className="outlinedInput"
-                        valueLabel="id"
-                        showLoaderIcon
-                        onChange={()=>{
-                          console.log('e');
-                          dispatch(getDetailsAsync());
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-
-                      <Field
-                        component={MultiSelect}
-                        name="reasons"
-                        options={details}
-                        optionLabel="name"
-                        placeholder="Select Reasons"
-                        className="outlinedInput"
-                        valueLabel="id"
-                        showLoaderIcon
-                       
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <button type="submit">
-                        Submit
-                      </button>
-                    </Grid>
-                  </Grid>
-                  <pre>{JSON.stringify(values, null, 2)}</pre>
-                </div>
-                
-              </Form>
-            );
-          }}
-        </Formik>
-
-      </Dialog>
-      {
-        data && 
-        <button onClick={()=>{
-          setUpdate(data);
-          handleClickOpen();
-        }}>Click</button>
-      }
-
-    </div>
+    <Switch 
+      checked={on} 
+      onChange={onToggle}
+      {...otherProps} 
+    />
   );
 };
 
-export default TestComponent;
+const Toggle = ({
+  onToggle = () => null,
+  children
+}) => {
 
+  const [ checked, setChecked ] = useState(false);
+  const handleChange = (e) => {
+    const { checked } = e.target;
+    setChecked(checked);
+  };
+
+  const childrenDetails = React.Children.map(
+    children,
+    child => {
+      return React.cloneElement(child, { 
+        on : checked,
+        onToggle : handleChange
+      });
+    }
+  ); 
+
+  return <div>{childrenDetails}</div>;
+};
+
+const Test = () => {
+  const doIt = (value) => console.log(value);
+  const [ data, setData ] = useState([]);
+  const fetchData = () => {
+    setTimeout(() =>{
+      setData([{
+        name :'shamseer',
+        age : 25
+      }]);
+    }, 2000);
+  };
+
+  return (
+    <Toggle onToggle={(value) => doIt(value)} > 
+
+      <button onClick={fetchData}>On click</button>
+      {data && data.map( item => <p>{item.name}</p>)}
+      <ToggleOn> The button is on </ToggleOn>
+      <ToggleButton> Button </ToggleButton>
+      <ToggleOff> The button is off</ToggleOff> 
+    </Toggle>
+  );
+};
+
+export default Test;
