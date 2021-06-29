@@ -139,7 +139,7 @@ const SearchableSelect = ({
         }
 
         // when clear icon is clicked 
-        if (reason === 'clear')
+        if (reason === 'clear' && onClear)
         {
           onClear();
         }

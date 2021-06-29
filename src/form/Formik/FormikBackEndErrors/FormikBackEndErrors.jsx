@@ -43,11 +43,13 @@ const EditClientForm = () => {
   });
 
   const [formErrors, setFormErrors] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   // simulating api call to reset values 
   useEffect(() => {
     new Promise((res, rej) => {
       setTimeout(() => {
+        setIsLoading(true);
         res(setinitialValues({
           first_name: 'shamseer',
           last_name: 'lastname',
@@ -56,13 +58,12 @@ const EditClientForm = () => {
           enable_cold_calling: true,
           date : new Date()
         }));
+        setIsLoading(false);
       }, 2000);
     });
   }, []);
 
   const submitFormHandler = (values, resetForm, setValues) => {
-
-    console.log('values', values);
     new Promise((res, rej) => {
       setTimeout(() => {
         const resolve = () => {
@@ -169,8 +170,8 @@ const EditClientForm = () => {
                     />
                   </Grid>
                   <Grid item xs={12} >
-                    <button>Update</button>
-                    <button>Submit</button>
+                    <button disabled={isLoading}>Update</button>
+                    <button disabled={isLoading}>Submit</button>
                   </Grid>
                 </Grid>
               </section>
