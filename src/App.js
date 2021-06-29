@@ -87,7 +87,7 @@ export const routePaths = [
         component: FormikTag
       },
       {
-        linkName: "Simple form",
+        linkName: "formik",
         path: "/formik",
         linkDescription: null,
         exact: true,
@@ -95,7 +95,7 @@ export const routePaths = [
         component: FormikForm
       },
       {
-        linkName: "Simple form",
+        linkName: "formikformarray",
         path: "/formikformarray",
         linkDescription: null,
         exact: true,
@@ -103,22 +103,13 @@ export const routePaths = [
         component: FormikFullFormFormArrayValidation
       },
       {
-        linkName: "Simple form",
+        linkName: "stepform",
         path: "/stepform",
         linkDescription: null,
         exact: true,
         exclude: false,
         component: StepForm
       },
-      {
-        linkName: "Simple form",
-        path: "/formik-backend-errors",
-        linkDescription: null,
-        exact: true,
-        exclude: false,
-        component: FormikBackEndErrors
-      },
-     
       {
         linkName: "Simple form",
         path: "/formik-custom-normal",
@@ -152,7 +143,7 @@ export const routePaths = [
         component: Refs
       },
       {
-        linkName: "Simple form",
+        linkName: "Life cycle methods",
         path: "/lifecyclemethods",
         linkDescription: null,
         exact: true,
@@ -160,7 +151,7 @@ export const routePaths = [
         component: LifeCycleMethods
       },
       {
-        linkName: "Simple form",
+        linkName: "Intersection observer",
         path: "/intersectionobserver",
         linkDescription: null,
         exact: true,
@@ -184,7 +175,7 @@ export const routePaths = [
         component: RouteComponent
       },
       {
-        linkName: "Simple form",
+        linkName: "Animation - transitiongroup",
         path: "/transitiongroup",
         linkDescription: null,
         exact: true,
@@ -192,7 +183,7 @@ export const routePaths = [
         component: TransitionGroup
       },
       {
-        linkName: "Simple form",
+        linkName: "Animation - csstransition",
         path: "/csstransition",
         linkDescription: null,
         exact: true,
@@ -207,14 +198,7 @@ export const routePaths = [
         exclude: false,
         component: Redux
       },
-      {
-        linkName: "Simple form",
-        path: "/promise",
-        linkDescription: null,
-        exact: true,
-        exclude: false,
-        component: Promise
-      },
+
       {
         linkName: "Simple form",
         path: "/hooks",
@@ -375,7 +359,7 @@ export const routePaths = [
         component: CustomHook
       },
       {
-        linkName: "Simple form",
+        linkName: "Context",
         path: "/context",
         linkDescription: null,
         exact: true,
@@ -425,6 +409,14 @@ export const routePaths = [
     name: 'Formik',
     linksDetails: [
       {
+        linkName: "Formik back end errors",
+        path: "/formik-backend-errors",
+        linkDescription: 'Only solution that worked',
+        exact: true,
+        exclude: false,
+        component: FormikBackEndErrors
+      },
+      {
         linkName: "Formik back end error",
         path: "/formik-backend-errors-proper",
         linkDescription: null,
@@ -461,7 +453,20 @@ export const routePaths = [
         path: "*",
         exclude: true,
         component: <p> 404 Not found :: Dont change this object position </p>
-      }
+      },
+    ]
+  },
+  {
+    name: 'Javascript',
+    linksDetails: [
+      {
+        linkName: "Promise",
+        path: "/promise",
+        linkDescription: null,
+        exact: true,
+        exclude: false,
+        component: Promise
+      },
     ]
   },
 ]
@@ -476,7 +481,6 @@ function App() {
         {
           routePaths.map(item => {
             return item.linksDetails.map(linkItem => {
-              console.log('linkItem',linkItem);
               return (
                 <Route
                   exact={linkItem.exact}

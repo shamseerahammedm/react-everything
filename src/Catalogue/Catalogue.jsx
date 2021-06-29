@@ -21,11 +21,11 @@ const Catalogue = () => {
                     {
                       item.linksDetails.map(linkItem => {
                         return !linkItem.exclude && (
-                          <div className="col-sm-3 cardWrapper" >
+                          <div className="col-sm-3 item" >
                             <div className="card mb-3" >
-                              <div className="card-body">
+                              <div className="itemWrapper">
                                 <NavLink 
-                                  className="card-title" 
+                                  className="card-title linkItem" 
                                   to={linkItem.path} 
                                   target="_blank" 
                                   rel="noopener noreferrer"
@@ -41,7 +41,7 @@ const Catalogue = () => {
                     }
                   </div>
                 </div>
-                {(i !== routePaths.length - 1) && <hr/>}
+                {(i !== routePaths.length - 1) && <div className="divider"/>}
               </>
             );
 

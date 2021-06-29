@@ -1,19 +1,35 @@
-// @import "bootstrap/scss/functions";
+@import "bootstrap/scss/functions";
 
-// @import "bootstrap/scss/variables";
-// @import "bootstrap/scss/mixins";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
 
 // @import "bootstrap/scss/root";
 // @import "bootstrap/scss/reboot";
 // @import "bootstrap/scss/type";
 // @import "bootstrap/scss/images";
-// @import "bootstrap/scss/containers";
-// @import "bootstrap/scss/grid";
+@import "bootstrap/scss/containers";
+@import "bootstrap/scss/grid";
 
+
+// full bootstrap scss if using this remove all other imports
 // @import "bootstrap/scss/bootstrap";
 
 .catalogue{
-  .cardWrapper{
+  .linkItem{
     cursor: pointer;
+  }
+  .item{
+    margin-bottom: 10px;
+    border: 1px solid rgb(226, 226, 226);
+    .itemWrapper{
+      padding: 5px;
+    }
+  }
+  .divider{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background: rgb(226, 226, 226);
+    width: 100%;
+    height:1px;
   }
 }
