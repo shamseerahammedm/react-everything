@@ -425,9 +425,9 @@ export const routePaths = [
         component: FormikFormArrays
       },
       {
-        linkName: "formik",
+        linkName: "formik :: initialErrors",
         path: "/formik",
-        linkDescription: null,
+        linkDescription: 'initialErrors',
         exact: true,
         exclude: false,
         component: FormikForm
