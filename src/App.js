@@ -64,6 +64,7 @@ import ToDoApp from 'Context/TodoApp/TodoApp';
 import MultistepWizard from 'form/Formik/MultistepWizard/MultistepWizard';
 import Catalogue from 'Catalogue/Catalogue';
 import PhaseOne from 'form/react-hook-form/phase1/Phase1';
+import AutoresizerIssue from 'form/react-hook-form/AutoresizerIssue/AutoresizerIssue';
 
 
 export const routePaths = [
@@ -247,14 +248,21 @@ export const routePaths = [
         exclude: false,
         component: BarChart
       },
-      
       {
-        linkName: "Simple form",
+        linkName: "Auto resizer ",
         path: "/resizer",
         linkDescription: null,
         exact: true,
         exclude: false,
         component: AutoResizerHookForms
+      },
+      {
+        linkName: "AutoresizerIssue",
+        path: "/autoresizerissue",
+        linkDescription: null,
+        exact: true,
+        exclude: false,
+        component: AutoresizerIssue
       },
       {
         linkName: "Simple form",

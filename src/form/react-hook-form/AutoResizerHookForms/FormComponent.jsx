@@ -45,7 +45,7 @@ const FormComponent = ({
   return (
     <Grid container>
       <Grid item xs={9} >
-        <form className="form" style={{ minHeight : '100vh'}} onSubmit={formMethods.handleSubmit(onSubmit)}>
+        <form className="form" style={{ minHeight : '100vh' }} onSubmit={formMethods.handleSubmit(onSubmit)}>
           <div className="wrapper">
             <FormProvider {...formMethods}>
               <AutoSizer>
@@ -106,7 +106,6 @@ const fetchResults = async () => {
 };
 
 const WindowedRowList = React.memo(({ index, style, data, isScrolling, ...otherProps }) => {
-  console.log('otherProps', otherProps);
 
   const { register, formState: { errors }, control, getValues } = useFormContext();
   const [options, setOptions] = useState([]);
