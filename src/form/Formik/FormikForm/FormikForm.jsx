@@ -38,7 +38,6 @@ const FormikForm = () => {
         }}
       >
         {({ validateField, validateForm, errors, touched, ...otherProps }) => {
-          console.log('otherProps',otherProps);
           return (
             <Form>
               <p>Test Form </p>

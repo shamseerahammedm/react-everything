@@ -79,44 +79,12 @@ export const routePaths = [
         component: Catalogue
       },
       {
-        linkName: "formtag",
-        path: "/formtag",
-        linkDescription: null,
-        exact: true,
-        exclude: false,
-        component: FormikTag
-      },
-      {
-        linkName: "formik",
-        path: "/formik",
-        linkDescription: null,
-        exact: true,
-        exclude: false,
-        component: FormikForm
-      },
-      {
-        linkName: "formikformarray",
-        path: "/formikformarray",
-        linkDescription: null,
-        exact: true,
-        exclude: false,
-        component: FormikFullFormFormArrayValidation
-      },
-      {
         linkName: "stepform",
         path: "/stepform",
         linkDescription: null,
         exact: true,
         exclude: false,
         component: StepForm
-      },
-      {
-        linkName: "Simple form",
-        path: "/formik-custom-normal",
-        linkDescription: null,
-        exact: true,
-        exclude: false,
-        component: CustomFormikNormal
       },
       {
         linkName: "Simple form",
@@ -262,14 +230,6 @@ export const routePaths = [
         exact: true,
         exclude: false,
         component: MultiParent
-      },
-      {
-        linkName: "Simple form",
-        path: "/formarray",
-        linkDescription: null,
-        exact: true,
-        exclude: false,
-        component: FormikFormArrays
       },
       {
         linkName: "Simple form",
@@ -449,11 +409,46 @@ export const routePaths = [
         component: CustomFormikMaterialUI
       },
       {
-        linkName: "Simple form",
-        path: "*",
-        exclude: true,
-        component: <p> 404 Not found :: Dont change this object position </p>
+        linkName: "formikformarray",
+        path: "/formikformarray",
+        linkDescription: null,
+        exact: true,
+        exclude: false,
+        component: FormikFullFormFormArrayValidation
       },
+      {
+        linkName: "Simple form",
+        path: "/formarray",
+        linkDescription: null,
+        exact: true,
+        exclude: false,
+        component: FormikFormArrays
+      },
+      {
+        linkName: "formik",
+        path: "/formik",
+        linkDescription: null,
+        exact: true,
+        exclude: false,
+        component: FormikForm
+      },
+      {
+        linkName: "Radio & checkbox inputs with Formik",
+        path: "/formik-custom-normal",
+        linkDescription: 'Formik checkbox component setup',
+        exact: true,
+        exclude: false,
+        component: CustomFormikNormal
+      },
+      {
+        linkName: "formtag",
+        path: "/formtag",
+        linkDescription: null,
+        exact: true,
+        exclude: false,
+        component: FormikTag
+      },
+      
     ]
   },
   {
@@ -466,6 +461,12 @@ export const routePaths = [
         exact: true,
         exclude: false,
         component: Promise
+      },
+      {
+        linkName: "Simple form",
+        path: "*",
+        exclude: true,
+        component: <p> 404 Not found :: Dont change this object position </p>
       },
     ]
   },
