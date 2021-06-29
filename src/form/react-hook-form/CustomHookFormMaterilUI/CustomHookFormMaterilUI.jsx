@@ -96,7 +96,8 @@ const CustomHookFormMaterilUI = () => {
   });
 
   const onSubmit = (values) => console.log('$$$$$------ values ------$$$$', values);
-  const watchAllFields = watch(); // when pass nothing as argument, you are watching everything
+  // when pass nothing as argument, you are watching everything, and entire component that form is contained will rerender
+  const watchAllFields = watch(); 
   // Section Starts :: Hook form -- 
 
   render = render + 1;
