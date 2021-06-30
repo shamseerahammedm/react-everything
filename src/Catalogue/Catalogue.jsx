@@ -5,7 +5,7 @@ import './Catalogue.scss';
 import { NavLink } from 'react-router-dom';
 import {  Tooltip } from '@material-ui/core';
 
-const defaultState = { index : null, open : false };
+const defaultState = { uniItemId : null, open : false };
 
 const Catalogue = () => {
   const itemRef = useRef();
@@ -34,6 +34,7 @@ const Catalogue = () => {
                   <div className="row">
                     {
                       item.linksDetails.map((linkItem, index) => {
+                        const uniItemId = `item${index}${linkItem.linkName}`;
                         return !linkItem.exclude && (
                           <div className="col-sm-3 item" key={index}>
                             <div className="card mb-3" >
@@ -52,7 +53,7 @@ const Catalogue = () => {
                                     disablePortal: true,
                                   }}
                                   onClose={()=>setOpen(defaultState)}
-                                  open={index === open.index && open.open}
+                                  open={uniItemId === open.uniItemId && open.open}
                                   disableFocusListener
                                   disableHoverListener
                                   disableTouchListener
@@ -61,9 +62,9 @@ const Catalogue = () => {
                                 >
                                   <p className="clipboardItem"> 
                                     <span className="tag">Copy :  </span>
-                                    <span className="tagValue" id={`item${index}`} onClick={() => {
-                                      copyToClipBoard(`item${index}`);
-                                      setOpen({ index : index, open : true });
+                                    <span className="tagValue" id={uniItemId} onClick={() => {
+                                      copyToClipBoard(uniItemId);
+                                      setOpen({ uniItemId : uniItemId, open : true });
                                     }}>
                                       {linkItem.component.name}
                                     </span>
