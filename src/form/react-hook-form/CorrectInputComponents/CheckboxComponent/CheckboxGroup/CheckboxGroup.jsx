@@ -13,7 +13,7 @@ const CheckboxGroup = ({
   required = false,
 
   // hook form specific
-  name, control, defaultValue, rules = {},setValue
+  name, control, defaultValue, rules = {}, setValue
 }) => {
 
   const {
@@ -25,6 +25,9 @@ const CheckboxGroup = ({
     defaultValue: {},
     rules: rules
   });
+
+  console.log('error', error);
+  console.log('name', name);
 
   const handleChange = (event) => {
     const target = event.currentTarget;

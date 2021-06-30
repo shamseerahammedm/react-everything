@@ -15,6 +15,9 @@ const Checkbox = ({
 }) => {
   const errorText = getError(name, { touched, status, errors });
   const isError = errorText ? true : false;
+  console.log('errorText', name, errorText);
+  // console.log('isError', isError);
+  // console.log('touched', touched);
   return (
     <FormControl error={isError} className="checkboxWrapper">
       <FormControlLabel

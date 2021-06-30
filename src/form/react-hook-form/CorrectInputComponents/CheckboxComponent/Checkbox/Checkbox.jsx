@@ -35,6 +35,7 @@ const Checkbox = ({
   // console.log('groupValue', groupValue);
   // console.log('groupHandleChange', groupHandleChange);
   // console.log('groupValue', groupValue);
+  console.log('error', error);
 
   return (
     <FormControl error={!!errorToUse} className="checkboxWrapper">

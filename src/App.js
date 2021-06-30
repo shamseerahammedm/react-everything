@@ -273,7 +273,7 @@ export const routePaths = [
         component: MaterilFileTree
       },
       {
-        linkName: "Simple form",
+        linkName: "React Table",
         path: "/react-table",
         linkDescription: null,
         exact: true,

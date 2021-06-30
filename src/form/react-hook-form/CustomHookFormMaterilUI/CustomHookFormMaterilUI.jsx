@@ -1,5 +1,4 @@
 import { Grid, Typography } from '@material-ui/core';
-import { Field, Form, Formik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import Input from '../CorrectInputComponents/Input/Input';
 import * as Yup from 'yup';
@@ -97,7 +96,8 @@ const CustomHookFormMaterilUI = () => {
 
   const onSubmit = (values) => console.log('$$$$$------ values ------$$$$', values);
   // when pass nothing as argument, you are watching everything, and entire component that form is contained will rerender
-  const watchAllFields = watch(); 
+  const watchAllFields = {}; 
+  // const watchAllFields = watch(); 
   // Section Starts :: Hook form -- 
 
   render = render + 1;
@@ -204,7 +204,7 @@ const CustomHookFormMaterilUI = () => {
                   control={control}
                 />
               </Grid>
-              {/* <Grid item xs={6}>
+              <Grid item xs={6}>
                 <p className="info">Checkbox group</p>
                 <CheckboxGroup
                   name="group_checkbox"
@@ -225,8 +225,7 @@ const CustomHookFormMaterilUI = () => {
                     ))
                   }
                 </CheckboxGroup>
-
-              </Grid> */}
+              </Grid>
               <Grid item xs={12}>
                 <hr />
               </Grid>
@@ -468,7 +467,7 @@ const dummyCheckBoxOptions = [
 const genderOptions = [
   { label: 'Male', value: 1 },
   { label: 'Female', value: 2 },
-  { label: 'Transgender', value: 3 },
+  { label: 'Prefer not to say', value: 3 },
 ];
 
 const dashboardFilterOptions = [

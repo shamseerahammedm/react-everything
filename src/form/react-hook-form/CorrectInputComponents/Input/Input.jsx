@@ -32,13 +32,18 @@ const Input = ({
 
   const {
     field: { ref, value, onBlur, onChange },
-    fieldState: { error },
+    fieldState,
   } = useController({
     name,
     control,
     defaultValue: {},
     rules: rules
   });
+  console.log('fieldState', fieldState);
+  const { error, ...others } = fieldState;
+  
+  console.log('others', others);
+  console.log('error', error);
 
   return (
     <div className="inputWrapper">
