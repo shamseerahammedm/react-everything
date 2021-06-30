@@ -1,21 +1,23 @@
 import { routePaths } from 'App';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import './Catalogue.scss';
 import { NavLink } from 'react-router-dom';
+import { Tooltip } from '@material-ui/core';
 
 const Catalogue = () => {
   const history = useHistory();
   const itemRef = useRef();
   const copyToClipBoard = () => {
-    let text = itemRef.current.innerText;
-    let elem = document.createElement('textarea');
+    const text = itemRef.current.innerText;
+    const elem = document.createElement('textarea');
     document.body.appendChild(elem);
     elem.value = text;
     elem.select();
     document.execCommand('copy');
     document.body.removeChild(elem);
   };
+  const [open, setOpen] = useState(false);
   return (
     <div className="catalogue container">
       <h2>Catalogue</h2>
@@ -45,7 +47,27 @@ const Catalogue = () => {
                                   {linkItem.linkName} 
                                 </NavLink>
                                 {linkItem.linkDescription && <p className="card-text">{linkItem.linkDescription}</p>}
-                                <p ref={itemRef} onClick={copyToClipBoard}> Component name : <span>{linkItem.component.name}</span></p>
+                                
+                                <Tooltip
+                                  PopperProps={{
+                                    disablePortal: true,
+                                  }}
+                                  onClose={()=>setOpen(false)}
+                                  open={open}
+                                  disableFocusListener
+                                  disableHoverListener
+                                  disableTouchListener
+                                  title="Copied to clipboard !"
+                                >
+                                  <p> Component name : 
+                                    <span ref={itemRef} onClick={() => {
+                                      copyToClipBoard();
+                                      setOpen(true);
+                                    }}>
+                                      {linkItem.component.name}
+                                    </span>
+                                  </p>
+                                </Tooltip>
                               </div>
                             </div>
                           </div>
