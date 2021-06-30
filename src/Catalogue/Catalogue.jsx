@@ -1,11 +1,21 @@
 import { routePaths } from 'App';
-import React from 'react';
+import React, { useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import './Catalogue.scss';
 import { NavLink } from 'react-router-dom';
 
 const Catalogue = () => {
   const history = useHistory();
+  const itemRef = useRef();
+  const copyToClipBoard = () => {
+    let text = itemRef.current.innerText;
+    let elem = document.createElement('textarea');
+    document.body.appendChild(elem);
+    elem.value = text;
+    elem.select();
+    document.execCommand('copy');
+    document.body.removeChild(elem);
+  };
   return (
     <div className="catalogue container">
       <h2>Catalogue</h2>
@@ -20,6 +30,8 @@ const Catalogue = () => {
                   <div className="row">
                     {
                       item.linksDetails.map(linkItem => {
+                        console.log('linkItem', linkItem);
+                        console.log('linkItem', linkItem.component.name);
                         return !linkItem.exclude && (
                           <div className="col-sm-3 item" >
                             <div className="card mb-3" >
@@ -33,6 +45,7 @@ const Catalogue = () => {
                                   {linkItem.linkName} 
                                 </NavLink>
                                 {linkItem.linkDescription && <p className="card-text">{linkItem.linkDescription}</p>}
+                                <p ref={itemRef} onClick={copyToClipBoard}> Component name : <span>{linkItem.component.name}</span></p>
                               </div>
                             </div>
                           </div>

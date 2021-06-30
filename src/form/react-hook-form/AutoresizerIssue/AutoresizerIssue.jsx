@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import { VariableSizeList as List } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import './autoresizerissue.scss';
+import { Grid } from '@material-ui/core';
 
 const items = Array.from(Array(1000).keys()).map((i) => ({
   title: `List ${i}`,
@@ -16,29 +17,32 @@ const WindowedRow = React.memo(({ index, style, data }) => {
     formState: { errors },
   } = useFormContext();
   const qtyKey = `${index}.quantity`;
-  console.log(errors);
   return (
     <div style={style}>
-      <label>{data[index].title}</label>
+      <p><label>{data[index].title}</label></p>
+      { errors && console.log(errors)}
       <input
         {...register(qtyKey, {
           validate: (value) => false, // simply returning false for shiowing error
         })}
       />
       {errors && errors?.[index]?.quantity && (
-        <p className="errorText">Some error </p>
+        <p className="errorText" style={{ color : 'red', marginTop : 0 }}>Some error </p>
       )}
     </div>
   );
 });
 
 export const AutoresizerIssue = () => {
+  const [ values, setValues] = useState(null);
   const onSubmit = (data) => {
+    setValues(data);
     console.log(data);
   };
 
   const formMethods = useForm({
     defaultValues: items,
+    mode : 'all'
   });
 
   return (
@@ -48,21 +52,31 @@ export const AutoresizerIssue = () => {
 
       <form className="form" onSubmit={formMethods.handleSubmit(onSubmit)}>
         <div className="wrapper">
-          <FormProvider {...formMethods}>
-            <AutoSizer>
-              {({ height, width }) => (
-                <List
-                  height={height}
-                  itemCount={items.length}
-                  itemSize={() => 100}
-                  width={width}
-                  itemData={items}
-                >
-                  {WindowedRow}
-                </List>
-              )}
-            </AutoSizer>
-          </FormProvider>
+          
+          <Grid container>
+            <Grid item xs={6}>
+              <FormProvider {...formMethods}>
+                <AutoSizer>
+                  {({ height, width }) => (
+                    <List
+                      height={height}
+                      itemCount={items.length}
+                      itemSize={() => 100}
+                      width={width}
+                      itemData={items}
+                    >
+                      {WindowedRow}
+                    </List>
+                  )}
+                </AutoSizer>
+              </FormProvider>
+            </Grid>
+            <Grid item xs={6}>
+              <div className="div" style={{ height : '80vh', overflowY : 'auto' }}>
+                <pre>{JSON.stringify(values, null, 2)}</pre>
+              </div>
+            </Grid>
+          </Grid>
         </div>
         <button type="submit">Submit</button>
       </form>
