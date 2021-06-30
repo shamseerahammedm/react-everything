@@ -471,7 +471,7 @@ routePaths.push({
   name: 'General',
     linksDetails: [
       {
-        linkName: "Test Component1",
+        linkName: "Test Component",
         path: "/test",
         linkDescription: null,
         exact: true,
@@ -479,7 +479,7 @@ routePaths.push({
         component: TestComponent
       },
       {
-        linkName: "Test Component1",
+        linkName: "Test Component2",
         path: "/test2",
         linkDescription: null,
         exact: true,
