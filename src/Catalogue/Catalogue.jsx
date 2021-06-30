@@ -3,13 +3,16 @@ import React, { useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import './Catalogue.scss';
 import { NavLink } from 'react-router-dom';
-import { Tooltip } from '@material-ui/core';
+import {  Tooltip } from '@material-ui/core';
+
+const defaultState = { index : null, open : false };
 
 const Catalogue = () => {
-  const history = useHistory();
   const itemRef = useRef();
-  const copyToClipBoard = () => {
-    const text = itemRef.current.innerText;
+  const copyToClipBoard = (item) => {
+    const text = document.getElementById(item).innerText;
+    console.log('text', text);
+    console.log('item', item);
     const elem = document.createElement('textarea');
     document.body.appendChild(elem);
     elem.value = text;
@@ -17,25 +20,22 @@ const Catalogue = () => {
     document.execCommand('copy');
     document.body.removeChild(elem);
   };
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(defaultState);
   return (
     <div className="catalogue container">
       <h2>Catalogue</h2>
       <div className="row">
         {
           routePaths.map((item, i) => {
-           
             return (
               <>
-                <div className="col-sm-12">
+                <div className="col-sm-12" key={i}>
                   <h5>Section : {item.name}</h5>
                   <div className="row">
                     {
-                      item.linksDetails.map(linkItem => {
-                        console.log('linkItem', linkItem);
-                        console.log('linkItem', linkItem.component.name);
+                      item.linksDetails.map((linkItem, index) => {
                         return !linkItem.exclude && (
-                          <div className="col-sm-3 item" >
+                          <div className="col-sm-3 item" key={index}>
                             <div className="card mb-3" >
                               <div className="itemWrapper">
                                 <NavLink 
@@ -47,22 +47,23 @@ const Catalogue = () => {
                                   {linkItem.linkName} 
                                 </NavLink>
                                 {linkItem.linkDescription && <p className="card-text">{linkItem.linkDescription}</p>}
-                                
                                 <Tooltip
                                   PopperProps={{
                                     disablePortal: true,
                                   }}
-                                  onClose={()=>setOpen(false)}
-                                  open={open}
+                                  onClose={()=>setOpen(defaultState)}
+                                  open={index === open.index && open.open}
                                   disableFocusListener
                                   disableHoverListener
                                   disableTouchListener
                                   title="Copied to clipboard !"
+                                  arrow
                                 >
-                                  <p> Component name : 
-                                    <span ref={itemRef} onClick={() => {
-                                      copyToClipBoard();
-                                      setOpen(true);
+                                  <p className="clipboardItem"> 
+                                    <span className="tag">Copy :  </span>
+                                    <span className="tagValue" id={`item${index}`} onClick={() => {
+                                      copyToClipBoard(`item${index}`);
+                                      setOpen({ index : index, open : true });
                                     }}>
                                       {linkItem.component.name}
                                     </span>

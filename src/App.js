@@ -47,7 +47,7 @@ import FormArray2 from './form/react-hook-form/FormArray2/FormArray2';
 import RenderProps from './RenderProps/RenderProps';
 import AutoResizerHookForms from './form/react-hook-form/AutoResizerHookForms/AutoResizerHookForms';
 import Test from './form/react-hook-form/phase1/Phase1';
-import TestComponent from './TestComponent/TestComponent';
+import TestComponent from './Test/TestComponent/TestComponent';
 import BindingComponent from './Binding/Binding';
 import FormikBackEndErrors from 'form/Formik/FormikBackEndErrors/FormikBackEndErrors';
 import FormikBackEndErrorsProper from 'form/Formik/FormikBackEndErrors/FormikBackEndErrorsProper';
@@ -65,6 +65,7 @@ import MultistepWizard from 'form/Formik/MultistepWizard/MultistepWizard';
 import Catalogue from 'Catalogue/Catalogue';
 import PhaseOne from 'form/react-hook-form/phase1/Phase1';
 import AutoresizerIssue from 'form/react-hook-form/AutoresizerIssue/AutoresizerIssue';
+import TestComponent2 from 'Test/TestComponent2/TestComponent2';
 
 
 export const routePaths = [
@@ -126,14 +127,6 @@ export const routePaths = [
         exact: true,
         exclude: false,
         component: IntersectionObserverTesting
-      },
-      {
-        linkName: "Simple form",
-        path: "/test",
-        linkDescription: null,
-        exact: true,
-        exclude: false,
-        component: TestComponent
       },
       {
         linkName: "Simple form",
@@ -469,19 +462,40 @@ export const routePaths = [
         exact: true,
         exclude: false,
         component: Promise
-      },
-      {
-        linkName: "Simple form",
-        path: "*",
-        exclude: true,
-        component: <p> 404 Not found :: Dont change this object position </p>
-      },
+      }
     ]
   },
 ]
 
+routePaths.push({
+  name: 'General',
+    linksDetails: [
+      {
+        linkName: "Test Component1",
+        path: "/test",
+        linkDescription: null,
+        exact: true,
+        exclude: false,
+        component: TestComponent
+      },
+      {
+        linkName: "Test Component1",
+        path: "/test2",
+        linkDescription: null,
+        exact: true,
+        exclude: false,
+        component: TestComponent2
+      },
+      {
+        linkName: "4o4",
+        path: "*",
+        exclude: true,
+        component: <p> 404 Not found </p>
+      },
+    ]
+})
 
-
+ console.log('routePaths',routePaths);
 
 function App() {
   return (
