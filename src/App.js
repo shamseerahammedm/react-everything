@@ -17,7 +17,6 @@ import Redux from './redux/redux';
 import TailWind from './non-react/tail-wind/tail-wind.component';
 import Hooks from './Hooks/Hooks.component';
 import MaterialUiFullForm from './material/material-ui-full-form/full-form.component';
-import MaterialUIFUll from './material/material-ui-full/MaterialUIFull'; // refer this for complete things
 import Javascript from './javascript/javscript';
 import Authentication from './authentication/authentication';
 
@@ -176,14 +175,6 @@ export const routePaths = [
         exact: true,
         exclude: false,
         component: MaterialUiFullForm
-      },
-      {
-        linkName: "Simple form",
-        path: "/materialui",
-        linkDescription: null,
-        exact: true,
-        exclude: false,
-        component: MaterialUIFUll
       },
       {
         linkName: "Simple form",
