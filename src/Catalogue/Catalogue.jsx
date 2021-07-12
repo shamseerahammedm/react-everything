@@ -1,9 +1,9 @@
-import { routePaths } from 'App';
+import routePaths from 'routes';
 import React, { useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import './Catalogue.scss';
 import { NavLink } from 'react-router-dom';
 import {  Tooltip } from '@material-ui/core';
+import './Catalogue.scss';
 
 const defaultState = { uniItemId : null, open : false };
 

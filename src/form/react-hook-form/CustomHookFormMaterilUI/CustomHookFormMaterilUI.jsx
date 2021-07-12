@@ -85,21 +85,23 @@ const CustomHookFormMaterilUI = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState,
     getValues,
     watch,
     setValue
   } = useForm({
     defaultValues: INITIAL_FORM_DATA,
-    resolver: yupResolver(muiSchema)
+    resolver: yupResolver(muiSchema),
+    mode : 'onBlur' 
   });
 
   const onSubmit = (values) => console.log('$$$$$------ values ------$$$$', values);
   // when pass nothing as argument, you are watching everything, and entire component that form is contained will rerender
-  const watchAllFields = {}; 
-  // const watchAllFields = watch(); 
+  // const watchAllFields = {}; 
+  const watchAllFields = watch(); 
   // Section Starts :: Hook form -- 
-
+  console.log('formState', formState);
+  console.log('formState', formState.errors);
   render = render + 1;
   return (
     <div className="CustomFormikMaterialUI" >
@@ -240,7 +242,6 @@ const CustomHookFormMaterilUI = () => {
           <Grid item xs={6}>
             <Typography color="secondary">Values rr</Typography>
             <pre>{JSON.stringify(watchAllFields, null, 2)}</pre>
-            {console.log('errors', errors)}
             {/* <Typography color="secondary">Touched</Typography>
                 <pre>{JSON.stringify(touched, null, 2)}</pre> */}
             {/* <Typography color="secondary">Errors</Typography> */}

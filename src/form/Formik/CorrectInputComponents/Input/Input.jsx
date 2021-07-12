@@ -25,10 +25,7 @@ const Input = ({
   onChange = () => null,
   endIcon = null
 }) => {
-
   const errorText = getError(name, { touched, status, errors });
-  const isError = (errorText) ? true : false;
-
   return (
     <div className="inputWrapper">
       <TextField
@@ -37,8 +34,8 @@ const Input = ({
         type={type}
         name={name}
         value={value}
-        helperText={errorText}
-        error={isError}
+        helperText={!!errorText}
+        error={!!errorText}
         variant={variant}
         size={size}
         className={`customInput ${className}` }
@@ -63,7 +60,7 @@ const Input = ({
             ? 
             <InputAdornment position="end">
               {
-                isError 
+                !!errorText 
                   ? <p>e</p> 
                   : <p>c</p>
               }

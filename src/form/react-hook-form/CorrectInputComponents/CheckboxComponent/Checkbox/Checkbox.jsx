@@ -31,6 +31,7 @@ const Checkbox = ({
   });
 
   const errorToUse = isCheckBoxGroup ? groupError : error;
+  const valueToUse = isCheckBoxGroup ? groupValue : value;
 
   // console.log('groupValue', groupValue);
   // console.log('groupHandleChange', groupHandleChange);
@@ -46,8 +47,8 @@ const Checkbox = ({
         control={
           <MuiCheckbox
             id={id}
-            checked={isCheckBoxGroup ? groupValue : value}
-            value={isCheckBoxGroup ? groupValue : value}
+            checked={valueToUse}
+            value={valueToUse}
             onChange={(e) => {
               if (isCheckBoxGroup)
               {
@@ -67,6 +68,7 @@ const Checkbox = ({
             name={name}
             color="primary"
             className={`customCheckBox ${className}`}
+            ref={ref}
           />
         }
       />

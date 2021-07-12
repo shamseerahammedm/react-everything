@@ -39,12 +39,7 @@ const Input = ({
     defaultValue: {},
     rules: rules
   });
-  console.log('fieldState', fieldState);
-  const { error, ...others } = fieldState;
-  
-  console.log('others', others);
-  console.log('error', error);
-
+  const { error } = fieldState;
   return (
     <div className="inputWrapper">
       <TextField

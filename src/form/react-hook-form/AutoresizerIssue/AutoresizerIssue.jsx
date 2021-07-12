@@ -4,45 +4,124 @@ import { VariableSizeList as List } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import './autoresizerissue.scss';
 import { Grid } from '@material-ui/core';
+import { isObject } from 'lodash';
+import Input from '../CorrectInputComponents/Input/Input';
+import moment from 'moment';
+import * as Yup from 'yup';
+import { dummyValues } from './constants';
+import { yupResolver } from '@hookform/resolvers/yup';
 
-const items = Array.from(Array(1000).keys()).map((i) => ({
-  title: `List ${i}`,
-  quantity: Math.floor(Math.random() * 10),
-}));
+const dummyData = new Array(2).fill().map( (item, i) => {
+  return {
+    'first_name': 'Jacob'+i,
+    'last_name': 'Kingston'+i,
+    'company': 'JJC'+i,
+    'phone_number': '7894561293'+i,
+    'email': 'jacob_kingston@outlook.com'+i,
+    'enable_cold_calling': true,
+    'referred_person_email': `abcd${i}@abcd.com`,
+    'referred_date': null,
+    'tableData': {
+      'id': i
+    }
+  };
+});
+
+let dynamicSchemaObject = {};
+dummyValues.forEach( (item, i) => {
+  const schemaRow = {
+    [`${i}.first_name`] : Yup.string()
+      .required('First name is required')
+      .max(100, 'Maximum characters upto 100.')
+      .matches(/^[A-Za-z ]*$/, 'First name should not contain special characters or numbers')
+  };
+  dynamicSchemaObject = {
+    ...dynamicSchemaObject,
+    ...schemaRow
+  };
+});
+
+const dynamicSchema=  Yup.object().shape(dynamicSchemaObject);
 
 //In a bigger project, this would be a seperate component.
 const WindowedRow = React.memo(({ index, style, data }) => {
   const {
-    register,
     formState: { errors },
+    control 
   } = useFormContext();
-  const qtyKey = `${index}.quantity`;
+  const firstNameFieldName = `${index}.first_name`;
+  const lastNameFieldName = `${index}.last_name`;
+  console.log('firstNameFieldName', firstNameFieldName);
+  console.log('lastNameFieldName', lastNameFieldName);
+  console.log('data', data);
   return (
-    <div style={style}>
-      <p><label>{data[index].title}</label></p>
-      <input
-        {...register(qtyKey, {
-          validate: (value) => false, // simply returning false for shiowing error
-        })}
+    <div style={{
+      ...style,
+      display : 'flex',
+    }} className="xor">
+      {/* <p><label>{data[index].title}</label></p> */}
+      <Input
+        name={firstNameFieldName}
+        label="First Name"
+        control={control}
+        defaultValue={{}}
       />
-      {errors && errors?.[index]?.quantity && (
-        <p className="errorText" style={{ color : 'red', marginTop : 0 }}>Some error </p>
-      )}
+
+      <Input
+        name={lastNameFieldName}
+        label="Last Name"
+        control={control}
+      />
     </div>
   );
 });
 
 export const AutoresizerIssue = () => {
   const [ values, setValues] = useState(null);
-  const onSubmit = (data) => {
-    setValues(data);
-    console.log(data);
-  };
-
+  console.log('dynamicSchema', dynamicSchemaObject);
   const formMethods = useForm({
-    defaultValues: items,
-    mode : 'all'
+    defaultValues: dummyData,
+    mode : 'onBlur',
+    // resolver: yupResolver(dynamicSchema) 
   });
+
+  const onSubmit = async (data) => {
+    setValues(data);
+    console.log('submit_data', data);
+    console.log('dummyData', dummyData);
+
+    const isValidPromises = await Promise.all(dummyData.map((newDataItem, i) => {
+      const schemaRow = {
+        [`${i}.first_name`] : newDataItem.first_name
+      };
+      console.log('schemaRow', schemaRow);
+      console.log('dynamicSchema.isValid(newDataItem)', dynamicSchema.isValidSync(newDataItem));
+      return dynamicSchema.isValid(newDataItem);
+    }));
+    const areAllChangesValid = isValidPromises.every(Boolean);
+
+    console.log('isValidPromises', isValidPromises);
+    console.log('areAllChangesValid', areAllChangesValid);
+
+    const details = [];
+    for( const property in data)
+    {
+      // console.log('property', property);
+      // console.log('data[property].quantity', data[property].quantity);
+      details.push(property);
+      if(data[property].quantity == 5 || data[property].quantity == 4)
+      {
+        const key = isObject(property) ? '' : `${property}.quantity`;
+        // console.log('property', `${property}.quantity`);
+        // console.log('key', key);
+        formMethods.setError(key, {
+          message : 'Some error occured'
+        });
+      }
+    }
+    // console.log('details', details);
+    // console.log('data', data);
+  };
 
   return (
     <div className="container autoresizer">
@@ -51,21 +130,20 @@ export const AutoresizerIssue = () => {
 
       <form className="form" onSubmit={formMethods.handleSubmit(onSubmit)}>
         <div className="wrapper">
-          
           <Grid container>
-            <Grid item xs={6}>
+            <Grid item xs={12} className="border" style={{ height : '100vh' }}>
               <FormProvider {...formMethods}>
                 <AutoSizer>
-                  {({ height, width }) => {
-                    console.log('width', width);
-                    console.log('height', height);
+                  {({ height, width, ...others }) => {
+                    // console.log('width', width);
+                    // console.log('height', height);
                     return (
                       <List
                         height={height}
-                        itemCount={items.length}
+                        itemCount={dummyData.length}
                         itemSize={() => 100}
                         width={width}
-                        itemData={items}
+                        itemData={dummyData}
                       >
                         {WindowedRow}
                       </List>
@@ -75,7 +153,7 @@ export const AutoresizerIssue = () => {
               </FormProvider>
             </Grid>
             <Grid item xs={6}>
-              <div className="div" style={{ height : '80vh', overflowY : 'auto' }}>
+              <div className="div" style={{ overflowY : 'auto' }}>
                 <pre>{JSON.stringify(values, null, 2)}</pre>
               </div>
             </Grid>
@@ -83,648 +161,17 @@ export const AutoresizerIssue = () => {
         </div>
         <button type="submit">Submit</button>
       </form>
+      <pre>{JSON.stringify(dummyData, null, 2)}</pre>
     </div>
   );
 };
 
 export default AutoresizerIssue;
 
-const dummyValues = [
-  {
-    'first_name': 'Mehmet',
-    'last_name': 'Baran',
-    'company': {
-      'value': '19870',
-      'name': '1987'
-    },
-    'phone_number': '1020',
-    'email': 'test@test.com',
-    'enable_cold_calling': true,
-    'referred_person_email': 'Shamseer',
-    'referred_date': '2020-06-10T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya ',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '20171',
-      'name': '2017'
-    },
-    'phone_number': '88444444455',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': true,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya ',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '20172',
-      'name': '2017'
-    },
-    'phone_number': '88444444455',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': false,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya ',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '20173',
-      'name': '2017'
-    },
-    'phone_number': '88444444455',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': false,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya ',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '20174',
-      'name': '2017'
-    },
-    'phone_number': '88444444455',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': false,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya ',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '20175',
-      'name': '2017'
-    },
-    'phone_number': '',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': false,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya ',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '20176',
-      'name': '2017'
-    },
-    'phone_number': '88444444455',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': false,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya$$$',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '20177',
-      'name': '2017'
-    },
-    'phone_number': '88444444455',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': false,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Mehmet',
-    'last_name': 'Baran',
-    'company': {
-      'value': '19878',
-      'name': '1987'
-    },
-    'phone_number': '1020',
-    'email': 'test@test.com',
-    'enable_cold_calling': true,
-    'referred_person_email': 'Shamseer',
-    'referred_date': '2020-06-10T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya ',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '20179',
-      'name': '2017'
-    },
-    'phone_number': '88444444455',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': true,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya ',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '201710',
-      'name': '2017'
-    },
-    'phone_number': '88444444455',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': false,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya ',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '201711',
-      'name': '2017'
-    },
-    'phone_number': '88444444455',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': false,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya ',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '201712',
-      'name': '2017'
-    },
-    'phone_number': '88444444455',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': false,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya ',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '201713',
-      'name': '2017'
-    },
-    'phone_number': '',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': false,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya ',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '201714',
-      'name': '2017'
-    },
-    'phone_number': '88444444455',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': false,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya$$$',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '201715',
-      'name': '2017'
-    },
-    'phone_number': '88444444455',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': false,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Mehmet',
-    'last_name': 'Baran',
-    'company': {
-      'value': '198716',
-      'name': '1987'
-    },
-    'phone_number': '1020',
-    'email': 'test@test.com',
-    'enable_cold_calling': true,
-    'referred_person_email': 'Shamseer',
-    'referred_date': '2020-06-10T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya ',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '201717',
-      'name': '2017'
-    },
-    'phone_number': '88444444455',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': true,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya ',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '201718',
-      'name': '2017'
-    },
-    'phone_number': '88444444455',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': false,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya ',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '201719',
-      'name': '2017'
-    },
-    'phone_number': '88444444455',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': false,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya ',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '201720',
-      'name': '2017'
-    },
-    'phone_number': '88444444455',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': false,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya ',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '201721',
-      'name': '2017'
-    },
-    'phone_number': '',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': false,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya ',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '201722',
-      'name': '2017'
-    },
-    'phone_number': '88444444455',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': false,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya$$$',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '201723',
-      'name': '2017'
-    },
-    'phone_number': '88444444455',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': false,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Mehmet',
-    'last_name': 'Baran',
-    'company': {
-      'value': '198724',
-      'name': '1987'
-    },
-    'phone_number': '1020',
-    'email': 'test@test.com',
-    'enable_cold_calling': true,
-    'referred_person_email': 'Shamseer',
-    'referred_date': '2020-06-10T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya ',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '201725',
-      'name': '2017'
-    },
-    'phone_number': '88444444455',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': true,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya ',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '201726',
-      'name': '2017'
-    },
-    'phone_number': '88444444455',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': false,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya ',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '201727',
-      'name': '2017'
-    },
-    'phone_number': '88444444455',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': false,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya ',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '201728',
-      'name': '2017'
-    },
-    'phone_number': '88444444455',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': false,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya ',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '201729',
-      'name': '2017'
-    },
-    'phone_number': '',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': false,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya ',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '201730',
-      'name': '2017'
-    },
-    'phone_number': '88444444455',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': false,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya$$$',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '201731',
-      'name': '2017'
-    },
-    'phone_number': '88444444455',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': false,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Mehmet',
-    'last_name': 'Baran',
-    'company': {
-      'value': '198732',
-      'name': '1987'
-    },
-    'phone_number': '1020',
-    'email': 'test@test.com',
-    'enable_cold_calling': true,
-    'referred_person_email': 'Shamseer',
-    'referred_date': '2020-06-10T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya ',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '201733',
-      'name': '2017'
-    },
-    'phone_number': '88444444455',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': true,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya ',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '201734',
-      'name': '2017'
-    },
-    'phone_number': '88444444455',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': false,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya ',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '201735',
-      'name': '2017'
-    },
-    'phone_number': '88444444455',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': false,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya ',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '201736',
-      'name': '2017'
-    },
-    'phone_number': '88444444455',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': false,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya ',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '201737',
-      'name': '2017'
-    },
-    'phone_number': '',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': false,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya ',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '201738',
-      'name': '2017'
-    },
-    'phone_number': '88444444455',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': false,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya$$$',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '201739',
-      'name': '2017'
-    },
-    'phone_number': '88444444455',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': false,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Mehmet',
-    'last_name': 'Baran',
-    'company': {
-      'value': '198740',
-      'name': '1987'
-    },
-    'phone_number': '1020',
-    'email': 'test@test.com',
-    'enable_cold_calling': true,
-    'referred_person_email': 'Shamseer',
-    'referred_date': '2020-06-10T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya ',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '201741',
-      'name': '2017'
-    },
-    'phone_number': '88444444455',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': true,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya ',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '201742',
-      'name': '2017'
-    },
-    'phone_number': '88444444455',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': false,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya ',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '201743',
-      'name': '2017'
-    },
-    'phone_number': '88444444455',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': false,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya ',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '201744',
-      'name': '2017'
-    },
-    'phone_number': '88444444455',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': false,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya ',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '201745',
-      'name': '2017'
-    },
-    'phone_number': '',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': false,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya ',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '201746',
-      'name': '2017'
-    },
-    'phone_number': '88444444455',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': false,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Zerya$$$',
-    'last_name': 'ahammed',
-    'company': {
-      'value': '201747',
-      'name': '2017'
-    },
-    'phone_number': '88444444455',
-    'email': 'Testing@123.com',
-    'enable_cold_calling': false,
-    'referred_person_email': 'Tino',
-    'referred_date': '2019-06-15T00:00:00.000Z'
-  },
-  {
-    'first_name': 'Mehmet',
-    'last_name': 'Baran',
-    'company': {
-      'value': '198748',
-      'name': '1987'
-    },
-    'phone_number': '1020',
-    'email': 'test@test.com',
-    'enable_cold_calling': true,
-    'referred_person_email': 'Shamseer',
-    'referred_date': '2020-06-10T00:00:00.000Z'
-  }
-];
+const isValidDate = dateObject => new Date(dateObject).toString() !== 'Invalid Date';
+
+/* 
+  Stopped at :
+
+  validation bluriil work cheyunundayirunilla, athe correct akeetu, line 110 pole error loopilnu set akanam ( allel schema vazhe loopil set akanam )
+*/
