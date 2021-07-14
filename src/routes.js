@@ -60,6 +60,8 @@ import Catalogue from 'Catalogue/Catalogue';
 import PhaseOne from 'form/react-hook-form/phase1/Phase1';
 import AutoresizerIssue from 'form/react-hook-form/AutoresizerIssue/AutoresizerIssue';
 import TestComponent2 from 'Test/TestComponent2/TestComponent2';
+import HookFormBackEndValidation from 'form/react-hook-form/HookFormBackEndValidation/HookFormBackEndValidation';
+import FormInsideLoop from 'form/react-hook-form/FormInsideLoop/FormInsideLoop';
 
 const routePaths = [
   {
@@ -348,6 +350,22 @@ const routePaths = [
         exact: true,
         exclude: false,
         component: CustomHookFormMaterilUI
+      },
+      {
+        linkName: 'Back end validation',
+        path: '/hook_form_back_end_validation',
+        linkDescription: 'Back end validation, dependant fields with react hook form',
+        exact: true,
+        exclude: false,
+        component: HookFormBackEndValidation
+      },
+      {
+        linkName: 'Inside loop',
+        path: '/hook_form_inside_loop',
+        linkDescription: 'Hook form inside loop',
+        exact: true,
+        exclude: false,
+        component: FormInsideLoop
       },
     ]
   },
