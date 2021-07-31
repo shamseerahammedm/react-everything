@@ -62,6 +62,8 @@ import AutoresizerIssue from 'form/react-hook-form/AutoresizerIssue/AutoresizerI
 import TestComponent2 from 'Test/TestComponent2/TestComponent2';
 import HookFormBackEndValidation from 'form/react-hook-form/HookFormBackEndValidation/HookFormBackEndValidation';
 import FormInsideLoop from 'form/react-hook-form/FormInsideLoop/FormInsideLoop';
+import FormikNormal from 'form/Formik/FormikNormal/FormikNormal';
+import PDFCreation from 'PDFCreation/PDFCreation';
 
 const routePaths = [
   {
@@ -293,6 +295,14 @@ const routePaths = [
         exclude: false,
         component: MultistepWizard
       },
+      {
+        linkName: 'PDF Creation and barcode generator',
+        path: '/pdf_creation',
+        linkDescription: null,
+        exact: true,
+        exclude: false,
+        component: PDFCreation
+      },
     ]
   },
   {
@@ -452,6 +462,14 @@ const routePaths = [
         exclude: false,
         component: FormikTag
       },
+      {
+        linkName: 'FormikNormal',
+        path: '/formik_normal',
+        linkDescription: 'Formik normal html input components',
+        exact: true,
+        exclude: false,
+        component: FormikNormal
+      },
       
     ]
   },
@@ -499,3 +517,9 @@ routePaths.push({
 });
 
 export default routePaths;
+
+// Removable
+
+/* 
+  jsbarcode
+*/

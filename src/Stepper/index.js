@@ -7,11 +7,6 @@ function MultiParent() {
   return (
     <div className="app">
       <div className="wrapper">
-
-
-
-
-        
         <MultiStepForm />
       </div>
     </div>
