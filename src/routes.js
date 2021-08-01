@@ -64,6 +64,10 @@ import HookFormBackEndValidation from 'form/react-hook-form/HookFormBackEndValid
 import FormInsideLoop from 'form/react-hook-form/FormInsideLoop/FormInsideLoop';
 import FormikNormal from 'form/Formik/FormikNormal/FormikNormal';
 import PDFCreation from 'PDFCreation/PDFCreation';
+import StepParent from 'form/Formik/Multistep/RoutedMultistepWizard/StepParent';
+import { Step1 } from 'form/Formik/Multistep/RoutedMultistepWizard/StepParent';
+import { Step2 } from 'form/Formik/Multistep/RoutedMultistepWizard/StepParent';
+import ArrayOperations from 'ArrayOperations/ArrayOperations';
 
 const routePaths = [
   {
@@ -76,6 +80,14 @@ const routePaths = [
         exact: true,
         exclude: true,
         component: Catalogue
+      },
+      {
+        linkName: 'Array Operations',
+        path: '/array_operations',
+        linkDescription: null,
+        exact: true,
+        exclude: false,
+        component: ArrayOperations
       },
       {
         linkName: 'stepform',
@@ -382,6 +394,32 @@ const routePaths = [
   {
     name: 'Formik',
     linksDetails: [
+      // Section Starts :: RoutedMultistepWizard was file in formik docs -- 
+      {
+        linkName: 'RoutedMultistepWizard',
+        path: '/step',
+        linkDescription: 'Only solution that worked',
+        exact: true,
+        exclude: false,
+        component: StepParent
+      },
+      {
+        linkName: 'RoutedMultistepWizard',
+        path: '/step/1',
+        linkDescription: 'Only solution that worked',
+        exact: true,
+        exclude: false,
+        component: StepParent
+      },
+      {
+        linkName: 'RoutedMultistepWizard',
+        path: '/step/2',
+        linkDescription: 'Only solution that worked',
+        exact: true,
+        exclude: false,
+        component: StepParent
+      },
+      // Section Starts :: RoutedMultistepWizard was file in formik docs -- 
       {
         linkName: 'Formik back end errors',
         path: '/formik-backend-errors',

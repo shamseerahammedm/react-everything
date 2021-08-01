@@ -1,40 +1,29 @@
 import React from 'react';
-import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik';
-
+import _ from 'lodash';
 const TestComponent = () => {
   return (
     <div>
-      <Formik
-        initialValues={{
-          first : '',
-          second : ''
-        }}
-        onSubmit={(values) => { }}
-      >
-        {({ values, setValues }) => {
-          return (
-            <Form>
-              {
-                values.first
-              }
-              {
-                values.second
-              }
-              <button
-                onClick={()=>{
-                  setValues({
-                    first : 'asdf',
-                    second : 'asdf'
-                  });
-                }}
-              > set</button>
-              <pre>{JSON.stringify(values, null, 2)}</pre>
-            </Form>
-          );
-        }}
-      </Formik>
+      asdasd
     </div>
   );
 };
 
 export default TestComponent;
+
+const object1 = {
+  firstname: 'firstname',
+  lastname: 'lastname'
+};
+const object2 = {
+  phone: '123412341234',
+  address: 'some address'
+};
+const object3 = {
+  firstname: 'gggggg',
+  lastname: 'hhhh'
+};
+const combined = {
+  ...object1,
+  ...object2,
+  ...object3
+};

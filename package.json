@@ -18,6 +18,7 @@
     "cross-fetch": "^3.1.4",
     "date-fns": "^2.0.0-beta.5",
     "formik": "^2.2.6",
+    "formik-persist": "^1.1.0",
     "inline-worker": "^1.1.0",
     "jquery": "^3.6.0",
     "jsbarcode": "^3.11.4",
