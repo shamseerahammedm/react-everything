@@ -18,7 +18,6 @@ const generalReducer = (state = INITIAL_STATE, action) => {
       loading: true
     };
   case generalTypes.AUTH_SUCCESS:
-    console.log(action.payload);
     return {
       ...state,
       token: action.payload.idToken,

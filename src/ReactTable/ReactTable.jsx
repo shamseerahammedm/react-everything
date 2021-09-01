@@ -227,16 +227,28 @@ function Table({
         This is just a very basic UI implementation:
       */}
       <div className="pagination">
-        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+        <button
+          onClick={() => gotoPage(0)}
+          disabled={!canPreviousPage}
+        >
           {'<<'}
         </button>{' '}
-        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+        <button
+          onClick={() => previousPage()}
+          disabled={!canPreviousPage}
+        >
           {'<'}
         </button>{' '}
-        <button onClick={() => nextPage()} disabled={!canNextPage}>
+        <button
+          onClick={() => nextPage()}
+          disabled={!canNextPage}
+        >
           {'>'}
         </button>{' '}
-        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+        <button
+          onClick={() => gotoPage(pageCount - 1)}
+          disabled={!canNextPage}
+        >
           {'>>'}
         </button>{' '}
         <span>
@@ -264,7 +276,10 @@ function Table({
           }}
         >
           {[10, 20, 30, 40, 50].map(pageSize => (
-            <option key={pageSize} value={pageSize}>
+            <option
+              key={pageSize}
+              value={pageSize}
+            >
               Show {pageSize}
             </option>
           ))}

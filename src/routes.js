@@ -7,7 +7,7 @@ import LifeCycleMethods from './lifecycle/lifecycle';
 
 import IntersectionObserverTesting from './intersection-observer/intersection-observer.component';
 import Refs from './refs/refs';
-import RouteComponent from './route/route';
+import RouteComponent from './route/routeParent';
 import TransitionGroup from './animations/transitiongroup';
 import Csstransition from './animations/csstransition';
 import Promise from './promises/promises';

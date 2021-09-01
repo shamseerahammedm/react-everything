@@ -60,66 +60,10 @@
     "yup": "^0.32.9"
   },
   "scripts": {
-    "start": "set PORT=3333 && react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app"
-    ],
-    "rules": {
-      "indent": [
-        "warn",
-        2
-      ],
-      "semi": [
-        "warn",
-        "always"
-      ],
-      "quotes": [
-        "warn",
-        "single"
-      ],
-      "jsx-quotes": [
-        "warn",
-        "prefer-double"
-      ],
-      "no-multiple-empty-lines": [
-        "warn",
-        {
-          "max": 1,
-          "maxBOF": 1,
-          "maxEOF": 1
-        }
-      ],
-      "object-curly-newline": [
-        "warn",
-        {
-          "consistent": true
-        }
-      ],
-      "semi-spacing": [
-        "warn",
-        {
-          "before": false,
-          "after": true
-        }
-      ],
-      "comma-spacing": [
-        "warn",
-        {
-          "before": false,
-          "after": true
-        }
-      ],
-      "no-var": "warn",
-      "object-curly-spacing": [
-        "warn",
-        "always"
-      ]
-    }
   },
   "browserslist": {
     "production": [
