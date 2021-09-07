@@ -172,6 +172,7 @@ function App() {
     const profitToShow = profit < 0 ? 0 : profit;
     return {
       ...items,
+      coinName : `${items.coinName} (${subRow.length})`,
       BoughtFor : boughtForTotal,
       soldFor : soldForTotal,
       subRows : subRow,
