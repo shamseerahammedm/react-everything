@@ -6,10 +6,15 @@ import TodoState from './context/todoState';
 const ToDoApp = () => {
   return (
     <TodoState>
-      <ToDoInput/>
-      <ToDoList/>
+      <ReactComment text={'My beautiful HTML comment'}/>
+      {/* <ToDoInput/>
+      <ToDoList/> */}
     </TodoState>
   );
 };
 
 export default ToDoApp;
+
+const ReactComment = ({ text }) => {
+  return <div dangerouslySetInnerHTML={{ __html: `<!-- ${text} -->` }}/>;
+};
