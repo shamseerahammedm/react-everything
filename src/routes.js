@@ -1,6 +1,5 @@
 
 import React from 'react';
-import Form from './form/form.component';
 import FormikTag from './form/Formik/FormikForm/FormikForm';
 import LoadMore from './load-more/load-more';
 import LifeCycleMethods from './lifecycle/lifecycle';
@@ -68,6 +67,10 @@ import StepParent from 'form/Formik/Multistep/RoutedMultistepWizard/StepParent';
 import { Step1 } from 'form/Formik/Multistep/RoutedMultistepWizard/StepParent';
 import { Step2 } from 'form/Formik/Multistep/RoutedMultistepWizard/StepParent';
 import ArrayOperations from 'ArrayOperations/ArrayOperations';
+import DesignPatterns from './DesignPatterns/DesignPatterns';
+import CustomBrowser from './FileManager/Custom/Custom';
+import VirtualizedTable from './ReactVirtualized/VirtualizedTable';
+import VitualizedHookFormTable from './ReactVirtualized/VitualizedHookFormTable';
 
 const routePaths = [
   {
@@ -315,6 +318,22 @@ const routePaths = [
         exclude: false,
         component: PDFCreation
       },
+      {
+        linkName: 'Design patterns',
+        path: '/design_patterns',
+        linkDescription: null,
+        exact: true,
+        exclude: false,
+        component: DesignPatterns
+      },
+      {
+        linkName: 'File Browser',
+        path: '/file_browser',
+        linkDescription: null,
+        exact: true,
+        exclude: false,
+        component: CustomBrowser
+      },
     ]
   },
   {
@@ -524,6 +543,27 @@ const routePaths = [
       }
     ]
   },
+  {
+    name: 'Editable Table',
+    linksDetails: [
+      {
+        linkName: 'React Virtualized table',
+        path: '/virtualizedtable',
+        linkDescription: null,
+        exact: true,
+        exclude: false,
+        component: VirtualizedTable
+      },
+      {
+        linkName: 'React Virtualized table with hook form',
+        path: '/hookfromvirtualized',
+        linkDescription: null,
+        exact: true,
+        exclude: false,
+        component: VitualizedHookFormTable
+      },
+    ]
+  },
 ];
 
 routePaths.push({
@@ -537,6 +577,7 @@ routePaths.push({
       exclude: false,
       component: TestComponent
     },
+    
     {
       linkName: 'Test Component2',
       path: '/test2',
