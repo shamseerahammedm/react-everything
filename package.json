@@ -47,7 +47,7 @@
     "react-hooks-helper": "^1.6.0",
     "react-redux": "^7.2.3",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.1",
+    "react-scripts": "4.0.3",
     "react-table": "^7.7.0",
     "react-virtualized": "^9.22.3",
     "react-virtualized-auto-sizer": "^1.0.5",
@@ -81,6 +81,10 @@
   },
   "devDependencies": {
     "redux-logger": "^3.0.6",
-    "web-vitals": "^1.1.0"
+    "web-vitals": "^1.1.0",
+    "react-error-overlay": "6.0.9"
+  },
+  "resolutions": {
+    "react-error-overlay": "6.0.9"
   }
 }

@@ -69,8 +69,10 @@ import { Step2 } from 'form/Formik/Multistep/RoutedMultistepWizard/StepParent';
 import ArrayOperations from 'ArrayOperations/ArrayOperations';
 import DesignPatterns from './DesignPatterns/DesignPatterns';
 import CustomBrowser from './FileManager/Custom/Custom';
-import VirtualizedTable from './ReactVirtualized/VirtualizedTable';
-import VitualizedHookFormTable from './ReactVirtualized/VitualizedHookFormTable';
+// import VirtualizedTable from './ReactVirtualized/VirtualizedTable';
+// import VitualizedHookFormTable from './ReactVirtualized/VitualizedHookFormTable';
+import FastForms from './form/FastForms/FastForms';
+import YupAllValidations from 'form/react-hook-form/YupAllValidations/YupAllValidations';
 
 const routePaths = [
   {
@@ -408,6 +410,25 @@ const routePaths = [
         exclude: false,
         component: FormInsideLoop
       },
+      {
+        linkName: 'yup all validation with hook form',
+        path: '/yup_validations',
+        linkDescription: 'yup all validation with hook form',
+        exact: true,
+        exclude: false,
+        component: () => {
+          const isCommercialLoan = false,isGreenCardLoan = true,isNewLoanApplication = true, isEnhancementApplication = false;
+          const dummyComponent = (
+            <YupAllValidations
+              isCommercialLoan={isCommercialLoan}
+              isGreenCardLoan={isGreenCardLoan}
+              isNewLoanApplication={isNewLoanApplication}
+              isEnhancementApplication={isEnhancementApplication}
+            />
+          );
+          return dummyComponent;
+        }
+      },
     ]
   },
   {
@@ -543,27 +564,27 @@ const routePaths = [
       }
     ]
   },
-  {
-    name: 'Editable Table',
-    linksDetails: [
-      {
-        linkName: 'React Virtualized table',
-        path: '/virtualizedtable',
-        linkDescription: null,
-        exact: true,
-        exclude: false,
-        component: VirtualizedTable
-      },
-      {
-        linkName: 'React Virtualized table with hook form',
-        path: '/hookfromvirtualized',
-        linkDescription: null,
-        exact: true,
-        exclude: false,
-        component: VitualizedHookFormTable
-      },
-    ]
-  },
+  // {
+  //   name: 'Editable Table',
+  //   linksDetails: [
+  //     {
+  //       linkName: 'React Virtualized table',
+  //       path: '/virtualizedtable',
+  //       linkDescription: null,
+  //       exact: true,
+  //       exclude: false,
+  //       component: VirtualizedTable
+  //     },
+  //     {
+  //       linkName: 'React Virtualized table with hook form',
+  //       path: '/hookfromvirtualized',
+  //       linkDescription: null,
+  //       exact: true,
+  //       exclude: false,
+  //       component: VitualizedHookFormTable
+  //     },
+  //   ]
+  // },
 ];
 
 routePaths.push({
@@ -585,6 +606,14 @@ routePaths.push({
       exact: true,
       exclude: false,
       component: TestComponent2
+    },
+    {
+      linkName: 'fast_forms',
+      path: '/fast_forms',
+      linkDescription: null,
+      exact: true,
+      exclude: false,
+      component: FastForms
     },
     {
       linkName: '4o4',
