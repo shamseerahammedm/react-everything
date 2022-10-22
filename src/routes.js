@@ -416,18 +416,7 @@ const routePaths = [
         linkDescription: 'yup all validation with hook form',
         exact: true,
         exclude: false,
-        component: () => {
-          const isCommercialLoan = false,isGreenCardLoan = true,isNewLoanApplication = true, isEnhancementApplication = false;
-          const dummyComponent = (
-            <YupAllValidations
-              isCommercialLoan={isCommercialLoan}
-              isGreenCardLoan={isGreenCardLoan}
-              isNewLoanApplication={isNewLoanApplication}
-              isEnhancementApplication={isEnhancementApplication}
-            />
-          );
-          return dummyComponent;
-        }
+        component:YupAllValidations
       },
     ]
   },
