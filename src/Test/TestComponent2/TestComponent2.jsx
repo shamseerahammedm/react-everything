@@ -1,70 +1,44 @@
-import React from 'react';
+import { Field, Form, Formik } from 'formik';
+import React, { useState } from 'react';
 
-import { IconButton, Menu, MenuItem } from '@material-ui/core';
+let render = 0;
+const TestComponent2 = () => {
+  render = render + 1;
 
-const options = [
-  ['1', '2'],
-  ['3', '4'],
-  ['5', '6']
-];
+  const [ state, setState ] = useState(0);
+  return (
+    <div>
+      <Formik
+        initialValues={{
+          something : ''
+        }}
+        onSubmit={(values) => {}}
+      >
+        {({ values }) => {
+          return (
+            <Form>
+              <Field
+                name="something"
+              />
+              <Field
+                name="something"
+              >
+                {(props)=>{
+                  console.log('props',props);
+                  return <input type="text" onChange={(e)=>{
+                    props.form.setFieldValue('something2',e.target.value );
+                  }}/>;
+                }}
+              </Field>
+              <pre>{JSON.stringify(values, null, 2)}</pre>
+              render :: <pre>{JSON.stringify(render, null, 2)}</pre>
+              <button onClick={()=>setState(prev => prev + 1)}>render</button>
+            </Form>
+          );
+        }}
+      </Formik>
+    </div>
+  );
+};
 
-const ITEM_HEIGHT = 48;
-
-class LongMenu extends React.Component {
-  state = {
-    anchorEl: null
-  };
-
-  handleClick = (i) => (event) => {
-    this.setState({ index: i, anchorEl: event.currentTarget });
-  };
-
-  handleClose = () => {
-    this.setState({ anchorEl: null });
-  };
-
-  render() {
-    const { anchorEl } = this.state;
-
-    return (
-      <div>
-        {options.map((option, i) => (
-          <React.Fragment key={i}>
-            <IconButton
-              aria-label="More"
-              aria-owns={anchorEl ? 'long-menu' : null}
-              aria-haspopup="true"
-              onClick={this.handleClick(i)}
-            >
-              a
-            </IconButton>
-            <Menu
-              id="long-menu"
-              anchorEl={this.state.anchorEl}
-              open={Boolean(anchorEl) && this.state.index === i}
-              onClose={this.handleClose}
-              PaperProps={{
-                style: {
-                  maxHeight: ITEM_HEIGHT * 4.5,
-                  width: 200
-                }
-              }}
-            >
-              {option.map((single) => (
-                <MenuItem
-                  key={single}
-                  selected={single === 'Pyxis'}
-                  onClick={this.handleClose}
-                >
-                  {single}
-                </MenuItem>
-              ))}
-            </Menu>
-          </React.Fragment>
-        ))}
-      </div>
-    );
-  }
-}
-
-export default LongMenu;
+export default TestComponent2;

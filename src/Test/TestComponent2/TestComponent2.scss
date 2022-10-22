@@ -1,0 +1,29 @@
+.wrapper{
+  height: 500px;
+  // width: 100%;
+  .item{
+    // width: 100%;
+    // background: red;
+  }
+}
+
+.wrapper2{
+  margin-top: 50px;
+  display: flex;
+  flex-direction:column;
+  height: 500px;
+  width: 100%;
+  .child{
+    width: 100%;
+    background: green;
+  }
+}
+
+
+.one{
+  background:orange;
+}
+
+.two{
+  background:green;
+}
