@@ -1,12 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 export class PureComponent extends Component {
 
-
     state = {
-        val : 1
+      val : 1
     }
-
 
     // if PureComponent is not used use shouldComponentUpdate to do this
     // shouldComponentUpdate(nextProp, nextState){
@@ -14,31 +12,29 @@ export class PureComponent extends Component {
     // }
 
     componentDidMount(){
-        setInterval(()=>{
-            this.setState({
-                val : 1
-            })
-        },2000)
+      setInterval(()=>{
+        this.setState({
+          val : 1
+        });
+      },2000);
     }
-
 
     getNewDate = () => {
-        // your code 
-        return NewDate;
+      // your code 
+      return NewDate;
     }
-
 
     render() {
 
-        this.getNewDate();
+      this.getNewDate();
 
-        console.log("Rerendering");
-        return (
-            <div>
-                {this.state.val}
-            </div>
-        )
+      console.log('Rerendering');
+      return (
+        <div>
+          {this.state.val}
+        </div>
+      );
     }
 }
 
-export default PureComponent
+export default PureComponent;

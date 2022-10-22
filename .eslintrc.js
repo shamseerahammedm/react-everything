@@ -16,7 +16,7 @@ module.exports = {
     ],
     'quotes': [
       'warn',
-      'single'
+      'double'
     ],
     'jsx-quotes': [
       'warn',

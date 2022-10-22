@@ -1,44 +1,42 @@
-import { Field, Form, Formik } from 'formik';
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 
-let render = 0;
-const TestComponent2 = () => {
-  render = render + 1;
+class ComponentTwo extends Component {
 
-  const [ state, setState ] = useState(0);
-  return (
-    <div>
-      <Formik
-        initialValues={{
-          something : ''
-        }}
-        onSubmit={(values) => {}}
-      >
-        {({ values }) => {
-          return (
-            <Form>
-              <Field
-                name="something"
-              />
-              <Field
-                name="something"
-              >
-                {(props)=>{
-                  console.log('props',props);
-                  return <input type="text" onChange={(e)=>{
-                    props.form.setFieldValue('something2',e.target.value );
-                  }}/>;
-                }}
-              </Field>
-              <pre>{JSON.stringify(values, null, 2)}</pre>
-              render :: <pre>{JSON.stringify(render, null, 2)}</pre>
-              <button onClick={()=>setState(prev => prev + 1)}>render</button>
-            </Form>
-          );
-        }}
-      </Formik>
-    </div>
-  );
-};
+  someFunction = () => {
+    
+  }
 
-export default TestComponent2;
+  render()
+  {
+    return (
+      <div>
+        ComponentTwo
+      </div>
+    );
+  }
+}
+
+export default withSomething(ComponentTwo);
+
+function withSomething(Component) {
+  class LogProps extends React.Component {
+    componentDidUpdate(prevProps) {
+      console.log('old props:', prevProps);
+      console.log('new props:', this.props);
+    }
+
+    render() {
+      const { forwardedRef, ...rest } = this.props;
+
+      // Assign the custom prop "forwardedRef" as a ref
+      return <Component ref={forwardedRef} {...rest} />;
+    }
+  }
+
+  // Note the second param "ref" provided by React.forwardRef.
+  // We can pass it along to LogProps as a regular prop, e.g. "forwardedRef"
+  // And it can then be attached to the Component.
+  return React.forwardRef((props, ref) => {
+    return <LogProps {...props} forwardedRef={ref} />;
+  });
+}

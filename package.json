@@ -11,6 +11,7 @@
     "@material-ui/lab": "^4.0.0-alpha.57",
     "@material-ui/pickers": "^3.3.10",
     "@react-pdf/renderer": "^2.0.16",
+    "@tanstack/react-table": "0.0.1-alpha.0",
     "apexcharts": "^3.26.1",
     "autosuggest-highlight": "^3.1.1",
     "axios": "^0.21.1",
